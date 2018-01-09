@@ -31,10 +31,10 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Update()
         {
-            var pos = World.Map.GetPosition(Actor);
+            //var pos = World.Map.GetPosition(Actor);
 
-            var worldPos = new Vector3(pos.X, 0, pos.Y) + World.Map.CellOffset;
-            Debug.DrawLine(worldPos , worldPos + Vector3.up * 1, Color.red);
+            //var worldPos = new Vector3(pos.X, 0, pos.Y) + World.Map.CellOffset;
+            //Debug.DrawLine(worldPos , worldPos + Vector3.up * 1, Color.red);
         }
     }
 }

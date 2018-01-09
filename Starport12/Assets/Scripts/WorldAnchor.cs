@@ -41,7 +41,7 @@ namespace Smallgroup.Starport.Assets.Scripts
         protected void Start()
         {
 
-            Map.SetPosition(Player.Actor, new GridXY(1, 3));
+            //Map.SetPosition(Player.Actor, new GridXY(1, 3));
         }
 
         protected void Update()

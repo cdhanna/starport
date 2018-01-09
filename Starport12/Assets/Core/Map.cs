@@ -4,26 +4,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Core
 {
-    class Map<TCoordinateType> 
+    abstract class Map<TCoordinateType, TCellType> 
         where TCoordinateType : ICoordinate<TCoordinateType>, new()
+        where TCellType : ICell<TCellType>, new()
     {
 
-        private Dictionary<TCoordinateType, Cell> _world;
+        private Dictionary<TCoordinateType, TCellType> _world;
+        private Dictionary<int, TCoordinateType> _similarHashCodeToActualCoordinate;
 
         private Dictionary<Guid, Actor> _actors;
 
-        private Dictionary<Guid, Cell> _objectPositions;
-        private Dictionary<Cell, TCoordinateType> _cellPositions;
+        private Dictionary<Guid, TCellType> _objectPositions;
+        private Dictionary<TCellType, TCoordinateType> _cellPositions;
 
         public Map()
         {
-            _world = new Dictionary<TCoordinateType, Cell>();
+            _similarHashCodeToActualCoordinate = new Dictionary<int, TCoordinateType>();
+            _world = new Dictionary<TCoordinateType, TCellType>();
             _actors = new Dictionary<Guid, Actor>();
-            _objectPositions = new Dictionary<Guid, Cell>();
-            _cellPositions = new Dictionary<Cell, TCoordinateType>();
+            _objectPositions = new Dictionary<Guid, TCellType>();
+            _cellPositions = new Dictionary<TCellType, TCoordinateType>();
         }
 
         public IEnumerable<TCoordinateType> Coordinates { get { return _world.Keys.AsEnumerable(); } }
@@ -39,7 +43,7 @@ namespace Smallgroup.Starport.Assets.Core
 
             var cell = _world[coord];
 
-            var previousCell = default(Cell);
+            var previousCell = default(TCellType);
             if (_objectPositions.TryGetValue(existing.Id, out previousCell))
             {
                 _objectPositions[existing.Id] = cell;
@@ -56,9 +60,9 @@ namespace Smallgroup.Starport.Assets.Core
             return position;
         }
 
-        public void Set(TCoordinateType coord, Cell cell)
+        public void Set(TCoordinateType coord, TCellType cell)
         {
-            var existing = default(Cell);
+            var existing = default(TCellType);
             if (_world.TryGetValue(coord, out existing))
             {
                 _world[coord] = cell;
@@ -69,11 +73,28 @@ namespace Smallgroup.Starport.Assets.Core
             _cellPositions.Add(cell, coord);
         }
         
+        public TCellType Get(TCoordinateType coord)
+        {
+            var result = default(TCellType);
+            _world.TryGetValue(coord, out result);
+            return result;
+        }
+
+        public TCoordinateType GetRightCoord(TCoordinateType coord)
+        {
+            var result = default(TCoordinateType);
+            var hash = coord.GetSimilarHashCode();
+            _similarHashCodeToActualCoordinate.TryGetValue(hash, out result);
+            return result;
+        }
+
+        public abstract TCoordinateType TransformWorldToCoordinate(Vector3 position);
+
         public bool CoordinateExists(TCoordinateType coord)
         {
             return _world.ContainsKey(coord);
         }
-        
 
+      
     }
 }

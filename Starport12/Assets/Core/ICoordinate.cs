@@ -9,8 +9,10 @@ namespace Smallgroup.Starport.Assets.Core
         where TOutCoordinate : ICoordinate<TOutCoordinate>, new()
     {
 
-        IEnumerable<TOutCoordinate> GetNeighbors();
+        List<TOutCoordinate> GetNeighbors();
+        List<TOutCoordinate> GetTraversableNeighbors();
 
+        int GetSimilarHashCode();
     }
 
 
