@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Smallgroup.Starport.Assets.Surface
 {
-    class Cell : ICell<Cell>
+    public class Cell : ICell<Cell>
     {
         
     }

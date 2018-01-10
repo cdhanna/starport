@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Surface
 {
-    class MapXY : Map<GridXY, Cell>
+    public class MapXY : Map<GridXY, Cell>
     {
         public int CellWidth { get; set; }
         public Vector3 CellOffset { get { return new Vector3(CellWidth, 0, CellWidth)/2; } }

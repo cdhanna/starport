@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Smallgroup.Starport.Assets.Surface
 {
-    struct GridXY : ICoordinate<GridXY>
+    public struct GridXY : ICoordinate<GridXY>
     {
 
         private int _x, _y;

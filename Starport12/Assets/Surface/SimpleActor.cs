@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Smallgroup.Starport.Assets.Surface
 {
-    class SimpleActor : Actor
+    public class SimpleActor : Actor
     {
         private MapXY _map;
 

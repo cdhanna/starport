@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Core
 {
-    abstract class Map<TCoordinateType, TCellType> 
+    public abstract class Map<TCoordinateType, TCellType> 
         where TCoordinateType : ICoordinate<TCoordinateType>, new()
         where TCellType : ICell<TCellType>, new()
     {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Smallgroup.Starport.Assets.Core.Players
 {
-    interface InputMechanism<out TActor> where TActor : Actor
+    public interface InputMechanism<out TActor> where TActor : Actor
     {
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Smallgroup.Starport.Assets.Core
 {
-    interface ICell<TCellType>
+    public interface ICell<TCellType>
         where TCellType : ICell<TCellType>,new()
     {
         //TCoordinateType Coord { get; }
