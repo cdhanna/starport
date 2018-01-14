@@ -47,7 +47,8 @@ public class MouseIntersector : DefaultInputMech<SimpleActor>
             if (World.Map.CoordinateExists(clickedCoord))
             {
                 Debug.Log("SUBMITTING COMMAND");
-                Actor.Accept(new GotoCommand(clickedCoord));
+                Actor.ClearCommands();
+                Actor.AddCommand(new GotoCommand(clickedCoord));
             }
         }
     }

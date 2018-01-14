@@ -4,16 +4,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Surface
 {
     public class SimpleActor : Actor
     {
         private MapXY _map;
+        private GridPather _pather;
+
+        
 
         public SimpleActor(MapXY map)
         {
             _map = map;
+            _pather = new GridPather();
         }
 
         public void MoveLeft()
@@ -56,6 +61,7 @@ namespace Smallgroup.Starport.Assets.Surface
             }
         }
 
+
         public override IEnumerable<CommandResult> ProcessCommand_Generator(ICommand command)
         {
             if (command is GotoCommand)
@@ -69,10 +75,23 @@ namespace Smallgroup.Starport.Assets.Surface
 
         private IEnumerable<CommandResult> HandleGoto(GotoCommand command)
         {
-            yield return CommandResult.WORKING;
+            var path = _pather.FindPath(_map, _map.GetObjectPosition(this), command.Target);
 
-            _map.SetObjectPosition(command.Target, this);
+            for (var i = 0; i < path.Count; i++)
+            {
+                var node = path[i];
+                _map.SetObjectPosition(node, this);
 
+                var placedAt = DateTime.Now;
+                var procedeAt = placedAt.AddMilliseconds(250);
+                while (procedeAt > DateTime.Now)
+                {
+                    yield return CommandResult.WORKING;
+                }
+            }
+
+
+            Debug.Log("DONE");
             yield return CommandResult.COMPLETE;
 
         }

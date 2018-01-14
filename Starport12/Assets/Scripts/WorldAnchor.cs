@@ -28,10 +28,20 @@ namespace Smallgroup.Starport.Assets.Scripts
         private void SetSampleLevel()
         {
 
-            for (var x = 0; x < 6; x++)
+            for (var x = 0; x < 8; x++)
             {
                 for (var y = 0; y < 12; y++)
                 {
+
+                    if (  (x == 4 && y == 4)
+                        || (x == 5 && y == 4)
+                        || (x == 4 && y == 5)
+                        || (x == 7 && y == 4)
+                        || (x == 4 && y == 6))
+                    {
+                        continue;
+                    }
+
                     var coord = new GridXY(x, y);
 
                     var cell = new Cell();
@@ -48,6 +58,13 @@ namespace Smallgroup.Starport.Assets.Scripts
                     Map.SetCell(coord, cell);
                 }
             }
+            Map.AutoMap();
+            /*
+             * 
+             * map.GetTraversable(coord) -> coord[]
+             * map.SetTraversable(coord, coord[])
+             * 
+             */ 
         }
 
         protected void Start()

@@ -21,9 +21,17 @@ namespace Smallgroup.Starport.Assets.Core.Players
             _commandQueue = new Queue<ICommand>();
         }
 
-        public virtual void Accept(ICommand command)
+        public virtual void AddCommand(ICommand command)
         {
             _commandQueue.Enqueue(command);
+        }
+
+        public virtual void ClearCommands()
+        {
+            // cancel current command ?
+            _activeCommand = null;
+            _commandQueue.Clear();
+            _commandIterator = null;
         }
 
         public void Update()
