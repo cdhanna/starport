@@ -10,9 +10,9 @@ namespace Smallgroup.Starport.Assets.Core
     {
 
         List<TOutCoordinate> GetNeighbors();
-        List<TOutCoordinate> GetTraversableNeighbors();
+        //List<TOutCoordinate> GetTraversableNeighbors();
 
-        int GetSimilarHashCode();
+        //int GetSimilarHashCode();
     }
 
 

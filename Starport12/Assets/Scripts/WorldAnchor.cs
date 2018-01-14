@@ -20,7 +20,6 @@ namespace Smallgroup.Starport.Assets.Scripts
         public WorldAnchor()
         {
             Map = World.Map;
-            SetSampleLevel();
 
             //Map.SetPosition()
         }
@@ -33,50 +32,36 @@ namespace Smallgroup.Starport.Assets.Scripts
             {
                 for (var y = 0; y < 12; y++)
                 {
-                    Map.Set(new GridXY(x, y), new Cell());
+                    var coord = new GridXY(x, y);
+
+                    var cell = new Cell();
+                    var cellObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    var cellScript = cellObj.AddComponent<CellAnchor>();
+                    cellScript.Cell = cell;
+
+                    cellObj.transform.parent = transform;
+            
+                    cellObj.transform.localPosition = World.Map.TransformCoordinateToWorld(coord);
+
+                    float scale = .9f;
+                    cellObj.transform.localScale = new Vector3(World.Map.CellWidth * scale, .1f, World.Map.CellWidth * scale);
+                    Map.SetCell(coord, cell);
                 }
             }
         }
 
         protected void Start()
         {
+            SetSampleLevel();
 
             //Map.SetPosition(Player.Actor, new GridXY(1, 3));
         }
 
         protected void Update()
         {
-            DrawDebugLines();
         }
 
-        private void DrawDebugLines()
-        {
-            if (!DebugVisuals) return;
-
-            foreach(var coord in Map.Coordinates)
-            {
-                var cornerTopLeft = new Vector3(coord.X, 0, coord.Y) * Map.CellWidth;
-                Debug.DrawLine(
-                    cornerTopLeft + Vector3.right * Map.CellWidth * 0 + Vector3.forward * Map.CellWidth * 0,
-                    cornerTopLeft + Vector3.right * Map.CellWidth * 1 + Vector3.forward * Map.CellWidth * 0,
-                    DebugColor);
-
-                Debug.DrawLine(
-                    cornerTopLeft + Vector3.right * Map.CellWidth * 0 + Vector3.forward * Map.CellWidth * 0,
-                    cornerTopLeft + Vector3.right * Map.CellWidth * 0 + Vector3.forward * Map.CellWidth * 1,
-                    DebugColor);
-
-                Debug.DrawLine(
-                    cornerTopLeft + Vector3.right * Map.CellWidth * 1 + Vector3.forward * Map.CellWidth * 0,
-                    cornerTopLeft + Vector3.right * Map.CellWidth * 1 + Vector3.forward * Map.CellWidth * 1,
-                    DebugColor);
-
-                Debug.DrawLine(
-                    cornerTopLeft + Vector3.right * Map.CellWidth * 0 + Vector3.forward * Map.CellWidth * 1,
-                    cornerTopLeft + Vector3.right * Map.CellWidth * 1 + Vector3.forward * Map.CellWidth * 1,
-                    DebugColor);
-            }
-        }
+       
 
     }
 }

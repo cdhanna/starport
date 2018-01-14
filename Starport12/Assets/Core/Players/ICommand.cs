@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Smallgroup.Starport.Assets.Core
+namespace Smallgroup.Starport.Assets.Core.Players
 {
-    public class Typings<TMap, TCoord, TCell>
-
+    public interface ICommand
     {
-
     }
 }

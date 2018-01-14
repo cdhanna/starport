@@ -4,12 +4,13 @@ using Smallgroup.Starport.Assets.Core.Players;
 using Smallgroup.Starport.Assets.Surface;
 using UnityEngine.Experimental.UIElements;
 
-public class MouseIntersector : MonoBehaviour, InputMechanism<SimpleActor>
+public class MouseIntersector : DefaultInputMech<SimpleActor>
 {
 
     private Plane _ground;
     private Vector3 _lastHit;
 
+    private GameObject _mouseIndicator;
 
     // Use this for initialization
     void Start()
@@ -17,7 +18,9 @@ public class MouseIntersector : MonoBehaviour, InputMechanism<SimpleActor>
 
         _ground = new Plane(Vector3.up, 0);
 
-
+        _mouseIndicator = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        _mouseIndicator.GetComponent<MeshRenderer>().material.color = Color.red;
+        _mouseIndicator.transform.localScale = Vector3.one * .2f;
     }
 
     // Update is called once per frame
@@ -31,12 +34,21 @@ public class MouseIntersector : MonoBehaviour, InputMechanism<SimpleActor>
             // some point of the plane was hit - get its coordinates
             var hitPoint = ray.GetPoint(distance);
             _lastHit = hitPoint;
+            _mouseIndicator.transform.position = hitPoint;
             // use the hitPoint to aim your cannon
         }
 
         if (Input.GetMouseButtonDown(0))
         {
             var clickedCoord = World.Map.TransformWorldToCoordinate(_lastHit);
+
+            Debug.Log("CLICKED ON " + clickedCoord + " from " + _lastHit.x + "," + _lastHit.z);
+
+            if (World.Map.CoordinateExists(clickedCoord))
+            {
+                Debug.Log("SUBMITTING COMMAND");
+                Actor.Accept(new GotoCommand(clickedCoord));
+            }
         }
     }
 }

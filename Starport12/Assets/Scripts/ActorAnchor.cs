@@ -22,15 +22,26 @@ namespace Smallgroup.Starport.Assets.Scripts
         {
             Actor = new SimpleActor(World.Map);
             var gob = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            gob.GetComponent<MeshRenderer>().enabled = false;
+            //gob.GetComponent<MeshRenderer>().enabled = false;
             gob.transform.parent = transform;
-            var input = gob.AddComponent<SimpleKeyboardInput>();
-            Actor.InputMech = input;
+
+            World.Map.SetObjectPosition(new GridXY(1, 1), Actor);
+
+            var input = gob.AddComponent<MouseIntersector>();
             input.Actor = Actor;
+            
+
+            //var input = gob.AddComponent<SimpleKeyboardInput>();
+            //Actor.InputMech = input;
+            //input.Actor = Actor;
         }
 
         protected void Update()
         {
+            Actor.Update();
+
+            var coord = World.Map.GetObjectPosition(Actor);
+            transform.localPosition = World.Map.TransformCoordinateToWorld(coord);
             //var pos = World.Map.GetPosition(Actor);
 
             //var worldPos = new Vector3(pos.X, 0, pos.Y) + World.Map.CellOffset;
