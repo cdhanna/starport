@@ -35,6 +35,7 @@ namespace Smallgroup.Starport.Assets.Scripts
             var input = gob.AddComponent<ControllerIntersector>();
             input.Actor = Actor;
             input.Binding = Controller;
+            input.DebugColor = Color;
             
 
             //var input = gob.AddComponent<SimpleKeyboardInput>();

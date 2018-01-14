@@ -15,14 +15,14 @@ namespace Smallgroup.Starport.Assets.Surface.InputMechs
         private GameObject _indicator;
 
         public ControllerBinding Binding { get; set; }
-
+        public Color DebugColor { get; set; }
 
         // Use this for initialization
         void Start()
         {
             
             _indicator = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            _indicator.GetComponent<MeshRenderer>().material.color = Color.red;
+            _indicator.GetComponent<MeshRenderer>().material.color = DebugColor;
             _indicator.transform.localScale = Vector3.one * .2f;
         }
 
@@ -34,6 +34,9 @@ namespace Smallgroup.Starport.Assets.Surface.InputMechs
             var y = Input.GetAxis(Binding.Y_AXIS);
             _pos.x += x * .5f;
             _pos.z -= y * .5f;
+
+
+
 
             //var ray = Camera.main.ScreenPointToRay(_pos);
             // plane.Raycast returns the distance from the ray start to the hit point
