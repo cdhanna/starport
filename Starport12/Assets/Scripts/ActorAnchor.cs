@@ -1,5 +1,6 @@
 ﻿using Smallgroup.Starport.Assets.Core.Players;
 using Smallgroup.Starport.Assets.Surface;
+using Smallgroup.Starport.Assets.Surface.InputMechs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,9 @@ namespace Smallgroup.Starport.Assets.Scripts
 {
     class ActorAnchor : MonoBehaviour
     {
+        public Color Color;
+        public GridXY StartPosition;
+        public ControllerBinding Controller;
 
         public SimpleActor Actor { get; set; }
         //public MapXY World { get; set; }
@@ -22,13 +26,15 @@ namespace Smallgroup.Starport.Assets.Scripts
         {
             Actor = new SimpleActor(World.Map);
             var gob = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            //gob.GetComponent<MeshRenderer>().enabled = false;
+            gob.GetComponent<MeshRenderer>().material.color = Color;
             gob.transform.parent = transform;
 
-            World.Map.SetObjectPosition(new GridXY(1, 1), Actor);
 
-            var input = gob.AddComponent<MouseIntersector>();
+            World.Map.SetObjectPosition(StartPosition, Actor);
+
+            var input = gob.AddComponent<ControllerIntersector>();
             input.Actor = Actor;
+            input.Binding = Controller;
             
 
             //var input = gob.AddComponent<SimpleKeyboardInput>();

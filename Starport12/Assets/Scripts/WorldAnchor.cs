@@ -15,7 +15,7 @@ namespace Smallgroup.Starport.Assets.Scripts
         public bool DebugVisuals = true;
         public Color DebugColor = Color.blue;
 
-        public ActorAnchor Player;
+        public ActorAnchor[] Players;
 
         public WorldAnchor()
         {
