@@ -18,7 +18,7 @@ namespace Smallgroup.Starport.Assets.Surface.InputMechs
         public Color DebugColor { get; set; }
 
         // Use this for initialization
-        void Start()
+        public override void Init()
         {
             
             _indicator = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -27,7 +27,7 @@ namespace Smallgroup.Starport.Assets.Surface.InputMechs
         }
 
         // Update is called once per frame
-        void Update()
+        public override void Update()
         {
             
             var x = Input.GetAxis(Binding.X_AXIS);

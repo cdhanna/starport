@@ -13,9 +13,13 @@ namespace Smallgroup.Starport.Assets.Scripts
     {
         public Color Color;
         public GridXY StartPosition;
+        public bool UseMouse;
         public ControllerBinding Controller;
 
+        
+
         public SimpleActor Actor { get; set; }
+        public DefaultInputMech<SimpleActor> InputMech { get; set; }
         //public MapXY World { get; set; }
 
         public ActorAnchor()
@@ -32,20 +36,28 @@ namespace Smallgroup.Starport.Assets.Scripts
 
             World.Map.SetObjectPosition(StartPosition, Actor);
 
-            var input = gob.AddComponent<ControllerIntersector>();
-            input.Actor = Actor;
-            input.Binding = Controller;
-            input.DebugColor = Color;
+            if (UseMouse)
+            {
+                //var input = gameObject.AddComponent<MouseIntersector>();
+                InputMech = new MouseIntersector();
+                InputMech.Actor = Actor;
+            } else
+            {
+                var input = new ControllerIntersector();
+                //var input = gameObject.AddComponent<ControllerIntersector>();
+                input.Actor = Actor;
+                input.Binding = Controller;
+                input.DebugColor = Color;
+                InputMech = input;
+            }
+            InputMech.Init();
             
-
-            //var input = gob.AddComponent<SimpleKeyboardInput>();
-            //Actor.InputMech = input;
-            //input.Actor = Actor;
         }
 
         protected void Update()
         {
             Actor.Update();
+            InputMech.Update();
 
             var coord = World.Map.GetObjectPosition(Actor);
             transform.localPosition = World.Map.TransformCoordinateToWorld(coord);

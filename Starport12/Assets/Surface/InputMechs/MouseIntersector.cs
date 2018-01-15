@@ -13,7 +13,7 @@ public class MouseIntersector : DefaultInputMech<SimpleActor>
     private GameObject _mouseIndicator;
 
     // Use this for initialization
-    void Start()
+    public override void Init()
     {
 
         _ground = new Plane(Vector3.up, 0);
@@ -24,7 +24,7 @@ public class MouseIntersector : DefaultInputMech<SimpleActor>
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         // plane.Raycast returns the distance from the ray start to the hit point

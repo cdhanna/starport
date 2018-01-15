@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Core.Players
 {
@@ -11,16 +10,22 @@ namespace Smallgroup.Starport.Assets.Core.Players
         //TActor Actor { get; set; }
     }
 
-    public class DefaultInputMech<TActor> : MonoBehaviour, InputMechanism<TActor>
+    [Serializable]
+    public class DefaultInputMech<TActor> : InputMechanism<TActor>
         where TActor : Actor
     {
 
         public TActor Actor { get; set; }
 
-        //public (TActor actor)
-        //{
-        //    Actor = actor;
-        //}
+        public virtual void Init()
+        {
+
+        }
+
+        public virtual void Update()
+        {
+
+        }
     }
 
 }

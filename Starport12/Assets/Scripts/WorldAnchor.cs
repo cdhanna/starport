@@ -17,13 +17,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         public ActorAnchor[] Players;
 
-        public WorldAnchor()
-        {
-            Map = World.Map;
-
-            //Map.SetPosition()
-        }
-
+   
         private void AttachCellAnchors()
         {
             for (var i = 0; i <  Map.Coordinates.Length; i++)
@@ -43,60 +37,16 @@ namespace Smallgroup.Starport.Assets.Scripts
             }
         }
 
-        private void SetSampleLevel()
-        {
-
-            for (var x = 0; x < 8; x++)
-            {
-                for (var y = 0; y < 12; y++)
-                {
-
-                    if (  (x == 4 && y == 4)
-                        || (x == 5 && y == 4)
-                        || (x == 4 && y == 5)
-                        || (x == 7 && y == 4)
-                        || (x == 4 && y == 6))
-                    {
-                        continue;
-                    }
-
-                    var coord = new GridXY(x, y);
-
-                    var cell = new Cell();
-                    var cellObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    var cellScript = cellObj.AddComponent<CellAnchor>();
-                    cellScript.Cell = cell;
-
-                    cellObj.transform.parent = transform;
-            
-                    cellObj.transform.localPosition = World.Map.TransformCoordinateToWorld(coord);
-
-                    float scale = .9f;
-                    cellObj.transform.localScale = new Vector3(World.Map.CellWidth * scale, .1f, World.Map.CellWidth * scale);
-                    Map.SetCell(coord, cell);
-                }
-            }
-            Map.AutoMap();
-            /*
-             * 
-             * map.GetTraversable(coord) -> coord[]
-             * map.SetTraversable(coord, coord[])
-             * 
-             */ 
-        }
-
         protected void Start()
         {
 
             AttachCellAnchors();
-            //World.Map = Map;
-            //SetSampleLevel();
-
-            //Map.SetPosition(Player.Actor, new GridXY(1, 3));
+            Map = World.Map;
         }
 
         protected void Update()
         {
+
         }
 
        
