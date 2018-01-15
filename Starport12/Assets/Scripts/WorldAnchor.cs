@@ -12,8 +12,6 @@ namespace Smallgroup.Starport.Assets.Scripts
     {
             
         public MapXY Map { get; set; }
-        public bool DebugVisuals = true;
-        public Color DebugColor = Color.blue;
 
         public ActorAnchor[] Players;
 
@@ -40,8 +38,8 @@ namespace Smallgroup.Starport.Assets.Scripts
         protected void Start()
         {
 
-            AttachCellAnchors();
             Map = World.Map;
+            AttachCellAnchors();
         }
 
         protected void Update()
