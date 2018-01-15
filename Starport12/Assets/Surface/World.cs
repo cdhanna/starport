@@ -7,6 +7,12 @@ namespace Smallgroup.Starport.Assets.Surface
 {
     static class World
     {
-        public static MapXY Map = new MapXY();
+        public static MapXY Map;
+
+        static World()
+        {
+            var loader = new MapLoader();
+            Map = loader.LoadFromFile("Assets\\Maps\\testmap.json");
+        }
     }
 }

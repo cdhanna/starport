@@ -28,7 +28,7 @@ namespace Smallgroup.Starport.Assets.Core
             _coord2TraversableCoords = new Dictionary<TCoordinate, List<TCoordinate>>();
         }
 
-        public IEnumerable<TCoordinate> Coordinates { get { return _coord2Cell.Keys.AsEnumerable(); } }
+        public TCoordinate[] Coordinates { get { return _coord2Cell.Keys.ToArray(); } }
         
 
         public void SetObjectPosition<TMapObject>(TCoordinate coord, TMapObject obj)

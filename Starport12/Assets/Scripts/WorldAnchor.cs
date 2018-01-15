@@ -24,6 +24,24 @@ namespace Smallgroup.Starport.Assets.Scripts
             //Map.SetPosition()
         }
 
+        private void AttachCellAnchors()
+        {
+            for (var i = 0; i <  Map.Coordinates.Length; i++)
+            {
+                var coord = Map.Coordinates[i];
+                var cell = Map.GetCell(coord);
+                var cellObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                var cellScript = cellObj.AddComponent<CellAnchor>();
+                cellScript.Cell = cell;
+
+                cellObj.transform.parent = transform;
+
+                cellObj.transform.localPosition = World.Map.TransformCoordinateToWorld(coord);
+
+                float scale = .9f;
+                cellObj.transform.localScale = new Vector3(World.Map.CellWidth * scale, .1f, World.Map.CellWidth * scale);
+            }
+        }
 
         private void SetSampleLevel()
         {
@@ -69,7 +87,10 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
-            SetSampleLevel();
+
+            AttachCellAnchors();
+            //World.Map = Map;
+            //SetSampleLevel();
 
             //Map.SetPosition(Player.Actor, new GridXY(1, 3));
         }
