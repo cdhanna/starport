@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,10 @@ namespace Smallgroup.Starport.Assets.Surface
         {
             var loader = new MapLoader();
             Map = loader.LoadFromFile("Assets\\Maps\\testmap.json");
+
+            var test = new AThing();
+            test.Pumpkin = 53;
+
         }
     }
 }
