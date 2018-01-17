@@ -14,7 +14,7 @@ namespace Smallgroup.Starport.Assets.Scripts
         public Color Color;
         public GridXY StartPosition;
         public bool UseMouse;
-        public ControllerBinding Controller;
+        public ControllerBinding Controller; 
 
         
 

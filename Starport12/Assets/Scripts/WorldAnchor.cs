@@ -1,5 +1,7 @@
 ﻿using Smallgroup.Starport.Assets.Core;
+using Smallgroup.Starport.Assets.Core.Generation;
 using Smallgroup.Starport.Assets.Surface;
+using Smallgroup.Starport.Assets.Surface.Generation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +42,46 @@ namespace Smallgroup.Starport.Assets.Scripts
 
             Map = World.Map;
             AttachCellAnchors();
+
+            var globalCtx = new GenerationContext(null);
+            //globalCtx.Set("game_difficulty", "hard");
+            globalCtx.Set("game_playerCount", 1);
+            //globalCtx.Set("game_color", "brown");
+
+            var rules = new List<GenerationRule<Ctx>>();
+            rules.Add(new RuleFloor());
+            rules.Add(new RuleRightWall());
+            rules.Add(new RuleWallLighting());
+
+            var allActions = new List<GenerationAction>();
+            for (var x = 0; x < 3; x++)
+            {
+                for (var y = 0; y < 3; y++)
+                {
+                    var ctx = new Ctx(globalCtx);
+                    ctx.Set(RuleConstants.CELL_X, x);
+                    ctx.Set(RuleConstants.CELL_Y, y);
+
+                    ctx.Set("cell_wallRight", x == 1);
+                    ctx.Set("cell_wallTop", y == 0);
+                    ctx.Set("isWall", y == 0 || x == 1);
+                    if (x == 0)
+                    {
+                    }
+                    if (y == 2)
+                    {
+                    }
+                    
+
+                    var actionLists = rules
+                        .Where(r => r.EvaluateConditions(ctx).All(b => b == true))
+                        .Select(r => r.Execute(ctx))
+                        .ToList();
+                    actionLists.ForEach(l => allActions.AddRange(l));
+                }
+            }
+
+            allActions.ForEach(a => a.Invoke(globalCtx));
         }
 
         protected void Update()
