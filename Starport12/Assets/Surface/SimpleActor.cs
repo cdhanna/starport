@@ -8,15 +8,21 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Surface
 {
+    [Serializable]
     public class SimpleActor : Actor
     {
         private MapXY _map;
         private GridPather _pather;
 
-        
+        private Transform _transform;
 
-        public SimpleActor(MapXY map)
+        [Header("Coefs")]
+        public Vector3 Velocity;
+        public float Speed=.1f, Friction=.35f;
+
+        public SimpleActor(MapXY map, Transform transform)
         {
+            _transform = transform;
             _map = map;
             _pather = new GridPather();
         }
@@ -77,17 +83,61 @@ namespace Smallgroup.Starport.Assets.Surface
         {
             var path = _pather.FindPath(_map, _map.GetObjectPosition(this), command.Target);
 
-            for (var i = 0; i < path.Count; i++)
-            {
-                var node = path[i];
-                _map.SetObjectPosition(node, this);
 
-                var placedAt = DateTime.Now;
-                var procedeAt = placedAt.AddMilliseconds(250);
-                while (procedeAt > DateTime.Now)
+            for (var i = 1; i < path.Count; i++)
+            {
+                
+                //var startPos = _transform.position;
+
+                var targetPos = _map.TransformCoordinateToWorld(path[i]);
+
+                var mag = (targetPos - _transform.position).magnitude;
+                while ( mag > .2f)
                 {
+
+                    var pullForce = (targetPos - _transform.position).normalized * Speed;
+                    var frictionForce = (Velocity * -Friction);
+                    var acceleration = (pullForce + frictionForce) / 1.0f;
+
+                    Velocity += acceleration;
+                    _transform.position += Velocity;
+                    mag = (targetPos - _transform.position).magnitude;
                     yield return CommandResult.WORKING;
+
                 }
+                _map.SetObjectPosition(path[i], this);
+
+
+                //var placedAt = DateTime.Now;
+                //var procedeAt = placedAt.AddMilliseconds(250);
+
+                //var startPos = _transform.position;
+                //var endPos = startPos;
+                //if (i + 1 < path.Count)
+                //{
+                //    endPos = _map.TransformCoordinateToWorld(path[i + 1]);
+                //}
+
+                //while (procedeAt > DateTime.Now)
+                //{
+                //    var ratio = (procedeAt - DateTime.Now).Milliseconds / 250f;
+
+
+
+                //    //if (i + 1 < path.Count)
+                //    //{
+                //    //    var next = path[i + 1];
+                //    //    var startPos = _map.TransformCoordinateToWorld(node);
+                //    //    var endPos = _map.TransformCoordinateToWorld(next);
+
+                //    var pos = startPos + ratio * (endPos - startPos);
+                //    //_transform.position = pos;
+                //    //}
+
+                //    yield return CommandResult.WORKING;
+                //}
+                //var node = path[i];
+                //_map.SetObjectPosition(node, this);
             }
 
 

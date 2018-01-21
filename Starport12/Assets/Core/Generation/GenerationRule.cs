@@ -9,9 +9,14 @@ namespace Smallgroup.Starport.Assets.Core.Generation
         where TContext : GenerationContext
     {
 
-        public string[] Tags { get; protected set; }
+        public string Tag { get; protected set; }
         public abstract bool[] EvaluateConditions(TContext ctx);
         public abstract List<GenerationAction> Execute(TContext ctx);
+
+        //public GenerationRule(TContext ctx)
+        //{
+
+        //}
 
     }
     

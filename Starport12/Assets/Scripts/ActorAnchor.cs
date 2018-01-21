@@ -18,7 +18,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         
 
-        public SimpleActor Actor { get; set; }
+        public SimpleActor Actor { get; set; } 
         public DefaultInputMech<SimpleActor> InputMech { get; set; }
         //public MapXY World { get; set; }
 
@@ -28,10 +28,11 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
-            Actor = new SimpleActor(World.Map);
             var gob = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            Actor = new SimpleActor(World.Map, transform);
             gob.GetComponent<MeshRenderer>().material.color = Color;
             gob.transform.parent = transform;
+            gob.transform.localScale *= .5f;
 
 
             World.Map.SetObjectPosition(StartPosition, Actor);
@@ -51,7 +52,7 @@ namespace Smallgroup.Starport.Assets.Scripts
                 InputMech = input;
             }
             InputMech.Init();
-            
+            transform.localPosition = World.Map.TransformCoordinateToWorld(World.Map.GetObjectPosition(Actor));
         }
 
         protected void Update()
@@ -60,7 +61,7 @@ namespace Smallgroup.Starport.Assets.Scripts
             InputMech.Update();
 
             var coord = World.Map.GetObjectPosition(Actor);
-            transform.localPosition = World.Map.TransformCoordinateToWorld(coord);
+            //transform.localPosition = World.Map.TransformCoordinateToWorld(coord);
             //var pos = World.Map.GetPosition(Actor);
 
             //var worldPos = new Vector3(pos.X, 0, pos.Y) + World.Map.CellOffset;

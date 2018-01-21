@@ -21,6 +21,21 @@ namespace Smallgroup.Starport.Assets.Core.Generation
             _parent = parent;
         }
 
+        public GenerationContext()
+        {
+            _parent = null;
+        }
+        public void SetParent(GenerationContext parent)
+        {
+            _parent = parent;
+        }
+
+
+        public virtual void SetContextInfo<T>(T info)
+        {
+            // do nothing...
+        }
+
         //public int GetInt(string name)
         //{
         //    var def = default(int);
@@ -68,9 +83,41 @@ namespace Smallgroup.Starport.Assets.Core.Generation
                     return (T)output;
                 }
             }
+
+            if (_parent != null)
+            {
+                return _parent.Get<T>(name);
+            }
+
             throw new InvalidOperationException("Member does not exist in ctx, " + name);
 
         }
+
+        public string Get(string name)
+        {
+            object output = null;
+            if (_objs.TryGetValue(name, out output))
+            {
+                if (output is string)
+                {
+                    return (string)output;
+                }
+            }
+            if (_parent != null)
+            {
+                return _parent.Get(name);
+            }
+            throw new InvalidOperationException("Member does not exist in ctx, " + name);
+
+        }
+        public GenerationContext Set(string name, string value)
+        {
+            if (_objs.ContainsKey(name))
+                _objs[name] = value;
+            else _objs.Add(name, value);
+            return this;
+        }
+
         public GenerationContext Set<T>(string name, T value)
             where T : struct
         {
@@ -79,6 +126,71 @@ namespace Smallgroup.Starport.Assets.Core.Generation
             else _objs.Add(name, value);
             return this;
         }
+
+        public GenerationContext SetSubContext<TCoordinate>(TCoordinate coord, GenerationContext ctx)
+            where TCoordinate : ICoordinate<TCoordinate>, new()
+        {
+            var name = "coordCtx" + coord.GetHashCode();
+            if (_objs.ContainsKey(name))
+                _objs[name] = ctx;
+            else _objs.Add(name, ctx);
+            return this;
+        }
+
+        public TContext GetSubContext<TCoordinate, TContext>(TCoordinate coord)
+            where TCoordinate : ICoordinate<TCoordinate>, new()
+            where TContext : GenerationContext
+        {
+            object output = null;
+            var name = "coordCtx" + coord.GetHashCode();
+
+            if (_objs.TryGetValue(name, out output))
+            {
+                if (output is TContext)
+                {
+                    return (TContext)output;
+                }
+            }
+            if (_parent != null)
+            {
+                return _parent.GetSubContext<TCoordinate, TContext>(coord);
+            }
+            throw new InvalidOperationException("Member does not exist in ctx, " + name);
+        }
+
+
+        public bool Exists(string name)
+        {
+            if (_objs.ContainsKey(name))
+            {
+                return true;
+            } else if (_parent != null)
+            {
+                return _parent.Exists(name);
+            } else
+            {
+                return false;
+            }
+        }
+
+        public void Ensure<T>(string name, T defaultValue)
+        {
+            if (!Exists(name))
+            {
+                _objs.Add(name, defaultValue);
+            }
+        }
+
+        //public bool EnsureExists<T>(string name, T defaultValue)
+        //{
+        //    if (_objs.ContainsKey(name))
+        //    {
+        //        return true;
+        //    } else if (_parent != null)
+        //    {
+        //        return _parent.EnsureExists
+        //    }
+        //}
 
 
         //public GenerationContext Set(string name, int value)

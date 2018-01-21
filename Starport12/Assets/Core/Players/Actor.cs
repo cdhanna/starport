@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 namespace Smallgroup.Starport.Assets.Core.Players
 {
+    [Serializable]
     public abstract class Actor : IMapObject
     {
         public InputMechanism<Actor> InputMech { get; set; }
