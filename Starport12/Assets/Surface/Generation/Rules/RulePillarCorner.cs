@@ -11,7 +11,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
     {
         public RulePillarCorner()
         {
-            Tag = RuleConstants.TAG_JOINER + "_corner";
+            Tag = RuleConstants.TAG_CORNER_JOINER;
         }
 
         public override bool[] EvaluateConditions(Ctx ctx)

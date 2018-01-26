@@ -7,12 +7,11 @@ namespace Smallgroup.Starport.Assets.Core.Generation
 {
     class GenerationRunner
     {
+        private string[][] _runs;
 
-        private string[] _requiredTags;
-
-        public GenerationRunner(string[] requiredTags)
+        public GenerationRunner(string[][] runs)
         {
-            _requiredTags = requiredTags;
+            _runs = runs;
         }
 
 
@@ -37,49 +36,80 @@ namespace Smallgroup.Starport.Assets.Core.Generation
                 global.SetSubContext(coord, coordCtx);
             }
 
-            foreach (var coord in map.Coordinates)
+            foreach (var run in _runs)
             {
-                //var coordCtx = new TContext(); // TODO: figure out how to set the data on a coord
-                //coordCtx.SetParent(global);
-                //coordContextCreator(coordCtx, coord);
 
-                var ruleOutcomes = new Dictionary<string, GenerationRule<TContext>>();
-                var ruleScores = new Dictionary<string, int>();
-                var coordCtx = coord2ctx[coord];
-                foreach (var rule in rules)
+
+
+                foreach (var coord in map.Coordinates)
                 {
-                    var outcomes = rule.EvaluateConditions(coordCtx);
-                    var ruleScore = outcomes.Count(outcome => outcome == true);
-                    if (outcomes.Any(outcome => outcome == false))
-                    {
-                        ruleScore = 0;
-                    }
-                    if (ruleScore > 0)
-                    {
+                    //var coordCtx = new TContext(); // TODO: figure out how to set the data on a coord
+                    //coordCtx.SetParent(global);
+                    //coordContextCreator(coordCtx, coord);
 
-                        var existingScore = 0;
-                        if (ruleScores.TryGetValue(rule.Tag, out existingScore))
+                    var ruleOutcomes = new Dictionary<string, GenerationRule<TContext>>();
+                    var ruleScores = new Dictionary<string, int>();
+                    var coordCtx = coord2ctx[coord];
+                    foreach (var rule in rules)
+                    {
+                        if (!run.Contains(rule.Tag))
                         {
-                            if (ruleScore > existingScore || (ruleScore == existingScore && rand.Next() % 2 == 0))
+                            continue;
+                        }
+
+                        var outcomes = rule.EvaluateConditions(coordCtx);
+                        var ruleScore = outcomes.Count(outcome => outcome == true);
+                        if (outcomes.Any(outcome => outcome == false))
+                        {
+                            ruleScore = 0;
+                        }
+                        if (ruleScore > 0)
+                        {
+
+                            var existingScore = 0;
+                            if (ruleScores.TryGetValue(rule.Tag, out existingScore))
                             {
-                                ruleScores[rule.Tag] = ruleScore;
-                                ruleOutcomes[rule.Tag] = rule;
+                                if (ruleScore > existingScore || (ruleScore == existingScore && rand.Next() % 2 == 0))
+                                {
+                                    ruleScores[rule.Tag] = ruleScore;
+                                    ruleOutcomes[rule.Tag] = rule;
+                                }
+                            }
+                            else
+                            {
+                                ruleScores.Add(rule.Tag, ruleScore);
+                                ruleOutcomes.Add(rule.Tag, rule);
                             }
                         }
-                        else
-                        {
-                            ruleScores.Add(rule.Tag, ruleScore);
-                            ruleOutcomes.Add(rule.Tag, rule);
-                        }
+
                     }
 
+                    //var allActions = ruleOutcomes.Values.ToList().Select(rule => rule.Execute(coordCtx));
+                    //allActions.ToList().ForEach(a => a)
+
+                    ruleOutcomes.Values.ToList().ForEach(rule =>
+                    {
+                        var actions = rule.Execute(coordCtx);
+                        var coordActions = coordCtx.Ensure("actions", new Dictionary<GenerationRule<TContext>, List<GenerationAction>>());
+                        if (!coordActions.ContainsKey(rule))
+                        {
+                            coordActions.Add(rule, actions);
+
+                        }
+
+                        //returnActions.AddRange(actions);
+                    });
+
+                    //allActions.ToList().ForEach(set => returnActions.AddRange(set));
                 }
+            }
 
-                var allActions = ruleOutcomes.Values.ToList().Select(rule => rule.Execute(coordCtx));
-                //allActions.ToList().ForEach(a => a)
-                
 
-                allActions.ToList().ForEach(set => returnActions.AddRange(set));
+            foreach (var coord in map.Coordinates)
+            {
+                var coordCtx = coord2ctx[coord];
+                var actions = coordCtx.Get<Dictionary<GenerationRule<TContext>, List<GenerationAction>>>("actions");
+                actions.Values.ToList().ForEach(set => returnActions.AddRange(set));
             }
 
             return returnActions;
