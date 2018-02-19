@@ -14,9 +14,11 @@ public class DialogLoaderTest : MonoBehaviour {
     public DialogEngine dEngine;
     public Text conversationHistory;
     public Scrollbar scrollbar;
+    public Button button1;
+    public Button button2;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         ObjectDialogAttribute playerHealth = new ObjectDialogAttribute(player1, "player", "health");
         ObjectDialogAttribute playerRespect = new ObjectDialogAttribute(player1, "player", "respect");
 
@@ -26,7 +28,8 @@ public class DialogLoaderTest : MonoBehaviour {
 
         var json = File.ReadAllText("Assets\\sample json data\\wh_rule1.json");
         var rules = JsonConvert.DeserializeObject<DialogRule[]>(json);
-
+        button1.onClick.AddListener(button1Click);
+        button2.onClick.AddListener(button2Click);
         dEngine = new DialogEngine();
         dEngine.AddAttribute(playerHealth);
         dEngine.AddAttribute(playerRespect);
@@ -35,6 +38,9 @@ public class DialogLoaderTest : MonoBehaviour {
         {
             dEngine.AddRule(rules[i]);
         }
+
+        button1.GetComponentInChildren<Text>().text = rules[0].DisplayAs;
+        button2.GetComponentInChildren<Text>().text = rules[1].DisplayAs;
     }
 	
 	// Update is called once per frame
@@ -58,4 +64,40 @@ public class DialogLoaderTest : MonoBehaviour {
             scrollbar.value = 0; // hack for getting the scroll bar to auto adjust to the end
         }
 	}
+    void button1Click()
+    {
+        var json = File.ReadAllText("Assets\\sample json data\\wh_rule1.json");
+        var rules = JsonConvert.DeserializeObject<DialogRule[]>(json);
+        var rule = rules[0];
+        for (int i = 0; i < rule.Dialog.Length; i++)
+        {
+            String speaker = rule.Dialog[i].Speaker;
+            String content = rule.Dialog[i].Content;
+            String red = "<color=#ff0000ff>";
+            String green = "<color=#008000ff>";
+
+            // assumes only 2 speakers. also doesn't account for the order changing throughout the life of the convo. 
+            String speakerColor = i % 2 == 0 ? red : green;
+
+            conversationHistory.text += speakerColor + speaker + "</color>: " + content + '\n';
+        }
+    }
+    void button2Click()
+    {
+        var json = File.ReadAllText("Assets\\sample json data\\wh_rule1.json");
+        var rules = JsonConvert.DeserializeObject<DialogRule[]>(json);
+        var rule = rules[1];
+        for (int i = 0; i < rule.Dialog.Length; i++)
+        {
+            String speaker = rule.Dialog[i].Speaker;
+            String content = rule.Dialog[i].Content;
+            String red = "<color=#ff0000ff>";
+            String green = "<color=#008000ff>";
+
+            // assumes only 2 speakers. also doesn't account for the order changing throughout the life of the convo. 
+            String speakerColor = i % 2 == 0 ? red : green;
+
+            conversationHistory.text += speakerColor + speaker + "</color>: " + content + '\n';
+        }
+    }
 }
