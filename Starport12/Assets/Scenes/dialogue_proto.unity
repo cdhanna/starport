@@ -452,7 +452,9 @@ MonoBehaviour:
 
     on
 
-    the end'
+    the end
+
+'
 --- !u!222 &877353892
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -483,6 +485,7 @@ GameObject:
   - component: {fileID: 891793573}
   - component: {fileID: 891793572}
   - component: {fileID: 891793571}
+  - component: {fileID: 891793574}
   m_Layer: 5
   m_Name: ConversationPanel
   m_TagString: Untagged
@@ -558,6 +561,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 891793569}
+--- !u!114 &891793574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 891793569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e4f446f289fa7641887c5cde3a93ae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1: {fileID: 1697218628}
+  conversationHistory: {fileID: 877353891}
 --- !u!1 &1013869117
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,8 +876,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 232496379}
   m_HandleRect: {fileID: 232496378}
   m_Direction: 2
-  m_Value: 0.5
-  m_Size: 0.6944696
+  m_Value: 0.49999985
+  m_Size: 0.67338955
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -968,7 +984,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300054, guid: 8098d30c44947294d839407359d24c77, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8841403a205927e44874ae955ace50bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1068,6 +1084,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 891793570}
+  - {fileID: 1697218627}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1203,6 +1220,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1697218626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1697218627}
+  - component: {fileID: 1697218628}
+  m_Layer: 5
+  m_Name: JafarPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1697218627
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1697218626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1406413175}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1697218628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1697218626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d2cb8ae1e3b03e438fcd6fad4c52266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  respect: 0
 --- !u!1 &1705391493
 GameObject:
   m_ObjectHideFlags: 0

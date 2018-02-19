@@ -5,13 +5,13 @@
         "conditions": [
             {
                 "op": ">",
-                "left": "Player.health",
+                "left": "Jafar_Player.health",
                 "right": "50"
             }
         ],
         "dialog": [
             {
-                "speaker": "player1",
+                "speaker": "Jafar_Player",
                 "content": "Hello world this is rule A"
             }
         ],
@@ -23,18 +23,18 @@
         "conditions": [
             {
                 "op": ">",
-                "left": "Player.health",
+                "left": "Jafar_Player.health",
                 "right": "50"
             },
             {
                 "op": ">",
-                "left": "Player.respect",
+                "left": "Jafar_Player.respect",
                 "right": "(+ 50 (* 20 2))"
             }
         ],
         "dialog": [
             {
-                "speaker": "player1",
+                "speaker": "Jafar_Player",
                 "content": "Hoopa Hooray"
             }
         ],

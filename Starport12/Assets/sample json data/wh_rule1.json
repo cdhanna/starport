@@ -1,0 +1,1 @@
+[{"name":"TestRule1","displayAs":"Display_text_without_spaces","conditions":[{"op":">","left":"Player.respect","right":"10"}],"dialog":[{"speaker":"Jafar","content":"Give me a dollar"},{"speaker":"AbisMal","content":"Very well"}],"outcomes":[]}]
