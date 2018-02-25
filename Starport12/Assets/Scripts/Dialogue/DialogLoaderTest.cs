@@ -11,93 +11,98 @@ using UnityEngine.UI;
 public class DialogLoaderTest : MonoBehaviour {
 
     public DialogPlayer player1;
+    public DialogPlayer player2;
+
     public DialogEngine dEngine;
     public Text conversationHistory;
     public Scrollbar scrollbar;
-    public Button button1;
-    public Button button2;
+    public RuleButton ruleButtonTemplate;
+    public RectTransform buttonPanel;
+    
+    private RuleButton[] buttons;
+    private DialogRule[] rules;
+    private bool textAdded;
 
     // Use this for initialization
     void Start () {
         ObjectDialogAttribute playerHealth = new ObjectDialogAttribute(player1, "player", "health");
         ObjectDialogAttribute playerRespect = new ObjectDialogAttribute(player1, "player", "respect");
 
-        
-        player1.health = 51;
+        ObjectDialogAttribute merchant = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "merchant");
+        ObjectDialogAttribute criminal = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "criminal");
+        ObjectDialogAttribute seeker = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "seeker");
+        ObjectDialogAttribute trust = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "trust");
+        ObjectDialogAttribute collection = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "collection");
+        ObjectDialogAttribute conversation = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "conversation");
+
+
+        player1.health = 13;
         player1.respect = 15;
 
-        var json = File.ReadAllText("Assets\\sample json data\\wh_rule1.json");
-        var rules = JsonConvert.DeserializeObject<DialogRule[]>(json);
-        button1.onClick.AddListener(button1Click);
-        button2.onClick.AddListener(button2Click);
+   
+        String jsonPath = "Assets\\sample json data\\Phieneas_the_Collector_Dialog.json";
+
+        var json = File.ReadAllText(jsonPath);
+        rules = JsonConvert.DeserializeObject<DialogRule[]>(json);
+
         dEngine = new DialogEngine();
         dEngine.AddAttribute(playerHealth);
         dEngine.AddAttribute(playerRespect);
+        dEngine.AddAttribute(merchant);
+        dEngine.AddAttribute(collection);
+        dEngine.AddAttribute(criminal);
+        dEngine.AddAttribute(seeker);
+        dEngine.AddAttribute(trust);
+        dEngine.AddAttribute(conversation);
 
         for (int i = 0; i < rules.Length; i++)
         {
             dEngine.AddRule(rules[i]);
         }
 
-        button1.GetComponentInChildren<Text>().text = rules[0].DisplayAs;
-        button2.GetComponentInChildren<Text>().text = rules[1].DisplayAs;
+        UpdateRuleOptions();
+        
+    }
+    public void setTextFlag(bool val)
+    {
+        textAdded = val;
     }
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Space))
+        if (textAdded)
         {
-            var rule = dEngine.GetBestValidDialog();
-            for (int i = 0; i < rule.Dialog.Length; i++)
+            scrollbar.value = 0;
+            textAdded = false;
+        }
+    }
+
+    public void UpdateRuleOptions()
+    {
+
+        List<DialogRule> validRules = dEngine.GetAllValidDialog();
+
+        if (buttons != null) { 
+            for (int i = 0; i < buttons.Length; i++)
             {
-                String speaker = rule.Dialog[i].Speaker;
-                String content = rule.Dialog[i].Content;
-                String red = "<color=#ff0000ff>";
-                String green = "<color=#008000ff>";
-
-                // assumes only 2 speakers. also doesn't account for the order changing throughout the life of the convo. 
-                String speakerColor = i % 2 == 0 ? red : green;
-
-                conversationHistory.text += speakerColor + speaker + "</color>: " + content + '\n';
+                Destroy(buttons[i].gameObject);
             }
-
-            scrollbar.value = 0; // hack for getting the scroll bar to auto adjust to the end
         }
-	}
-    void button1Click()
-    {
-        var json = File.ReadAllText("Assets\\sample json data\\wh_rule1.json");
-        var rules = JsonConvert.DeserializeObject<DialogRule[]>(json);
-        var rule = rules[0];
-        for (int i = 0; i < rule.Dialog.Length; i++)
+        
+        buttons = new RuleButton[validRules.Count];
+
+        for (int i = 0; i < validRules.Count; i++)
         {
-            String speaker = rule.Dialog[i].Speaker;
-            String content = rule.Dialog[i].Content;
-            String red = "<color=#ff0000ff>";
-            String green = "<color=#008000ff>";
+            buttons[i] = Instantiate(ruleButtonTemplate);
+            buttons[i].transform.parent = buttonPanel.transform;
+            // fix this to work
+            
+            buttons[i].transform.localPosition = new Vector3(-300, 80 + i * -40, 0);
+            buttons[i].Setup(conversationHistory, validRules[i], dEngine, this);
+            buttons[i].ruleButton.GetComponentInChildren<Text>().text = validRules[i].DisplayAs;
 
-            // assumes only 2 speakers. also doesn't account for the order changing throughout the life of the convo. 
-            String speakerColor = i % 2 == 0 ? red : green;
-
-            conversationHistory.text += speakerColor + speaker + "</color>: " + content + '\n';
         }
     }
-    void button2Click()
-    {
-        var json = File.ReadAllText("Assets\\sample json data\\wh_rule1.json");
-        var rules = JsonConvert.DeserializeObject<DialogRule[]>(json);
-        var rule = rules[1];
-        for (int i = 0; i < rule.Dialog.Length; i++)
-        {
-            String speaker = rule.Dialog[i].Speaker;
-            String content = rule.Dialog[i].Content;
-            String red = "<color=#ff0000ff>";
-            String green = "<color=#008000ff>";
 
-            // assumes only 2 speakers. also doesn't account for the order changing throughout the life of the convo. 
-            String speakerColor = i % 2 == 0 ? red : green;
 
-            conversationHistory.text += speakerColor + speaker + "</color>: " + content + '\n';
-        }
-    }
 }

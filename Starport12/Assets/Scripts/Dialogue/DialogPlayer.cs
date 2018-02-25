@@ -6,6 +6,7 @@ public class DialogPlayer : MonoBehaviour {
 
     public int health;
     public int respect;
+    public bool merchant, seeker, criminal, collection, trust, conversation;
 	// Use this for initialization
 	void Start () {
 		

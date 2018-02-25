@@ -1,0 +1,1 @@
+[{"name":"Rule","displayAs":"Demo Rule Feb","conditions":[{"op":">","left":"Player.health","right":"10"}],"dialog":[{"speaker":"Jafar","content":"I <b>really</b> dont like you","parts":["'I <b>really</b> dont like you'"]}],"outcomes":[{"command":"set","target":"player.respect","arguments":{"":"(- player.respect 1)"}}]}]
