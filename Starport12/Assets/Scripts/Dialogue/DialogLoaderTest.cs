@@ -22,9 +22,12 @@ public class DialogLoaderTest : MonoBehaviour {
     private RuleButton[] buttons;
     private DialogRule[] rules;
     private bool textAdded;
+    public bool conversationFlag = false;
+
 
     // Use this for initialization
     void Start () {
+        
         ObjectDialogAttribute playerHealth = new ObjectDialogAttribute(player1, "player", "health");
         ObjectDialogAttribute playerRespect = new ObjectDialogAttribute(player1, "player", "respect");
 
@@ -33,7 +36,7 @@ public class DialogLoaderTest : MonoBehaviour {
         ObjectDialogAttribute seeker = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "seeker");
         ObjectDialogAttribute trust = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "trust");
         ObjectDialogAttribute collection = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "collection");
-        ObjectDialogAttribute conversation = new ObjectDialogAttribute(player2, "Phineas.the.Collector", "conversation");
+        var conversation = GlobalDialogAttribute.New("conversation", value => conversationFlag = value, () => conversationFlag);
 
 
         player1.health = 13;
@@ -67,6 +70,10 @@ public class DialogLoaderTest : MonoBehaviour {
     {
         textAdded = val;
     }
+    public void CloseDialog()
+    {
+        Destroy(this.gameObject);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -95,9 +102,9 @@ public class DialogLoaderTest : MonoBehaviour {
         {
             buttons[i] = Instantiate(ruleButtonTemplate);
             buttons[i].transform.parent = buttonPanel.transform;
+
             // fix this to work
-            
-            buttons[i].transform.localPosition = new Vector3(-300, 80 + i * -40, 0);
+            buttons[i].transform.localPosition = new Vector3(-380, 60 + i * -40, 0);
             buttons[i].Setup(conversationHistory, validRules[i], dEngine, this);
             buttons[i].ruleButton.GetComponentInChildren<Text>().text = validRules[i].DisplayAs;
 
