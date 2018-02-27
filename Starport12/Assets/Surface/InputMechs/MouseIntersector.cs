@@ -3,6 +3,7 @@ using System.Collections;
 using Smallgroup.Starport.Assets.Core.Players;
 using Smallgroup.Starport.Assets.Surface;
 using UnityEngine.Experimental.UIElements;
+using Smallgroup.Starport.Assets.Scripts;
 
 public class MouseIntersector : DefaultInputMech<SimpleActor>
 {
@@ -11,6 +12,8 @@ public class MouseIntersector : DefaultInputMech<SimpleActor>
     private Vector3 _lastHit;
 
     private GameObject _mouseIndicator;
+
+    private HoverableObject _currentlyHovering;
 
     // Use this for initialization
     public override void Init()
@@ -26,9 +29,13 @@ public class MouseIntersector : DefaultInputMech<SimpleActor>
     // Update is called once per frame
     public override void Update()
     {
+        if (Ignore) return; 
+
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         // plane.Raycast returns the distance from the ray start to the hit point
         var distance = 0f;
+
+        CheckForHover(ray);
         if (_ground.Raycast(ray, out distance))
         {
             // some point of the plane was hit - get its coordinates
@@ -44,12 +51,65 @@ public class MouseIntersector : DefaultInputMech<SimpleActor>
 
             Debug.Log("CLICKED ON " + clickedCoord + " from " + _lastHit.x + "," + _lastHit.z);
 
-            if (World.Map.CoordinateExists(clickedCoord))
+            if (_currentlyHovering != null)
             {
-                Debug.Log("SUBMITTING COMMAND");
-                Actor.ClearCommands();
-                Actor.AddCommand(new GotoCommand(clickedCoord));
+                var selectable = _currentlyHovering.GetComponent<SelectableObject>();
+                if (selectable != null)
+                {
+                    // TODO. think about how better to handle these comamnds
+                    //selectable.Select();
+                    
+                }
+
+                var otherActor = _currentlyHovering.GetComponent<ActorAnchor>();
+                if (otherActor != null)
+                {
+                    Actor.ClearCommands();
+                    Actor.AddCommand(new GotoCommand(otherActor.Actor.Coordinate));
+                    Actor.AddCommand(new OpenDialogCommand(Actor, otherActor.Actor));
+                }
+
+            } else
+            {
+
+
+                if (World.Map.CoordinateExists(clickedCoord))
+                {
+                    Debug.Log("SUBMITTING COMMAND");
+                    Actor.ClearCommands();
+                    Actor.AddCommand(new GotoCommand(clickedCoord));
+                }
             }
+        }
+    }
+
+    private void CheckForHover(Ray ray)
+    {
+
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+           
+            var hoverable = hit.transform.GetComponentInParent<HoverableObject>();
+            if (hoverable != null)
+            {
+                if (hoverable != _currentlyHovering && _currentlyHovering != null)
+                {
+                    _currentlyHovering.StopHover();
+                }
+                
+                hoverable.StartHover();
+                _currentlyHovering = hoverable;
+            } else if (_currentlyHovering != null)
+            {
+
+                _currentlyHovering.StopHover();
+                _currentlyHovering = null;
+            }
+        } else if (_currentlyHovering != null)
+        {
+            _currentlyHovering.StopHover();
+            _currentlyHovering = null;
         }
     }
 }

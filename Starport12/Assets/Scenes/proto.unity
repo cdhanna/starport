@@ -122,6 +122,8 @@ GameObject:
   m_Component:
   - component: {fileID: 438988261}
   - component: {fileID: 438988260}
+  - component: {fileID: 438988263}
+  - component: {fileID: 438988262}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -149,6 +151,19 @@ MonoBehaviour:
     X_AXIS: H2
     Y_AXIS: V2
     A_BUTTON: A2
+  DialogAnchor: {fileID: 1598098268}
+  Actor:
+    Velocity: {x: 0, y: 0, z: 0}
+    Speed: 0.1
+    Friction: 0.35
+    Name: Phineas.the.Collector
+    Merchant: 0
+    Seeker: 1
+    Criminal: 0
+    Collection: 0
+    Trust: 0
+    Health: 100
+    Respect: 50
 --- !u!4 &438988261
 Transform:
   m_ObjectHideFlags: 0
@@ -162,6 +177,76 @@ Transform:
   m_Father: {fileID: 1598098267}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &438988262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438988259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e2ca3ede4a1364fa358cc9015272b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1598098268}
+        m_MethodName: OpenDialog
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &438988263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 438988259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c535567bfb2b1e4fa58d0c4d12b1ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 438988260}
+        m_MethodName: SetColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: HoverEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnHoverStop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 438988260}
+        m_MethodName: ResetColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  HoverColor: {r: 0.8206897, g: 1, b: 0, a: 0}
 --- !u!1 &496370822
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +403,121 @@ MonoBehaviour:
   AttractionCoef: 0.01
   FrictionCoef: 0.1
   Mass: 1
+--- !u!1001 &801331272
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224875575757705386, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224875575757705386, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224862755856517234, guid: c8b6ce617c0be404a9658b62e9a3f258,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 36.083607
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c8b6ce617c0be404a9658b62e9a3f258, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1220810778
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,6 +702,7 @@ GameObject:
   - component: {fileID: 1598098267}
   - component: {fileID: 1598098266}
   - component: {fileID: 1598098268}
+  - component: {fileID: 1598098269}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -520,9 +721,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3bab95b816da3d49808725d0157f80b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DialogAnchor: {fileID: 1598098268}
   Players:
   - {fileID: 438988260}
   - {fileID: 2099036712}
+  ConversationFlag: 0
 --- !u!4 &1598098267
 Transform:
   m_ObjectHideFlags: 0
@@ -547,11 +750,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1598098265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecbbf2d4b3cc55540924bc9fd79e9824, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fd5d09b7c72ee14595f8ef1a7c80aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  convotemplate: {fileID: 114874166688770944, guid: 499ccf34e78629347adecd7c4bf87c13,
+  jsonFiles:
+  - Assets\sample json data\Phieneas_the_Collector_Dialog.json
+  convotemplate: {fileID: 114698298025129782, guid: c8b6ce617c0be404a9658b62e9a3f258,
     type: 2}
+  loadedRuleNames: []
+  attributes: []
+--- !u!114 &1598098269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1598098265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34eec2959418273418b585e574bdd1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetFPS: 60
 --- !u!1 &2099036710
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,3 +820,16 @@ MonoBehaviour:
     X_AXIS: H1
     Y_AXIS: V1
     A_BUTTON: A1
+  DialogAnchor: {fileID: 1598098268}
+  Actor:
+    Velocity: {x: 0, y: 0, z: 0}
+    Speed: 0.1
+    Friction: 0.35
+    Name: Human
+    Merchant: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
+    Health: 100
+    Respect: 50

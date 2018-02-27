@@ -1,4 +1,5 @@
-﻿using Smallgroup.Starport.Assets.Core;
+﻿using Dialog.Engine;
+using Smallgroup.Starport.Assets.Core;
 using Smallgroup.Starport.Assets.Core.Generation;
 using Smallgroup.Starport.Assets.Surface;
 using Smallgroup.Starport.Assets.Surface.Generation;
@@ -16,6 +17,7 @@ namespace Smallgroup.Starport.Assets.Scripts
             
         public MapXY Map { get; set; }
 
+        public DialogAnchor DialogAnchor;
         public ActorAnchor[] Players;
 
    
@@ -42,6 +44,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
+
 
             Map = World.Map;
             AttachCellAnchors();

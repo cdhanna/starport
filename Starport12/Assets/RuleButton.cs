@@ -14,14 +14,14 @@ public class RuleButton : MonoBehaviour {
     private DialogRule rule;
     private Text conversationHistory;
     private DialogEngine dEngine;
-    private DialogLoaderTest dialogLoader;
+    private DialogUI dialogLoader;
     
 	// Use this for initialization
 	void Start () {
         
 	}
 
-    public void Setup(Text conversationHistory, DialogRule rule, DialogEngine dEngine, DialogLoaderTest dialogLoader)
+    public void Setup(Text conversationHistory, DialogRule rule, DialogEngine dEngine, DialogUI dialogLoader)
     {
         this.ruleButton = this.GetComponent<Button>();
         
@@ -40,10 +40,11 @@ public class RuleButton : MonoBehaviour {
     void Click()
     {
         
+        var dialogContents = dEngine.ExecuteRuleDialogs(rule); // fill in any templates, like "hello mr {plr.name}"
         for (int i = 0; i < rule.Dialog.Length; i++)
         {
             String speaker = rule.Dialog[i].Speaker;
-            String content = rule.Dialog[i].Content;
+            String content = dialogContents[i];
             String red = "<color=#ff0000ff>";
             String green = "<color=#008000ff>";
 
@@ -54,7 +55,7 @@ public class RuleButton : MonoBehaviour {
 
         }
         dEngine.ExecuteRuleOutcomes(rule);
-        dialogLoader.UpdateRuleOptions();
+        dialogLoader.UpdateRuleOptions(dEngine);
         dialogLoader.setTextFlag(true);
         //dialogLoader.scrollbar.value = 0;
     }
