@@ -32,22 +32,14 @@ public class DialogAnchor : MonoBehaviour {
     private DialogUI dialogInstance;
     private List<DialogRule> allRules = new List<DialogRule>();
 
+    private int _gayHack = 5;
+
     // Use this for initialization
     void Start () {
 
         dEngine.AddAttribute(GlobalDialogAttribute.New("conversation", v => ConversationFlag = v, () => ConversationFlag));
 
-        // load up all rules from all files
-        foreach (var file in jsonFiles)
-        {
-            var json = File.ReadAllText(file);
-            var rules = JsonConvert.DeserializeObject<DialogRule[]>(json).ToList();
-            allRules.AddRange(rules);
-
-            rules.ForEach(r => dEngine.AddRule(r));
-        }
-
-        loadedRuleNames = allRules.Select(r => r.Name).ToArray();
+       
        
     }
 	
@@ -61,6 +53,28 @@ public class DialogAnchor : MonoBehaviour {
         {
             StartCoroutine(CloseDialogInSeconds(1));
         }
+
+       
+        if (_gayHack == 0)
+        {
+            // load up all rules from all files
+            // defer loading of rules until next step
+            foreach (var file in jsonFiles)
+            {
+                var json = File.ReadAllText(file);
+                var rules = JsonConvert.DeserializeObject<DialogRule[]>(json).ToList();
+                allRules.AddRange(rules);
+
+                rules.ForEach(r => dEngine.AddRule(r));
+            }
+
+            loadedRuleNames = allRules.Select(r => r.Name).ToArray();
+            _gayHack = -1;
+        } else if (_gayHack > 0)
+        {
+            _gayHack -= 1;
+        }
+
 	}
 
     IEnumerator CloseDialogInSeconds(float seconds)

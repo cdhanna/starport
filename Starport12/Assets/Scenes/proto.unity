@@ -156,7 +156,7 @@ MonoBehaviour:
     Velocity: {x: 0, y: 0, z: 0}
     Speed: 0.1
     Friction: 0.35
-    Name: Phineas.the.Collector
+    Name: melvin
     Merchant: 0
     Seeker: 1
     Criminal: 0
@@ -164,6 +164,7 @@ MonoBehaviour:
     Trust: 0
     Health: 100
     Respect: 50
+    Flags: []
 --- !u!4 &438988261
 Transform:
   m_ObjectHideFlags: 0
@@ -403,121 +404,6 @@ MonoBehaviour:
   AttractionCoef: 0.01
   FrictionCoef: 0.1
   Mass: 1
---- !u!1001 &801331272
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224492921225682522, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224875575757705386, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224875575757705386, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224862755856517234, guid: c8b6ce617c0be404a9658b62e9a3f258,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 36.083607
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: c8b6ce617c0be404a9658b62e9a3f258, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1220810778
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,7 +611,6 @@ MonoBehaviour:
   Players:
   - {fileID: 438988260}
   - {fileID: 2099036712}
-  ConversationFlag: 0
 --- !u!4 &1598098267
 Transform:
   m_ObjectHideFlags: 0
@@ -754,11 +639,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jsonFiles:
-  - Assets\sample json data\Phieneas_the_Collector_Dialog.json
+  - Assets\sample json data\flagTest.json
   convotemplate: {fileID: 114698298025129782, guid: c8b6ce617c0be404a9658b62e9a3f258,
     type: 2}
   loadedRuleNames: []
   attributes: []
+  ConversationFlag: 0
 --- !u!114 &1598098269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -825,7 +711,7 @@ MonoBehaviour:
     Velocity: {x: 0, y: 0, z: 0}
     Speed: 0.1
     Friction: 0.35
-    Name: Human
+    Name: chris
     Merchant: 0
     Seeker: 0
     Criminal: 0
@@ -833,3 +719,8 @@ MonoBehaviour:
     Trust: 0
     Health: 100
     Respect: 50
+    Flags:
+    - name: start
+      value: 1
+    - name: mean
+      value: 0

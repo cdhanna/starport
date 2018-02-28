@@ -27,7 +27,7 @@ namespace Smallgroup.Starport.Assets.Surface
         public bool Merchant, Seeker, Criminal, Collection, Trust;
         public int Health = 100;
         public int Respect = 50;
-
+        public List<BagElement> Flags = new List<BagElement>();
 
         // TODO: REFACTOR CLASS TO ONLY HAVE DATA, I GUESS
 
@@ -51,6 +51,7 @@ namespace Smallgroup.Starport.Assets.Surface
             dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Trust)));
             dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Health)));
             dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Respect)));
+            dEngine.AddAttribute(new BagDialogAttribute(Name + ".flags", Flags).UpdateElements(dEngine));
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
         }
 
