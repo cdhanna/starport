@@ -18,7 +18,7 @@ public class DayCycle : MonoBehaviour {
         {
             days[i] = Instantiate(dayTemplate);
             days[i].transform.parent = daysPanel.transform;
-            days[i].transform.localPosition = new Vector3(i * 120, 0, 0);
+            days[i].transform.localPosition = new Vector3(20 + i * 120, 0, 0);
             days[i].GetComponentInChildren<Text>().text = "Day " + (i + 1);
         }
         currentDay = 0;
