@@ -14,7 +14,7 @@ namespace Smallgroup.Starport.Assets.Core.Players
     public class DefaultInputMech<TActor> : InputMechanism<TActor>
         where TActor : Actor
     {
-
+        public bool Ignore { get; set; }
         public TActor Actor { get; set; }
 
         public virtual void Init()

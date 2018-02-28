@@ -14,12 +14,15 @@ namespace Smallgroup.Starport.Assets.Scripts
         public Color Color;
         public GridXY StartPosition;
         public bool UseMouse;
-        public ControllerBinding Controller; 
+        public ControllerBinding Controller;
 
-        
+        public DialogAnchor DialogAnchor;
 
-        public SimpleActor Actor { get; set; } 
+        public SimpleActor Actor;
         public DefaultInputMech<SimpleActor> InputMech { get; set; }
+
+        private Material standardMat;
+        private GameObject gob;
         //public MapXY World { get; set; }
 
         public ActorAnchor()
@@ -28,9 +31,14 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
-            var gob = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            Actor = new SimpleActor(World.Map, transform);
+            Actor.Setup(World.Map, transform);
+            Actor.InitDialogAttributes(DialogAnchor);
+
+
+            gob = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            //Actor = new SimpleActor(World.Map, transform);
             gob.GetComponent<MeshRenderer>().material.color = Color;
+            standardMat = gob.GetComponent<MeshRenderer>().material;
             gob.transform.parent = transform;
             gob.transform.localScale *= .5f;
 
@@ -67,5 +75,17 @@ namespace Smallgroup.Starport.Assets.Scripts
             //var worldPos = new Vector3(pos.X, 0, pos.Y) + World.Map.CellOffset;
             //Debug.DrawLine(worldPos , worldPos + Vector3.up * 1, Color.red);
         }
+
+        public void SetColor(Color color)
+        {
+            gob.GetComponent<MeshRenderer>().material.color = color;
+        }
+        public void ResetColor()
+        {
+            gob.GetComponent<MeshRenderer>().material.color = Color;
+            
+        }
+        
+
     }
 }

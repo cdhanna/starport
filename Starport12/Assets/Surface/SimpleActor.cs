@@ -1,4 +1,5 @@
-﻿using Smallgroup.Starport.Assets.Core;
+﻿using Dialog.Engine;
+using Smallgroup.Starport.Assets.Core;
 using Smallgroup.Starport.Assets.Core.Players;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Smallgroup.Starport.Assets.Surface
     {
         private MapXY _map;
         private GridPather _pather;
+        private DialogAnchor _dialog;
 
         private Transform _transform;
 
@@ -20,12 +22,39 @@ namespace Smallgroup.Starport.Assets.Surface
         public Vector3 Velocity;
         public float Speed=.1f, Friction=.35f;
 
-        public SimpleActor(MapXY map, Transform transform)
+        [Header("Attributes")]
+        public string Name;
+        public bool Merchant, Seeker, Criminal, Collection, Trust;
+        public int Health = 100;
+        public int Respect = 50;
+
+
+        // TODO: REFACTOR CLASS TO ONLY HAVE DATA, I GUESS
+
+
+        public void Setup(MapXY map, Transform transform)
         {
             _transform = transform;
             _map = map;
             _pather = new GridPather();
         }
+
+        public void InitDialogAttributes(DialogAnchor dialog)
+        {
+            var dEngine = dialog.dEngine;
+            _dialog = dialog;
+            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
+            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Merchant)));
+            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Seeker)));
+            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Criminal)));
+            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Collection)));
+            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Trust)));
+            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Health)));
+            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Respect)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
+        }
+
+        public GridXY Coordinate { get { return _map.GetObjectPosition(this); } }
 
         public void MoveLeft()
         {
@@ -73,10 +102,24 @@ namespace Smallgroup.Starport.Assets.Surface
             if (command is GotoCommand)
             {
                 return HandleGoto(command as GotoCommand);
+            } else if (command is OpenDialogCommand)
+            {
+                return HandleDialog(command as OpenDialogCommand);
             }
 
             return null;
             //yield return CommandResult.COMPLETE;
+        }
+
+        private IEnumerable<CommandResult> HandleDialog(OpenDialogCommand command)
+        {
+            _dialog.OpenDialog();
+            while (_dialog.IsDialogOpen)
+            {
+                yield return CommandResult.WORKING;
+            }
+
+            yield return CommandResult.COMPLETE;
         }
 
         private IEnumerable<CommandResult> HandleGoto(GotoCommand command)
