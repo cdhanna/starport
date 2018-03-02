@@ -9,6 +9,19 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Surface
 {
+
+    [Serializable]
+    public class BagObjElement : BagElement<object>
+    {
+
+    }
+    [Serializable]
+    public class BagIntElement : BagElement<int>
+    {
+
+    }
+
+
     [Serializable]
     public class SimpleActor : Actor
     {
@@ -20,7 +33,7 @@ namespace Smallgroup.Starport.Assets.Surface
 
         [Header("Coefs")]
         public Vector3 Velocity;
-        public float Speed=.1f, Friction=.35f;
+        public float Speed = .1f, Friction = .35f;
 
         [Header("Attributes")]
         public string Name;
@@ -28,6 +41,9 @@ namespace Smallgroup.Starport.Assets.Surface
         public int Health = 100;
         public int Respect = 50;
         public List<BagElement> Flags = new List<BagElement>();
+        public List<BagObjElement> Ints = new BagElement<object>[]{
+            new BagIntElement(){name = "number", value = 4 }
+        }.ToList ();
 
         // TODO: REFACTOR CLASS TO ONLY HAVE DATA, I GUESS
 
