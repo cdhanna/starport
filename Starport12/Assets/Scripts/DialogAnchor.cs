@@ -17,9 +17,13 @@ public class DialogAnchor : MonoBehaviour {
         "Assets\\sample json data\\Phieneas_the_Collector_Dialog.json" // default file
     };
     public DialogUI convotemplate;
-    public DialogEngine dEngine = new DialogEngine();
+    public DialogEngine dEngine = new DialogEngine()
+        .AddHandler(new BagBoolHandler())
+        .AddHandler(new BagIntHandler())
+        .AddHandler(new BagStringHandler());
 
     [Header("debug only. Dont edit")]
+    public string[] handlers;
     public string[] loadedRuleNames;
     public string[] attributes;
     public bool ConversationFlag;
@@ -32,7 +36,7 @@ public class DialogAnchor : MonoBehaviour {
     private DialogUI dialogInstance;
     private List<DialogRule> allRules = new List<DialogRule>();
 
-    private int _gayHack = 5;
+    private int _gayHack = 1;
 
     // Use this for initialization
     void Start () {
@@ -53,7 +57,7 @@ public class DialogAnchor : MonoBehaviour {
         {
             StartCoroutine(CloseDialogInSeconds(1));
         }
-
+        handlers = dEngine.GetHandlerNames;
        
         if (_gayHack == 0)
         {
@@ -64,11 +68,19 @@ public class DialogAnchor : MonoBehaviour {
                 var json = File.ReadAllText(file);
                 var bundle = JsonConvert.DeserializeObject<DialogBundle>(json);
                 allRules.AddRange(bundle.Rules);
-
-                bundle.Rules.ToList().ForEach(r => dEngine.AddRule(r));
+                var rules = bundle.Rules.ToList();
+                foreach (var rule in rules) {
+                    var refs = dEngine.ExtractReferencesFromRule(rule);
+                    dEngine.AddRule(rule);
+                }
             }
 
             loadedRuleNames = allRules.Select(r => r.Name).ToArray();
+
+            var listing = dEngine.GetAttributeNames().ToList();
+            listing.Sort();
+            attributes = listing.ToArray();
+           
             _gayHack = -1;
         } else if (_gayHack > 0)
         {

@@ -11,18 +11,6 @@ namespace Smallgroup.Starport.Assets.Surface
 {
 
     [Serializable]
-    public class BagObjElement : BagElement<object>
-    {
-
-    }
-    [Serializable]
-    public class BagIntElement : BagElement<int>
-    {
-
-    }
-
-
-    [Serializable]
     public class SimpleActor : Actor
     {
         private MapXY _map;
@@ -56,6 +44,8 @@ namespace Smallgroup.Starport.Assets.Surface
 
         public void InitDialogAttributes(DialogAnchor dialog)
         {
+            UnitySystemConsoleRedirector.Redirect();
+
             var dEngine = dialog.dEngine;
             _dialog = dialog;
             dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));

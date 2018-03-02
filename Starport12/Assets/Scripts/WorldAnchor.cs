@@ -45,7 +45,6 @@ namespace Smallgroup.Starport.Assets.Scripts
         protected void Start()
         {
 
-
             Map = World.Map;
             AttachCellAnchors();
 
