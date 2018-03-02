@@ -37,7 +37,7 @@ public class DialogAnchor : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        dEngine.AddAttribute(GlobalDialogAttribute.New("conversation", v => ConversationFlag = v, () => ConversationFlag));
+        dEngine.AddAttribute(DialogAttribute.New("conversation", v => ConversationFlag = v, () => ConversationFlag));
 
        
        
@@ -62,10 +62,10 @@ public class DialogAnchor : MonoBehaviour {
             foreach (var file in jsonFiles)
             {
                 var json = File.ReadAllText(file);
-                var rules = JsonConvert.DeserializeObject<DialogRule[]>(json).ToList();
-                allRules.AddRange(rules);
+                var bundle = JsonConvert.DeserializeObject<DialogBundle>(json);
+                allRules.AddRange(bundle.Rules);
 
-                rules.ForEach(r => dEngine.AddRule(r));
+                bundle.Rules.ToList().ForEach(r => dEngine.AddRule(r));
             }
 
             loadedRuleNames = allRules.Select(r => r.Name).ToArray();
