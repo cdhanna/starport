@@ -20,7 +20,8 @@ public class DialogAnchor : MonoBehaviour {
     public DialogEngine dEngine = new DialogEngine()
         .AddHandler(new BagBoolHandler())
         .AddHandler(new BagIntHandler())
-        .AddHandler(new BagStringHandler());
+        .AddHandler(new BagStringHandler())
+        .AddHandler(new ConditionSetEvalHandler());
 
     [Header("debug only. Dont edit")]
     public string[] handlers;
@@ -36,7 +37,7 @@ public class DialogAnchor : MonoBehaviour {
     private DialogUI dialogInstance;
     private List<DialogRule> allRules = new List<DialogRule>();
 
-    private int _gayHack = 1;
+    private int _gayHack = 2;
 
     // Use this for initialization
     void Start () {
@@ -58,7 +59,7 @@ public class DialogAnchor : MonoBehaviour {
             StartCoroutine(CloseDialogInSeconds(1));
         }
         handlers = dEngine.GetHandlerNames;
-       
+        
         if (_gayHack == 0)
         {
             // load up all rules from all files
@@ -68,6 +69,12 @@ public class DialogAnchor : MonoBehaviour {
                 var json = File.ReadAllText(file);
                 var bundle = JsonConvert.DeserializeObject<DialogBundle>(json);
                 allRules.AddRange(bundle.Rules);
+
+                foreach (var set in bundle.ConditionSets)
+                {
+                    dEngine.AddConditionSet(set);
+                }
+
                 var rules = bundle.Rules.ToList();
                 foreach (var rule in rules) {
                     var refs = dEngine.ExtractReferencesFromRule(rule);
