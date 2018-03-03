@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Scripts
 {
-    class ActorAnchor : MonoBehaviour
+    public class ActorAnchor : MonoBehaviour
     {
         public Color Color;
         public GridXY StartPosition;
@@ -65,8 +65,15 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Update()
         {
-            Actor.Update();
-            InputMech.Update();
+
+            if (!DialogAnchor.ConversationFlag)
+            {
+                Actor.Update();
+                InputMech.Update();
+
+            }
+
+
 
             var coord = World.Map.GetObjectPosition(Actor);
             //transform.localPosition = World.Map.TransformCoordinateToWorld(coord);
