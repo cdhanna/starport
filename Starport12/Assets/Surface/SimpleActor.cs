@@ -59,6 +59,19 @@ namespace Smallgroup.Starport.Assets.Surface
             dEngine.AddAttribute(DialogAttribute.New(Name + ".flags", false, Flags).UpdateElements(dEngine));
             dEngine.AddAttribute(DialogAttribute.New(Name + ".ints", 0, Ints).UpdateElements(dEngine));
             dEngine.AddAttribute(DialogAttribute.New(Name + ".strs", "", Strs).UpdateElements(dEngine));
+
+
+            var gotoFunc = new ObjectFunctionDialogAttribute(Name + ".funcs.goto", args =>
+            {
+                var xPosition = (int)args["x"];
+                var yPosition = (int)args["y"];
+                this.AddCommand(new GotoCommand() { Target = new GridXY(xPosition, yPosition) });
+            }, new Dictionary<string, object>() {
+                { "x", -1 },
+                { "y", -1 }
+            });
+            dEngine.AddAttribute(gotoFunc);
+
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
         }
 
@@ -121,7 +134,7 @@ namespace Smallgroup.Starport.Assets.Surface
 
         private IEnumerable<CommandResult> HandleDialog(OpenDialogCommand command)
         {
-            _dialog.OpenDialog();
+            _dialog.OpenDialog(this, command.Target);
             while (_dialog.IsDialogOpen)
             {
                 yield return CommandResult.WORKING;

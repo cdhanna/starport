@@ -10,6 +10,7 @@ using System;
 using Smallgroup.Starport.Assets.Core.Players;
 using Smallgroup.Starport.Assets.Surface;
 using Smallgroup.Starport.Assets.Scripts;
+using Smallgroup.Starport.Assets.Scripts.Dialogue;
 
 public class DialogAnchor : MonoBehaviour {
     
@@ -20,7 +21,9 @@ public class DialogAnchor : MonoBehaviour {
     public DialogEngine dEngine = new DialogEngine()
         .AddHandler(new BagBoolHandler())
         .AddHandler(new BagIntHandler())
-        .AddHandler(new BagStringHandler());
+        .AddHandler(new BagStringHandler())
+        //.AddHandler(new BagVec2Handler())
+        .AddHandler(new ConditionSetEvalHandler());
 
     [Header("debug only. Dont edit")]
     public string[] handlers;
@@ -35,16 +38,30 @@ public class DialogAnchor : MonoBehaviour {
 
     private DialogUI dialogInstance;
     private List<DialogRule> allRules = new List<DialogRule>();
+    private SimpleActor _speaker, _target;
 
-    private int _gayHack = 1;
+
+    private int _gayHack = 2;
 
     // Use this for initialization
     void Start () {
 
         dEngine.AddAttribute(DialogAttribute.New("conversation", v => ConversationFlag = v, () => ConversationFlag));
+        dEngine.AddTransform("dialog.target", () => _target.Name);
+        dEngine.AddTransform("dialog.speaker", () => _speaker.Name);
+        //dEngine.AddAttribute(DialogAttribute.New("dialog.target.name", v => { }, () => _target.Name));
 
-       
-       
+        //var gotoFunc = new ObjectFunctionDialogAttribute("dialog.target.funcs.goto", args =>
+        //{
+        //    var xPosition = (int)args["x"];
+        //    var yPosition = (int)args["y"];
+        //    _target.AddCommand(new GotoCommand() { Target = new GridXY(xPosition, yPosition) });
+        //}, new Dictionary<string, object>() {
+        //        { "x", -1 },
+        //        { "y", -1 }
+        //    });
+        //dEngine.AddAttribute(gotoFunc);
+
     }
 	
 	// Update is called once per frame
@@ -58,7 +75,7 @@ public class DialogAnchor : MonoBehaviour {
             StartCoroutine(CloseDialogInSeconds(1));
         }
         handlers = dEngine.GetHandlerNames;
-       
+        
         if (_gayHack == 0)
         {
             // load up all rules from all files
@@ -68,6 +85,12 @@ public class DialogAnchor : MonoBehaviour {
                 var json = File.ReadAllText(file);
                 var bundle = JsonConvert.DeserializeObject<DialogBundle>(json);
                 allRules.AddRange(bundle.Rules);
+
+                foreach (var set in bundle.ConditionSets)
+                {
+                    dEngine.AddConditionSet(set);
+                }
+
                 var rules = bundle.Rules.ToList();
                 foreach (var rule in rules) {
                     var refs = dEngine.ExtractReferencesFromRule(rule);
@@ -96,12 +119,14 @@ public class DialogAnchor : MonoBehaviour {
         CloseDialog();
     }
 
-    public void OpenDialog()
+    public void OpenDialog(SimpleActor speaker, SimpleActor target)
     {
         if (IsDialogOpen)
         {
             throw new Exception("Dialog is already open");
         }
+        _speaker = speaker;
+        _target = target;
         ConversationFlag = true;
         dialogInstance = Instantiate(convotemplate);
         dialogInstance.UpdateRuleOptions(dEngine);
@@ -123,4 +148,7 @@ public class DialogAnchor : MonoBehaviour {
         GameObject.FindObjectsOfType<ActorAnchor>().ToList().ForEach(anchor => anchor.InputMech.Ignore = false);
 
     }
+
+    
+
 }

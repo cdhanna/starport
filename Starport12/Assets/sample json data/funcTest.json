@@ -1,0 +1,1 @@
+{"name":"test","rules":[{"name":"Rule","displayAs":"Go point A","conditions":[{"op":"=","left":"Player.flags.a","right":"false"}],"dialog":[{"speaker":"player","content":"I demand I walk to point A","parts":["'I demand I walk to point A'"]}],"outcomes":[{"command":"run","target":"player.funcs.goto","arguments":{"x":"1","y":"1"}}]}],"conditionSets":[]}

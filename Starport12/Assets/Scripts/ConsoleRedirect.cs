@@ -16,9 +16,17 @@ public static class UnitySystemConsoleRedirector
     {
         private StringBuilder buffer = new StringBuilder();
 
+        private Action<object> _flush;
+
+        public UnityTextWriter(Action<object> flush)
+        {
+            _flush = flush;
+        }
+
         public override void Flush()
         {
-            Debug.Log(buffer.ToString());
+            _flush(buffer.ToString());
+            //Debug.Log(buffer.ToString());
             buffer.Length = 0;
         }
 
@@ -61,6 +69,7 @@ public static class UnitySystemConsoleRedirector
 
     public static void Redirect()
     {
-        Console.SetOut(new UnityTextWriter());
+        Console.SetError(new UnityTextWriter(Debug.LogError));
+        Console.SetOut(new UnityTextWriter(Debug.Log));
     }
 }

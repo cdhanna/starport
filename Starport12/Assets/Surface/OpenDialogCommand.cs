@@ -9,12 +9,10 @@ namespace Smallgroup.Starport.Assets.Surface
 {
     public class OpenDialogCommand : ICommand
     {
-        public Actor Speaker;
-        public Actor Target;
+        public SimpleActor Target;
 
-       public OpenDialogCommand(Actor speaker, Actor target)
+       public OpenDialogCommand(SimpleActor target)
         {
-            Speaker = speaker;
             Target = target;
         }
 
