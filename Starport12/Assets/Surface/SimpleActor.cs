@@ -59,7 +59,8 @@ namespace Smallgroup.Starport.Assets.Surface
             dEngine.AddAttribute(DialogAttribute.New(Name + ".flags", false, Flags).UpdateElements(dEngine));
             dEngine.AddAttribute(DialogAttribute.New(Name + ".ints", 0, Ints).UpdateElements(dEngine));
             dEngine.AddAttribute(DialogAttribute.New(Name + ".strs", "", Strs).UpdateElements(dEngine));
-
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".position.x", x => Coordinate = new GridXY(x, Coordinate.Y) , () => Coordinate.X));
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".position.y", y => Coordinate = new GridXY(Coordinate.X, y) , () => Coordinate.Y));
 
             var gotoFunc = new ObjectFunctionDialogAttribute(Name + ".funcs.goto", args =>
             {
@@ -75,7 +76,15 @@ namespace Smallgroup.Starport.Assets.Surface
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
         }
 
-        public GridXY Coordinate { get { return _map.GetObjectPosition(this); } }
+        public GridXY Coordinate
+        {
+            get { return _map.GetObjectPosition(this); }
+            set
+            {
+
+                _map.SetObjectPosition(value, this);
+            }
+        }
 
         public void MoveLeft()
         {

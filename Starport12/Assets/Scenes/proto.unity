@@ -438,7 +438,9 @@ MonoBehaviour:
     Trust: 0
     Health: 100
     Respect: 50
-    Flags: []
+    Flags:
+    - name: cool
+      value: 1
     Ints: []
     Strs: []
 --- !u!4 &438988261
@@ -1157,7 +1159,7 @@ MonoBehaviour:
     value: 1
   - name: pointA.y
     value: 4
-  - name: pointB.y
+  - name: pointB.x
     value: 4
   - name: pointB.y
     value: 4
