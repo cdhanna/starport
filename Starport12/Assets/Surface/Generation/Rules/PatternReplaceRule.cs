@@ -12,9 +12,17 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
         private string[] data = new string[]
             {
-                "000",
-                "0.0",
-                "000"
+                //".0.",
+                //".0.",
+                "..",
+                "00",
+                ".."
+
+                //".."
+                //".00."
+                //"000",
+                //"0.0",
+                //"000"
             };
 
         public PatternReplaceRule()
@@ -37,6 +45,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
                         pattern.Add(cell != null && !cell.Patterned);
                     } else
                     {
+                        Debug.Log("Adding must be null at " + i + "," + j + " for " + ctx.X + "," + ctx.Y + " and cell is " + (cell == null));
                         pattern.Add(cell == null);
                     }
                 }
@@ -66,7 +75,15 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
                     if(neighbor != null)
                     {
                         neighbor.Patterned = true;
-
+                        var rule2Actions = neighbor.GetActions();
+                        Debug.Log("Existing Actions " + rule2Actions.Count);
+                        rule2Actions.Values.ToList().ForEach(actions =>
+                        {
+                            actions.OfType<CreateObjectAction>()
+                                //.Where(a => a.PrefabPath.Equals("light_main1"))
+                                .ToList()
+                                .ForEach(a => actions.Remove(a));
+                        });
                     }
                 }
             }
@@ -79,7 +96,9 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             position += offset * ctx.Get<float>(RuleConstants.CELL_UNIT_WIDTH);
 
             ////position.y = 1;
-            output.Add(new CreateObjectAction("fillPattern1", position, Quaternion.identity));
+            
+
+            output.Add(new CreateObjectAction("hall2", position, Quaternion.identity));
 
 
             return output;

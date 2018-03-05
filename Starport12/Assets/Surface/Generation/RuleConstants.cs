@@ -13,6 +13,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public const string TAG_WALL = "WALL";
         public const string TAG_FLOOR = "FLOOR";
         public const string TAG_JOINER = "JOINER";
+        public const string TAG_CORNER_JOINER = "CORNERJOINER";
         public const string TAG_LIGHT = "LIGHT";
 
 
@@ -61,6 +62,11 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public string FloorPrefabName { get { return Get(RuleConstants.FLOOR_NAME); } }
         public float WallOffset { get { return Get<float>(RuleConstants.WALL_OFFSET); } }
 
+        public Dictionary<GenerationRule<Ctx>, List<GenerationAction>> GetActions()
+        {
+            return Get<Dictionary<GenerationRule<Ctx>, List<GenerationAction>>>("actions");
+        }
+
 
         public Ctx GetNeighborCtx(int xDiff, int yDiff)
         {
@@ -76,6 +82,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             }
 
         }
+       
 
         public void SetFromGrid(MapXY map, GridXY coord)
         {

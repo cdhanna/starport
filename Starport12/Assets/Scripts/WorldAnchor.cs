@@ -54,8 +54,16 @@ namespace Smallgroup.Starport.Assets.Scripts
             globalCtx.Set(RuleConstants.FLOOR_NAME, "floor_stone");
             globalCtx.Set(RuleConstants.WALL_OFFSET, .5f);
 
-            var runner = new GenerationRunner(new string[] {
-                "WALL", "FLOOR", "PATTERN"
+
+            var runner = new GenerationRunner(new string[][]{
+
+                new string[]{ RuleConstants.TAG_FLOOR,
+                    RuleConstants.TAG_WALL,
+                    RuleConstants.TAG_JOINER,
+                    RuleConstants.TAG_CORNER_JOINER,
+                    RuleConstants.TAG_LIGHT},
+                new string[]{ RuleConstants.TAG_LIGHT, "PATTERN"}
+                
             });
             var actions = runner.Run(globalCtx, Map, (ctx, coord) => ctx.SetFromGrid(Map, coord), new GenerationRule<Ctx>[]{
                 new RuleFloor(),
@@ -70,6 +78,14 @@ namespace Smallgroup.Starport.Assets.Scripts
 
                 new PatternReplaceRule(),
                 //new RuleLightMain()
+
+                new RuleLightMain(),
+                new RuleLightMainRemove(),
+                //new RuleLightAtTJunctionTop(),
+                //new RuleLightAtTJunctionLow(),
+                //new RuleLightAtTJunctionLeft(),
+                //new RuleLightAtTJunctionRight()
+
             });
             actions.ForEach(a => a.Invoke(globalCtx));
             //var globalCtx = new GenerationContext(null);

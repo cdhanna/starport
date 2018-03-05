@@ -73,7 +73,7 @@ namespace Smallgroup.Starport.Assets.Core.Generation
         //    else throw new InvalidOperationException("Member does not exist in ctx, " + name);
         //}
         public T Get<T>(string name)
-            where T : struct
+            //where T : struct
         {
             object output = null;
             if (_objs.TryGetValue(name, out output))
@@ -119,7 +119,7 @@ namespace Smallgroup.Starport.Assets.Core.Generation
         }
 
         public GenerationContext Set<T>(string name, T value)
-            where T : struct
+            //where T : struct
         {
             if (_objs.ContainsKey(name))
                 _objs[name] = value;
@@ -173,12 +173,14 @@ namespace Smallgroup.Starport.Assets.Core.Generation
             }
         }
 
-        public void Ensure<T>(string name, T defaultValue)
+        public T Ensure<T>(string name, T defaultValue)
+            
         {
             if (!Exists(name))
             {
                 _objs.Add(name, defaultValue);
             }
+            return Get<T>(name);
         }
 
         //public bool EnsureExists<T>(string name, T defaultValue)
