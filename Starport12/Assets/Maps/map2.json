@@ -1,0 +1,16 @@
+﻿{
+  "basic": {
+    "mappings": {
+      "stone_walkable": "s",
+      "stone_full": "S",
+      "dirt_full": "D"
+    },
+    "data": [
+      "DDDDDDDD",
+      "DssssDDDDD",
+      "DssssDDDss",
+      "DssssDDDDD",
+      "DDDDDDDD"
+    ]
+  }
+}

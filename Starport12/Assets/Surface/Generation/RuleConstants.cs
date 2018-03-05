@@ -58,7 +58,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public string WallPrefabName { get { return Get(RuleConstants.WALL_NAME); } }
         public string FloorPrefabName { get { return Get(RuleConstants.FLOOR_NAME); } }
         public float WallOffset { get { return Get<float>(RuleConstants.WALL_OFFSET); } }
-
+        public Cell Cell { get { return World.Map.GetCell(new GridXY(X, Y)); } }
 
         public Ctx GetNeighborCtx(int xDiff, int yDiff)
         {

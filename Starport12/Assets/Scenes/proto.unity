@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdf24bb9c8aac64cbfbd312996fdec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Color: {r: 0.30147058, g: 0.3351926, b: 1, a: 0}
+  Color: {r: 1, g: 0.68275857, b: 0, a: 0}
   StartPosition:
     _x: 4
     _y: 2
@@ -384,7 +384,9 @@ MonoBehaviour:
     Trust: 0
     Health: 100
     Respect: 50
-    Flags: []
+    Flags:
+    - name: hasObject
+      value: 0
     Ints: []
     Strs: []
 --- !u!1 &438988259

@@ -12,12 +12,9 @@ namespace Smallgroup.Starport.Assets.Surface
 
         static World()
         {
-            var loader = new MapLoader();
-            Map = loader.LoadFromFile("Assets\\Maps\\testmap.json");
-
-            var test = new AThing();
-            test.Pumpkin = 53;
-
+            //var loader = new MapLoader();
+            //Map = loader.LoadFromFile("Assets\\Maps\\testmap.json");
+            
         }
     }
 }

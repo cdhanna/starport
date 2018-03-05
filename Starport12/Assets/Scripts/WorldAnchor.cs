@@ -19,7 +19,10 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         public DialogAnchor DialogAnchor;
         public ActorAnchor[] Players;
-
+        public string levelJson = "Assets\\Maps\\testmap.json";
+        private MapLoader loader = new MapLoader();
+        //Map = loader.LoadFromFile("Assets\\Maps\\testmap.json");
+            
    
         private void AttachCellAnchors()
         {
@@ -44,7 +47,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
-
+            World.Map = loader.LoadFromFile(levelJson);
             Map = World.Map;
             AttachCellAnchors();
 
@@ -59,16 +62,17 @@ namespace Smallgroup.Starport.Assets.Scripts
             });
             var actions = runner.Run(globalCtx, Map, (ctx, coord) => ctx.SetFromGrid(Map, coord), new GenerationRule<Ctx>[]{
                 new RuleFloor(),
-                new RuleSingleWall(),
-                new RuleCornerWall(),
-                new RuleHallWall(),
-                new RuleDeadEndWall(),
+                new RuleFilled(),
+                //new RuleSingleWall(),
+                //new RuleCornerWall(),
+                //new RuleHallWall(),
+                //new RuleDeadEndWall(),
 
-                new RulePillarsLeftAndRight(),
-                new RulePillarsTopAndLow(),
-                new RulePillarCorner(),
+                //new RulePillarsLeftAndRight(),
+                //new RulePillarsTopAndLow(),
+                //new RulePillarCorner(),
 
-                new RuleLightMain()
+               // new RuleLightMain()
             });
             actions.ForEach(a => a.Invoke(globalCtx));
             //var globalCtx = new GenerationContext(null);

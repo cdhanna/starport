@@ -7,17 +7,17 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 {
-    public class RuleFloor : GenerationRule<Ctx>
+    public class RuleFilled : GenerationRule<Ctx>
     {
-        public RuleFloor()
+        public RuleFilled()
         {
             Tag = "FLOOR";
         }
 
         public override bool[] EvaluateConditions(Ctx ctx)
         {
-            
-            return new bool[] { ctx.Cell.Walkable };
+
+            return new bool[] { !ctx.Cell.Walkable };
         }
 
         public override List<GenerationAction> Execute(Ctx ctx)
@@ -27,7 +27,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var coord = new GridXY(ctx.X, ctx.Y);
             var position = World.Map.TransformCoordinateToWorld(coord);
             //position.y = 1;
-            output.Add(new CreateObjectAction(ctx.FloorPrefabName, position, Quaternion.identity));
+            output.Add(new CreateObjectAction(ctx.Cell.FillPrefabName, position, Quaternion.identity));
 
             return output;
         }
