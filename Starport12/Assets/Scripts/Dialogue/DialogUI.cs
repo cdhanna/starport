@@ -60,6 +60,7 @@ public class DialogUI : MonoBehaviour {
             Destroy(buttons[i].gameObject);
         }
         buttons.Clear();
+        buttonPanel.sizeDelta = new Vector2(300, 50 * validRules.Count);
         
         for (int i = 0; i < validRules.Count; i++)
         {
@@ -74,7 +75,7 @@ public class DialogUI : MonoBehaviour {
 
             rectTransform.anchoredPosition = new Vector2(
                 -parentRect.rect.width/2 + 20,
-                parentRect.rect.height/2 - (i+1)*20);
+                 parentRect.rect.height/4 -i*50);
 
             //button.transform.localPosition = new Vector3(-380, 60 + i * -40, 0);
             button.Setup(conversationHistory, validRules[i], dEngine, this);
