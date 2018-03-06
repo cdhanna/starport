@@ -41,9 +41,10 @@ public class RuleButton : MonoBehaviour {
     {
         
         var dialogContents = dEngine.ExecuteRuleDialogs(rule); // fill in any templates, like "hello mr {plr.name}"
+        var dialogSpeakers = dEngine.ExecuteRuleSpeakers(rule); // fill in any templates, like "hello mr {plr.name}"
         for (int i = 0; i < rule.Dialog.Length; i++)
         {
-            String speaker = rule.Dialog[i].Speaker;
+            String speaker = dialogSpeakers[i];
             String content = dialogContents[i];
             String red = "<color=#ff0000ff>";
             String green = "<color=#008000ff>";

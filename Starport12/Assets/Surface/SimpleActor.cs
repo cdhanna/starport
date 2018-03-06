@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Surface
 {
+
     [Serializable]
     public class SimpleActor : Actor
     {
@@ -20,14 +21,16 @@ namespace Smallgroup.Starport.Assets.Surface
 
         [Header("Coefs")]
         public Vector3 Velocity;
-        public float Speed=.1f, Friction=.35f;
+        public float Speed = .1f, Friction = .35f;
 
         [Header("Attributes")]
         public string Name;
         public bool Merchant, Seeker, Criminal, Collection, Trust;
         public int Health = 100;
         public int Respect = 50;
-        public List<BagElement> Flags = new List<BagElement>();
+        public List<BagBoolElement> Flags = new List<BagBoolElement>();
+        public List<BagIntElement> Ints = new List<BagIntElement>();
+        public List<BagStringElement> Strs = new List<BagStringElement>();
 
         // TODO: REFACTOR CLASS TO ONLY HAVE DATA, I GUESS
 
@@ -41,6 +44,8 @@ namespace Smallgroup.Starport.Assets.Surface
 
         public void InitDialogAttributes(DialogAnchor dialog)
         {
+            UnitySystemConsoleRedirector.Redirect();
+
             var dEngine = dialog.dEngine;
             _dialog = dialog;
             dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
@@ -51,11 +56,35 @@ namespace Smallgroup.Starport.Assets.Surface
             dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Trust)));
             dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Health)));
             dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Respect)));
-            dEngine.AddAttribute(new BagDialogAttribute(Name + ".flags", Flags).UpdateElements(dEngine));
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".flags", false, Flags).UpdateElements(dEngine));
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".ints", 0, Ints).UpdateElements(dEngine));
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".strs", "", Strs).UpdateElements(dEngine));
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".position.x", x => Coordinate = new GridXY(x, Coordinate.Y) , () => Coordinate.X));
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".position.y", y => Coordinate = new GridXY(Coordinate.X, y) , () => Coordinate.Y));
+
+            var gotoFunc = new ObjectFunctionDialogAttribute(Name + ".funcs.goto", args =>
+            {
+                var xPosition = (int)args["x"];
+                var yPosition = (int)args["y"];
+                this.AddCommand(new GotoCommand() { Target = new GridXY(xPosition, yPosition) });
+            }, new Dictionary<string, object>() {
+                { "x", -1 },
+                { "y", -1 }
+            });
+            dEngine.AddAttribute(gotoFunc);
+
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
         }
 
-        public GridXY Coordinate { get { return _map.GetObjectPosition(this); } }
+        public GridXY Coordinate
+        {
+            get { return _map.GetObjectPosition(this); }
+            set
+            {
+
+                _map.SetObjectPosition(value, this);
+            }
+        }
 
         public void MoveLeft()
         {
@@ -114,7 +143,7 @@ namespace Smallgroup.Starport.Assets.Surface
 
         private IEnumerable<CommandResult> HandleDialog(OpenDialogCommand command)
         {
-            _dialog.OpenDialog();
+            _dialog.OpenDialog(this, command.Target);
             while (_dialog.IsDialogOpen)
             {
                 yield return CommandResult.WORKING;
