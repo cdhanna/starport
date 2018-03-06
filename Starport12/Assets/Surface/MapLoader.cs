@@ -30,7 +30,7 @@ namespace Smallgroup.Starport.Assets.Surface
                     //{
                     //}
                     // TODO make cell types scriptable objects that we can load in
-                    map.SetCell(new GridXY(rowIndex, colIndex), new Cell()
+                    map.SetCell(new GridXY(colIndex, -rowIndex + raw.Basic.Data.Length), new Cell()
                     {
                         Walkable = walkable,
                         Code = code

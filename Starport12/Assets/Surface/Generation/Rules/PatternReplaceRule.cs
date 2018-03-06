@@ -35,16 +35,16 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             return output.ToArray();
         }
 
-        public static List<PatternReplaceRule> General(string prefabName,  params string[] data)
+        public static List<PatternReplaceRule> General(string prefabName, Vector2 offset,  params string[] data)
         {
             var set = new List<PatternReplaceRule>();
-
-            set.Add(new PatternReplaceRule(data, prefabName, 0));
-            for (var i = 1; i < 4; i++)
+            var originalSize = new Vector2(data[0].Length, data.Length);
+            set.Add(new PatternReplaceRule(data, prefabName, 0, new Vector2(0, 0)));
+            for (var i = 1; i <3; i++)
             {
 
                 data = Rotate90(data);
-                set.Add(new PatternReplaceRule(data, prefabName, 90 * i));
+                set.Add(new PatternReplaceRule(data, prefabName, 90 * i, originalSize));
             }
 
             return set;
@@ -58,10 +58,13 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         private string prefabName;
         private Quaternion quaternion;
         private int degree;
+        private Vector2 anchor;
 
-        public PatternReplaceRule(string[] _data, string _prefabName, int _degree)
+        public PatternReplaceRule(string[] _data, string _prefabName, int _degree, Vector2 _anchor)
         {
             degree = _degree;
+            anchor = _anchor;
+            Debug.Log("CREATED RULE " + _data.Length + "," + _data[0].Length + "  : " + -degree);
             quaternion = Quaternion.Euler(0, _degree, 0);
             data = _data;
             prefabName = _prefabName;
@@ -76,7 +79,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             {
                 for (var j = 0; j < data[i].Length; j++)
                 {
-                    var neighbor = ctx.GetNeighborCtx((int)i, (int)j);
+                    var neighbor = ctx.GetNeighborCtx((int)j, (int)-i);
                     var matched = neighbor != null
                         && !neighbor.Patterned
                         && neighbor.Cell.Code == data[i][j];
@@ -107,7 +110,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         public override List<GenerationAction> Execute(Ctx ctx)
         {
             var output = new List<GenerationAction>();
-            Debug.Log("Pattern match");
+            //Debug.Log("Pattern match");
 
             for (var i = 0; i < data.Length; i++)
             {
@@ -118,12 +121,12 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
                         ///pattern.Add(new Vector2(i, j));
 
                     }
-                    var neighbor = ctx.GetNeighborCtx(i, j);
+                    var neighbor = ctx.GetNeighborCtx(j ,i);
                     if(neighbor != null)
                     {
                         neighbor.Patterned = true;
                         var rule2Actions = neighbor.GetActions();
-                        Debug.Log("Existing Actions " + rule2Actions.Count);
+                        //Debug.Log("Existing Actions " + rule2Actions.Count);
                         rule2Actions.Values.ToList().ForEach(actions =>
                         {
                             actions.OfType<CreateObjectAction>()
@@ -140,23 +143,27 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
             var offset = new Vector3(0, 0, 0);
             //var width = ctx.CellUnitWidth * (Math.Max(data[0].Length, data.Length) -1);
-            var width = ctx.CellUnitWidth * data.Length - 1;
-            //if (degree == 180)
-            //{
-            //    offset = new Vector3(0, 0, width);
-            //}
+            var width = ctx.CellUnitWidth;
+            if (degree == 90)
+            {
+                offset = new Vector3(0,0, width * (anchor.y - 1) );
+            }
+            if (degree == 180)
+            {
+                //offset = new Vector3(-width * anchor.x, 0, -width * anchor.y);
+            }
             //if (degree == 270)
             //{
             //    offset = new Vector3(width, 0,0);
 
             //}
+            
+            //offset = new Vector3(0,0,ctx.CellUnitWidth * -.5f);
+            //if (degree == 180 || degree == 270)
+            //{
 
-            offset = new Vector3(0,0,ctx.CellUnitWidth * -.5f);
-            if (degree == 180 || degree == 270)
-            {
-
-            }
-                offset = quaternion * offset;
+            //}
+               // offset = quaternion * offset;
 
             //var offset = new Vector3(0, 0, width);
             //offset = quaternion * offset;
@@ -166,7 +173,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             ////position.y = 1;
 
 
-            output.Add(new CreateObjectAction(prefabName, position + offset, quaternion));
+            output.Add(new CreateObjectAction(prefabName, position + offset , quaternion));
 
 
             return output;
