@@ -137,10 +137,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdf24bb9c8aac64cbfbd312996fdec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Color: {r: 0.30147058, g: 0.3351926, b: 1, a: 0}
+  Color: {r: 0.97794116, g: 0.62723124, b: 0, a: 0}
   StartPosition:
-    _x: 11
-    _y: 11
+    _x: 4
+    _y: 5
   UseMouse: 0
   Controller:
     X_AXIS: H2
@@ -436,10 +436,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdf24bb9c8aac64cbfbd312996fdec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Color: {r: 0, g: 0.9852941, b: 0.3329616, a: 0}
+  Color: {r: 0, g: 0.047565773, b: 0.9852941, a: 0}
   StartPosition:
-    _x: 11
-    _y: 25
+    _x: 1
+    _y: 11
   UseMouse: 0
   Controller:
     X_AXIS: H2
@@ -577,10 +577,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdf24bb9c8aac64cbfbd312996fdec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Color: {r: 0, g: 0.9852941, b: 0.3329616, a: 0}
+  Color: {r: 0.31937096, g: 0, b: 0.9852941, a: 0}
   StartPosition:
-    _x: 11
-    _y: 25
+    _x: 10
+    _y: 11
   UseMouse: 0
   Controller:
     X_AXIS: H2
@@ -877,6 +877,288 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a781c938bcf99340a5f3c9d342262de, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1552873505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1552873509}
+  - component: {fileID: 1552873506}
+  - component: {fileID: 1552873508}
+  - component: {fileID: 1552873507}
+  m_Layer: 0
+  m_Name: Player7alchemy station
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1552873506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1552873505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cdf24bb9c8aac64cbfbd312996fdec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Color: {r: 0, g: 0.047565773, b: 0.9852941, a: 0}
+  StartPosition:
+    _x: 8
+    _y: 5
+  UseMouse: 0
+  Controller:
+    X_AXIS: H2
+    Y_AXIS: V2
+    A_BUTTON: A2
+  DialogAnchor: {fileID: 1598098268}
+  Actor:
+    Velocity: {x: 0, y: 0, z: 0}
+    Speed: 0.1
+    Friction: 0.35
+    Name: barrel
+    Merchant: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
+    Health: 100
+    Respect: 50
+    Flags:
+    - name: ill
+      value: 0
+    - name: ready
+      value: 0
+    Ints: []
+    Strs: []
+--- !u!114 &1552873507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1552873505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e2ca3ede4a1364fa358cc9015272b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1598098268}
+        m_MethodName: OpenDialog
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &1552873508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1552873505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c535567bfb2b1e4fa58d0c4d12b1ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1552873506}
+        m_MethodName: SetColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: HoverEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnHoverStop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1552873506}
+        m_MethodName: ResetColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  HoverColor: {r: 0.8206897, g: 1, b: 0, a: 0}
+--- !u!4 &1552873509
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1552873505}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1598098267}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1575712308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1575712312}
+  - component: {fileID: 1575712309}
+  - component: {fileID: 1575712311}
+  - component: {fileID: 1575712310}
+  m_Layer: 0
+  m_Name: Player9glass furnace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1575712309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1575712308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cdf24bb9c8aac64cbfbd312996fdec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Color: {r: 0, g: 0.047565773, b: 0.9852941, a: 0}
+  StartPosition:
+    _x: 8
+    _y: 1
+  UseMouse: 0
+  Controller:
+    X_AXIS: H2
+    Y_AXIS: V2
+    A_BUTTON: A2
+  DialogAnchor: {fileID: 1598098268}
+  Actor:
+    Velocity: {x: 0, y: 0, z: 0}
+    Speed: 0.1
+    Friction: 0.35
+    Name: barrel
+    Merchant: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
+    Health: 100
+    Respect: 50
+    Flags:
+    - name: ill
+      value: 0
+    - name: ready
+      value: 0
+    Ints: []
+    Strs: []
+--- !u!114 &1575712310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1575712308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e2ca3ede4a1364fa358cc9015272b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1598098268}
+        m_MethodName: OpenDialog
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &1575712311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1575712308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c535567bfb2b1e4fa58d0c4d12b1ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1575712309}
+        m_MethodName: SetColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: HoverEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnHoverStop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1575712309}
+        m_MethodName: ResetColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  HoverColor: {r: 0.8206897, g: 1, b: 0, a: 0}
+--- !u!4 &1575712312
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1575712308}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1598098267}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1598098265
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,6 +1196,10 @@ MonoBehaviour:
   - {fileID: 1754522167}
   - {fileID: 942566746}
   - {fileID: 899361136}
+  - {fileID: 1552873506}
+  - {fileID: 2125249596}
+  - {fileID: 1575712309}
+  - {fileID: 1733366505}
 --- !u!4 &1598098267
 Transform:
   m_ObjectHideFlags: 0
@@ -931,6 +1217,10 @@ Transform:
   - {fileID: 1754522164}
   - {fileID: 942566749}
   - {fileID: 899361139}
+  - {fileID: 1552873509}
+  - {fileID: 2125249599}
+  - {fileID: 1575712312}
+  - {fileID: 1733366508}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -965,6 +1255,147 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetFPS: 60
+--- !u!1 &1733366504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1733366508}
+  - component: {fileID: 1733366505}
+  - component: {fileID: 1733366507}
+  - component: {fileID: 1733366506}
+  m_Layer: 0
+  m_Name: Player10palace worker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1733366505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1733366504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cdf24bb9c8aac64cbfbd312996fdec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Color: {r: 0.9852941, g: 0, b: 0.87657195, a: 0}
+  StartPosition:
+    _x: 1
+    _y: 11
+  UseMouse: 0
+  Controller:
+    X_AXIS: H2
+    Y_AXIS: V2
+    A_BUTTON: A2
+  DialogAnchor: {fileID: 1598098268}
+  Actor:
+    Velocity: {x: 0, y: 0, z: 0}
+    Speed: 0.1
+    Friction: 0.35
+    Name: barrel
+    Merchant: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
+    Health: 100
+    Respect: 50
+    Flags:
+    - name: ill
+      value: 0
+    - name: ready
+      value: 0
+    Ints: []
+    Strs: []
+--- !u!114 &1733366506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1733366504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e2ca3ede4a1364fa358cc9015272b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1598098268}
+        m_MethodName: OpenDialog
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &1733366507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1733366504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c535567bfb2b1e4fa58d0c4d12b1ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1733366505}
+        m_MethodName: SetColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: HoverEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnHoverStop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1733366505}
+        m_MethodName: ResetColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  HoverColor: {r: 0.8206897, g: 1, b: 0, a: 0}
+--- !u!4 &1733366508
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1733366504}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1598098267}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1754522163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1077,9 +1508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdf24bb9c8aac64cbfbd312996fdec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Color: {r: 0, g: 1, b: 0.95862055, a: 0}
+  Color: {r: 0.36551714, g: 0, b: 1, a: 0}
   StartPosition:
-    _x: 11
+    _x: 1
     _y: 3
   UseMouse: 0
   Controller:
@@ -1218,8 +1649,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Color: {r: 0, g: 0.9852941, b: 0.3329616, a: 0}
   StartPosition:
-    _x: 11
-    _y: 25
+    _x: 7
+    _y: 11
   UseMouse: 0
   Controller:
     X_AXIS: H2
@@ -1322,3 +1753,144 @@ MonoBehaviour:
       value: 1
     Ints: []
     Strs: []
+--- !u!1 &2125249595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2125249599}
+  - component: {fileID: 2125249596}
+  - component: {fileID: 2125249598}
+  - component: {fileID: 2125249597}
+  m_Layer: 0
+  m_Name: Player8transmutation station
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2125249596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2125249595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cdf24bb9c8aac64cbfbd312996fdec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Color: {r: 0, g: 0.047565773, b: 0.9852941, a: 0}
+  StartPosition:
+    _x: 4
+    _y: 1
+  UseMouse: 0
+  Controller:
+    X_AXIS: H2
+    Y_AXIS: V2
+    A_BUTTON: A2
+  DialogAnchor: {fileID: 1598098268}
+  Actor:
+    Velocity: {x: 0, y: 0, z: 0}
+    Speed: 0.1
+    Friction: 0.35
+    Name: barrel
+    Merchant: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
+    Health: 100
+    Respect: 50
+    Flags:
+    - name: ill
+      value: 0
+    - name: ready
+      value: 0
+    Ints: []
+    Strs: []
+--- !u!114 &2125249597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2125249595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e2ca3ede4a1364fa358cc9015272b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1598098268}
+        m_MethodName: OpenDialog
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &2125249598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2125249595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c535567bfb2b1e4fa58d0c4d12b1ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2125249596}
+        m_MethodName: SetColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: HoverEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  OnHoverStop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2125249596}
+        m_MethodName: ResetColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  HoverColor: {r: 0.8206897, g: 1, b: 0, a: 0}
+--- !u!4 &2125249599
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2125249595}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1598098267}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
