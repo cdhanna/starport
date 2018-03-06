@@ -16,7 +16,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
         public override bool[] EvaluateConditions(Ctx ctx)
         {
-            return new bool[] { true };
+            return new bool[] { ctx.Cell.Walkable };
         }
 
         public override List<GenerationAction> Execute(Ctx ctx)

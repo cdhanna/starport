@@ -24,14 +24,21 @@ namespace Smallgroup.Starport.Assets.Surface
                 for (var colIndex = 0; colIndex < row.Length; colIndex ++)
                 {
                     var code = row[colIndex];
-                    if (existsFunc(code))
+
+                    var walkable = existsFunc(code);
+                    //if (existsFunc(code))
+                    //{
+                    //}
+                    // TODO make cell types scriptable objects that we can load in
+                    map.SetCell(new GridXY(rowIndex, colIndex), new Cell()
                     {
-                        map.SetCell(new GridXY(rowIndex, colIndex), new Cell());
-                    }
+                        Walkable = walkable,
+                        Code = code
+                    });
                 }
             }
 
-            map.AutoMap();
+            map.AutoMap( (coord, cell) => cell.Walkable);
             return map;
         }
 

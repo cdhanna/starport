@@ -22,13 +22,20 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 
         public override void Invoke(GenerationContext ctx)
         {
-            var prefab = Resources.Load<GameObject>(PrefabPath);
-            var instance = GameObject.Instantiate(prefab);
-            instance.transform.localPosition += Position;
-            instance.transform.localRotation = Rotation;
-            var scale = World.Map.CellWidth;
+            try
+            {
+                var prefab = Resources.Load<GameObject>(PrefabPath);
+                var instance = GameObject.Instantiate(prefab);
+                instance.transform.localPosition += Position;
+                instance.transform.localRotation = Rotation;
+                var scale = World.Map.CellWidth;
 
-            instance.transform.localScale = new Vector3(instance.transform.localScale.x * scale, instance.transform.localScale.y, instance.transform.localScale.z * scale);
+                instance.transform.localScale = new Vector3(instance.transform.localScale.x * scale, instance.transform.localScale.y, instance.transform.localScale.z * scale);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

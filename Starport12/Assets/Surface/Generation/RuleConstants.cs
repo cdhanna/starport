@@ -62,9 +62,12 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public string FloorPrefabName { get { return Get(RuleConstants.FLOOR_NAME); } }
         public float WallOffset { get { return Get<float>(RuleConstants.WALL_OFFSET); } }
 
+        public Cell Cell { get { return World.Map.GetCell(new GridXY(X, Y)); } }
+
         public Dictionary<GenerationRule<Ctx>, List<GenerationAction>> GetActions()
         {
-            return Get<Dictionary<GenerationRule<Ctx>, List<GenerationAction>>>("actions");
+            return Ensure<Dictionary<GenerationRule<Ctx>, List<GenerationAction>>>("actions", new Dictionary<GenerationRule<Ctx>, List<GenerationAction>>());
+            //return Get<Dictionary<GenerationRule<Ctx>, List<GenerationAction>>>("actions");
         }
 
 

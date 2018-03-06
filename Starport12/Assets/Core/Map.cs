@@ -101,14 +101,14 @@ namespace Smallgroup.Starport.Assets.Core
             }
         }
 
-        public void AutoMap()
+        public void AutoMap(Func<TCoordinate, TCell, bool> isTraverasable)
         {
             // take all coords, and figure out their traversable paths. This assumes no walls, just "does the neighbor coord exist"
 
             foreach (var coord in _coord2Cell.Keys.ToList())
             {
                 var neighbors = coord.GetNeighbors();
-                var traversable = neighbors.Where(n => CoordinateExists(n)).ToList();
+                var traversable = neighbors.Where(n => CoordinateExists(n) && isTraverasable(n, _coord2Cell[n])).ToList();
                 SetTraversable(coord, traversable);
             }
         }

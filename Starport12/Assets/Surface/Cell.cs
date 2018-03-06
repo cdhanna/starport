@@ -9,5 +9,7 @@ namespace Smallgroup.Starport.Assets.Surface
     public class Cell : ICell<Cell>
     {
         
+        public bool Walkable { get; set; }
+        public char Code { get; set; }
     }
 }

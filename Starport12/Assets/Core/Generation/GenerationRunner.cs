@@ -108,7 +108,9 @@ namespace Smallgroup.Starport.Assets.Core.Generation
             foreach (var coord in map.Coordinates)
             {
                 var coordCtx = coord2ctx[coord];
-                var actions = coordCtx.Get<Dictionary<GenerationRule<TContext>, List<GenerationAction>>>("actions");
+                var actions = coordCtx.Ensure("actions", new Dictionary<GenerationRule<TContext>, List<GenerationAction>>());
+
+                //var actions = coordCtx.Get<Dictionary<GenerationRule<TContext>, List<GenerationAction>>>("actions");
                 actions.Values.ToList().ForEach(set => returnActions.AddRange(set));
             }
 
