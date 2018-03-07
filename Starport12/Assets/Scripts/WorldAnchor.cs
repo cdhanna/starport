@@ -68,7 +68,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
             var rules = new List<GenerationRule<Ctx>>();
             rules.Add(new RuleFloor());
-            rules.AddRange(PatternRule.General("fill", new Vector2(1, 0),
+            rules.AddRange(PatternRule.General("side_good", new Vector2(1, 0),
                 ".0" 
                 //"0"
                 ));

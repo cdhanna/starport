@@ -40,7 +40,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var set = new List<PatternReplaceRule>();
             var originalSize = new Vector2(data[0].Length, data.Length);
             set.Add(new PatternReplaceRule(data, prefabName, 0, new Vector2(0, 0)));
-            for (var i = 1; i <3; i++)
+            for (var i = 1; i <4; i++)
             {
 
                 data = Rotate90(data);
@@ -121,7 +121,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
                         ///pattern.Add(new Vector2(i, j));
 
                     }
-                    var neighbor = ctx.GetNeighborCtx(j ,i);
+                    var neighbor = ctx.GetNeighborCtx(j ,-i);
                     if(neighbor != null)
                     {
                         neighbor.Patterned = true;
@@ -141,15 +141,22 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
             var position = ctx.Get<Vector3>(RuleConstants.CELL_WORLD_POS);
 
-            var offset = new Vector3(0, 0, 0);
+            //var offset = new Vector3(1, 0, 0) * ctx.CellUnitWidth/2;
+            var offset = new Vector3(data[0].Length - 1, 0, -(data.Length - 1)) * ctx.CellUnitWidth / 2;
+            //var offset = new Vector3(data[0].Length, 0, data.Length) * -ctx.CellUnitWidth/2 ;
+            // offset += new Vector3(ctx.CellUnitWidth , 0, -ctx.CellUnitWidth) * 1.5f;
             //var width = ctx.CellUnitWidth * (Math.Max(data[0].Length, data.Length) -1);
-            var width = ctx.CellUnitWidth;
+            //var width = ctx.CellUnitWidth;
+            //if (degree == 90)
+            //{
+            //    offset = new Vector3(0,0, width * (anchor.y - 1) );
+            //}
             if (degree == 90)
             {
-                offset = new Vector3(0,0, width * (anchor.y - 1) );
-            }
-            if (degree == 180)
-            {
+                //offset = new Vector3(0, 0, -1) * ctx.CellUnitWidth / 2;
+
+                Debug.Log("SDF" + data.Length + "/" + data[0].Length);
+                //offset.x *= -1;
                 //offset = new Vector3(-width * anchor.x, 0, -width * anchor.y);
             }
             //if (degree == 270)
@@ -157,13 +164,13 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             //    offset = new Vector3(width, 0,0);
 
             //}
-            
+
             //offset = new Vector3(0,0,ctx.CellUnitWidth * -.5f);
             //if (degree == 180 || degree == 270)
             //{
 
             //}
-               // offset = quaternion * offset;
+            // offset = quaternion * offset;
 
             //var offset = new Vector3(0, 0, width);
             //offset = quaternion * offset;
