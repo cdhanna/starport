@@ -49,18 +49,7 @@ public class DialogAnchor : MonoBehaviour {
         dEngine.AddAttribute(DialogAttribute.New("conversation", v => ConversationFlag = v, () => ConversationFlag));
         dEngine.AddTransform("dialog.target", () => _target.Name);
         dEngine.AddTransform("dialog.speaker", () => _speaker.Name);
-        //dEngine.AddAttribute(DialogAttribute.New("dialog.target.name", v => { }, () => _target.Name));
-
-        //var gotoFunc = new ObjectFunctionDialogAttribute("dialog.target.funcs.goto", args =>
-        //{
-        //    var xPosition = (int)args["x"];
-        //    var yPosition = (int)args["y"];
-        //    _target.AddCommand(new GotoCommand() { Target = new GridXY(xPosition, yPosition) });
-        //}, new Dictionary<string, object>() {
-        //        { "x", -1 },
-        //        { "y", -1 }
-        //    });
-        //dEngine.AddAttribute(gotoFunc);
+        
 
     }
 	

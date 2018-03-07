@@ -57,16 +57,22 @@ namespace Smallgroup.Starport.Assets.Surface
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Trust)));
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Health)));
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Respect)));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".flags", false, Flags).UpdateElements(dEngine));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".ints", 0, Ints).UpdateElements(dEngine));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".strs", "", Strs).UpdateElements(dEngine));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".position.x", x => Coordinate = new GridXY(x, Coordinate.Y) , () => Coordinate.X));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".position.y", y => Coordinate = new GridXY(Coordinate.X, y) , () => Coordinate.Y));
+
+            
+
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".flags", false, Flags)
+                .UpdateElements(dEngine));
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".ints", 0, Ints)
+                .UpdateElements(dEngine));
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".strs", "", Strs)
+                .UpdateElements(dEngine));
+
 
             var gotoFunc = new ObjectFunctionDialogAttribute(Name + ".funcs.goto", args =>
             {
                 var xPosition = (int)args["x"];
                 var yPosition = (int)args["y"];
+                
                 this.AddCommand(new GotoCommand() { Target = new GridXY(xPosition, yPosition) });
             }, new Dictionary<string, object>() {
                 { "x", -1 },
@@ -77,15 +83,7 @@ namespace Smallgroup.Starport.Assets.Surface
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
         }
 
-        public GridXY Coordinate
-        {
-            get { return _map.GetObjectPosition(this); }
-            set
-            {
-
-                _map.SetObjectPosition(value, this);
-            }
-        }
+        public GridXY Coordinate { get { return _map.GetObjectPosition(this); } }
 
         public void MoveLeft()
         {
