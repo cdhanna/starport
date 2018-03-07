@@ -81,7 +81,7 @@ public class DialogUI : MonoBehaviour {
 
             rectTransform.anchoredPosition = new Vector2(
                 -parentRect.rect.width/2 + 20,
-                 parentRect.rect.height/4 -i*50);
+                 -i*50);
 
             //button.transform.localPosition = new Vector3(-380, 60 + i * -40, 0);
             button.Setup(conversationHistory, validRules[i], dEngine, this);

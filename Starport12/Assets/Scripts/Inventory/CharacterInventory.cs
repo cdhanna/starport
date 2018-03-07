@@ -17,7 +17,7 @@ namespace Smallgroup.Starport.Assets.Scripts.Inventory
 
         public void addToInventory(InventoryItem item)
         {
-            bool exists = inventory.ContainsValue(item);
+            bool exists = inventory.ContainsKey(item.name);
             if (exists)
             {
                 inventory[item.name].count++;
