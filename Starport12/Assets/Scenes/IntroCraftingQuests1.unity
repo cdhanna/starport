@@ -157,6 +157,11 @@ MonoBehaviour:
     Speed: 0.1
     Friction: 0.35
     Name: chief alchemist vol
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
@@ -451,6 +456,11 @@ MonoBehaviour:
     Speed: 0.1
     Friction: 0.35
     Name: barrel
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
@@ -587,6 +597,11 @@ MonoBehaviour:
     Speed: 0.1
     Friction: 0.35
     Name: treasury chest
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
@@ -896,7 +911,12 @@ MonoBehaviour:
     Velocity: {x: 0, y: 0, z: 0}
     Speed: 0.1
     Friction: 0.35
-    Name: alchemy station
+    Name: nlchemy station
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
@@ -1033,6 +1053,11 @@ MonoBehaviour:
     Speed: 0.1
     Friction: 0.35
     Name: glass furnace
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
@@ -1265,6 +1290,11 @@ MonoBehaviour:
     Speed: 0.1
     Friction: 0.35
     Name: palace worker
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
@@ -1484,6 +1514,11 @@ MonoBehaviour:
     Speed: 0.1
     Friction: 0.35
     Name: desk
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
@@ -1618,6 +1653,11 @@ MonoBehaviour:
     Speed: 0.1
     Friction: 0.35
     Name: treasury guard
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
@@ -1682,6 +1722,11 @@ MonoBehaviour:
     Speed: 0.1
     Friction: 0.35
     Name: jafar
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
@@ -1743,6 +1788,11 @@ MonoBehaviour:
     Speed: 0.1
     Friction: 0.35
     Name: transmutation station
+    Decision: 0
+    Seeker: 0
+    Criminal: 0
+    Collection: 0
+    Trust: 0
     Health: 100
     Respect: 50
     Flags:
