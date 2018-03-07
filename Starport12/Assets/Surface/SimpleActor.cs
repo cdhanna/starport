@@ -25,7 +25,7 @@ namespace Smallgroup.Starport.Assets.Surface
 
         [Header("Attributes")]
         public string Name;
-        public bool Merchant, Seeker, Criminal, Collection, Trust;
+        public bool Decision, Seeker, Criminal, Collection, Trust;
         public int Health = 100;
         public int Respect = 50;
         public List<BagBoolElement> Flags = new List<BagBoolElement>();
@@ -48,14 +48,15 @@ namespace Smallgroup.Starport.Assets.Surface
 
             var dEngine = dialog.dEngine;
             _dialog = dialog;
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Merchant)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Seeker)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Criminal)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Collection)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Trust)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Health)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Respect)));
+            dEngine.AddAttribute(DialogAttribute.New(Name + ".name", n => Name = n, () => Name));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
+            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Decision)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Seeker)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Criminal)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Collection)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Trust)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Health)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Respect)));
             dEngine.AddAttribute(DialogAttribute.New(Name + ".flags", false, Flags).UpdateElements(dEngine));
             dEngine.AddAttribute(DialogAttribute.New(Name + ".ints", 0, Ints).UpdateElements(dEngine));
             dEngine.AddAttribute(DialogAttribute.New(Name + ".strs", "", Strs).UpdateElements(dEngine));

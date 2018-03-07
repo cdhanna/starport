@@ -51,7 +51,13 @@ public class DialogUI : MonoBehaviour {
 
     public void UpdateRuleOptions(DialogEngine dEngine)
     {
-
+        try
+        {
+            var codes = dEngine.GetAttributeValueCodes();
+        } catch (Exception ex)
+        {
+            throw ex;
+        }
         List<DialogRule> validRules = dEngine.GetAllValidDialog();
 
         
