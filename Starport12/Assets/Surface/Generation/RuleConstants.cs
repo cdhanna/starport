@@ -50,7 +50,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public bool WallLeft { get { return Get<bool>(RuleConstants.CELL_WALL_LEFT); } }
 
         public bool WallAny { get { return Get<bool>(RuleConstants.CELL_WALL_HAS_ANY); } }
-        public bool Patterned { get { return Get<bool>(RuleConstants.CELL_PATTERN_MATCHED); } set { Set<bool>(RuleConstants.CELL_PATTERN_MATCHED, value); } }
+        public int PatternCount { get { return Get<int>(RuleConstants.CELL_PATTERN_MATCHED); } set { Set<int>(RuleConstants.CELL_PATTERN_MATCHED, value); } }
 
         public Vector3 WorldPos { get { return Get<Vector3>(RuleConstants.CELL_WORLD_POS); } }
         public float CellUnitWidth { get { return Get<float>(RuleConstants.CELL_UNIT_WIDTH); } }
@@ -97,7 +97,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             // check if the cell is a single wall. 
             var neighbors = map.GetTraversable(coord);
             Set(RuleConstants.CELL_WALL_HAS_ANY, neighbors.Count != 4);
-            Set(RuleConstants.CELL_PATTERN_MATCHED, false);
+            Set(RuleConstants.CELL_PATTERN_MATCHED, 0);
             //Set(RuleConstants.CELL_QUAD_NEIGHBOR_COUNT, neighbors.Count);
 
 

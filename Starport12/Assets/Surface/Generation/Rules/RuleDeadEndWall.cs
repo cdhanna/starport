@@ -18,10 +18,10 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         {
             return new bool[]
             {
-                   (!ctx.WallLeft && ctx.WallLow && ctx.WallRight && ctx.WallTop)
-                || (ctx.WallLeft && !ctx.WallLow && ctx.WallRight && ctx.WallTop)
-                || (ctx.WallLeft && ctx.WallLow && !ctx.WallRight && ctx.WallTop)
-                || (ctx.WallLeft && ctx.WallLow && ctx.WallRight && !ctx.WallTop)
+                   (ctx.Cell.Walkable && !ctx.WallLeft && ctx.WallLow && ctx.WallRight && ctx.WallTop)
+                || (ctx.Cell.Walkable && ctx.WallLeft && !ctx.WallLow && ctx.WallRight && ctx.WallTop)
+                || (ctx.Cell.Walkable && ctx.WallLeft && ctx.WallLow && !ctx.WallRight && ctx.WallTop)
+                || (ctx.Cell.Walkable && ctx.WallLeft && ctx.WallLow && ctx.WallRight && !ctx.WallTop)
             };
         }
 
@@ -31,19 +31,19 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var position = ctx.WorldPos;
             if (ctx.WallLeft)
             {
-                output.Add(new CreateObjectAction(ctx.WallPrefabName, position + new Vector3(-ctx.WallOffset, 0, 0) * ctx.CellUnitWidth, Quaternion.Euler(0, 0, 0)));
+                output.Add(new CreateObjectAction(ctx.Cell.DefaultWallAsset, position + new Vector3(-ctx.WallOffset, 0, 0) * ctx.CellUnitWidth, Quaternion.Euler(0, 0, 0)));
             }
             if (ctx.WallRight)
             {
-                output.Add(new CreateObjectAction(ctx.WallPrefabName, position + new Vector3(ctx.WallOffset, 0, 0) * ctx.CellUnitWidth, Quaternion.Euler(0, 180, 0)));
+                output.Add(new CreateObjectAction(ctx.Cell.DefaultWallAsset, position + new Vector3(ctx.WallOffset, 0, 0) * ctx.CellUnitWidth, Quaternion.Euler(0, 180, 0)));
             }
             if (ctx.WallTop)
             {
-                output.Add(new CreateObjectAction(ctx.WallPrefabName, position + new Vector3(0, 0, -ctx.WallOffset) * ctx.CellUnitWidth, Quaternion.Euler(0, 90, 0)));
+                output.Add(new CreateObjectAction(ctx.Cell.DefaultWallAsset, position + new Vector3(0, 0, -ctx.WallOffset) * ctx.CellUnitWidth, Quaternion.Euler(0, 90, 0)));
             }
             if (ctx.WallLow)
             {
-                output.Add(new CreateObjectAction(ctx.WallPrefabName, position + new Vector3(0, 0, ctx.WallOffset) * ctx.CellUnitWidth, Quaternion.Euler(0, -90, 0)));
+                output.Add(new CreateObjectAction(ctx.Cell.DefaultWallAsset, position + new Vector3(0, 0, ctx.WallOffset) * ctx.CellUnitWidth, Quaternion.Euler(0, -90, 0)));
             }
 
 

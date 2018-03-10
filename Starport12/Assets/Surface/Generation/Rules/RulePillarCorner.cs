@@ -35,24 +35,24 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             {
 
                 var offset = new Vector3(.45f, 0, -.45f);
-                output.Add(new CreateObjectAction("corner_joiner", position + offset * ctx.CellUnitWidth, Quaternion.identity));
+                output.Add(new CreateObjectAction(ctx.Cell.DefaultCornerJoinAsset, position + offset * ctx.CellUnitWidth, Quaternion.identity));
             }
 
             if (!ctx.WallTop && !ctx.WallLeft && ctx.GetNeighborCtx(0, -1).WallLeft && ctx.GetNeighborCtx(-1, 0).WallTop)
             {
                 var offset = new Vector3(-.45f, 0, -.45f);
-                output.Add(new CreateObjectAction("corner_joiner", position + offset * ctx.CellUnitWidth, Quaternion.identity));
+                output.Add(new CreateObjectAction(ctx.Cell.DefaultCornerJoinAsset, position + offset * ctx.CellUnitWidth, Quaternion.identity));
             }
 
             if (!ctx.WallLow && !ctx.WallLeft && ctx.GetNeighborCtx(0, 1).WallLeft && ctx.GetNeighborCtx(-1, 0).WallLow)
             {
                 var offset = new Vector3(-.45f, 0, .45f);
-                output.Add(new CreateObjectAction("corner_joiner", position + offset * ctx.CellUnitWidth, Quaternion.identity));
+                output.Add(new CreateObjectAction(ctx.Cell.DefaultCornerJoinAsset, position + offset * ctx.CellUnitWidth, Quaternion.identity));
             }
             if (!ctx.WallLow && !ctx.WallRight && ctx.GetNeighborCtx(0, 1).WallRight && ctx.GetNeighborCtx(1, 0).WallLow)
             {
                 var offset = new Vector3(.45f, 0, .45f);
-                output.Add(new CreateObjectAction("corner_joiner", position + offset * ctx.CellUnitWidth, Quaternion.identity));
+                output.Add(new CreateObjectAction(ctx.Cell.DefaultCornerJoinAsset, position + offset * ctx.CellUnitWidth, Quaternion.identity));
             }
 
 

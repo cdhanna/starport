@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc3eee59930dbb4fa736ed529b39478, type: 3}
+  m_Name: dirtTiles
+  m_EditorClassIdentifier: 
+  WalkableCode: 49
+  FillCode: 68
+  FloorPrefab: {fileID: 1681317517353690, guid: d00a7775509f12b468bea834e087feba,
+    type: 2}
+  WallPrefab: {fileID: 1138859601548350, guid: 84ff9e3c94919ef4dbcfaf7e5c2ade1d, type: 2}
+  JoinPrefab: {fileID: 1171256216566734, guid: b193af27a311115469805306a9808c11, type: 2}
+  CornerJoinPrefab: {fileID: 1703880028367546, guid: 00ce06a92e3ef6a44b89da95ce8c036a,
+    type: 2}

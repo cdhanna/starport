@@ -19,8 +19,9 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         public DialogAnchor DialogAnchor;
         public ActorAnchor[] Players;
+        public PatternSet GenerationPatternSet;
+        public MapLoader MapLoader;
 
-   
         private void AttachCellAnchors()
         {
             for (var i = 0; i <  Map.Coordinates.Length; i++)
@@ -44,14 +45,14 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
-
+            World.Map = MapLoader.LoadFromFile();
             Map = World.Map;
             AttachCellAnchors();
 
             var globalCtx = new Ctx(null);
 
-            globalCtx.Set(RuleConstants.WALL_NAME, "wall_var1");
-            globalCtx.Set(RuleConstants.FLOOR_NAME, "floor_stone");
+            globalCtx.Set(RuleConstants.WALL_NAME, "stoneGen/wall_var1");
+            globalCtx.Set(RuleConstants.FLOOR_NAME, "stoneGen/floor_stone");
             globalCtx.Set(RuleConstants.WALL_OFFSET, .5f);
 
 
@@ -63,41 +64,60 @@ namespace Smallgroup.Starport.Assets.Scripts
                     RuleConstants.TAG_CORNER_JOINER,
                     RuleConstants.TAG_LIGHT},
                 new string[]{ RuleConstants.TAG_LIGHT, "PATTERN"}
-                
+
             });
 
             var rules = new List<GenerationRule<Ctx>>();
-            rules.Add(new RuleFloor());
-            rules.AddRange(PatternRule.General("side_good", new Vector2(1, 0),
-                ".0" 
-                //"0"
-                ));
+            //rules.Add(new RuleFloor());
+
+            GenerationPatternSet.Patterns = GenerationPatternSet.Patterns.Where(p => p != null).ToList();
+            //GenerationPatternSet.Patterns.ToList().Sort(new Comparison<MapBit>((a, b) =>
+            //{
+            //    var aSize = a.pattern.Length * a.pattern[0].Length;
+            //    var bSize = b.pattern.Length * b.pattern[0].Length;
+            //    return aSize > bSize ? -1 : 1;
+            //}));
+            GenerationPatternSet.Patterns.ForEach(bit =>
+            {
+                 rules.AddRange(PatternRule.General(bit));
+            });
+
+            var rules2 = new GenerationRule<Ctx>[]{
+                new RuleFloor(),
+                new RuleSingleWall(),
+                new RuleCornerWall(),
+                new RuleHallWall(),
+                new RuleDeadEndWall(),
+
+                new RulePillarsLeftAndRight(),
+                new RulePillarsTopAndLow(),
+                new RulePillarCorner(),
+
+            //new RuleLightMain()
+
+            //new RuleLightMain(),
+            //new RuleLightMainRemove(),
+            //new RuleLightAtTJunctionTop(),
+            //new RuleLightAtTJunctionLow(),
+            //new RuleLightAtTJunctionLeft(),
+            //new RuleLightAtTJunctionRight()
+
+            }.ToList();
+            rules.AddRange(rules2);
+            //rules.AddRange(PatternRule.General("side_good", new string[] {
+            //    ".0"
+            //}));
+            //rules.AddRange(PatternRule.General("corner", new string[]
+            //{
+            //    "..",
+            //    ".0"
+            //}));
+
 
             var actions = runner.Run(globalCtx, Map, (ctx, coord) => ctx.SetFromGrid(Map, coord),
-                rules.ToArray());
-                
-            //    new GenerationRule<Ctx>[]{
-            //    new RuleFloor(),
-            //    //new RuleSingleWall(),
-            //    //new RuleCornerWall(),
-            //    //new RuleHallWall(),
-            //    //new RuleDeadEndWall(),
+                    rules.ToArray());
 
-            //    //new RulePillarsLeftAndRight(),
-            //    //new RulePillarsTopAndLow(),
-            //    //new RulePillarCorner(),
-
-            //    PatternRule.General("stone_side", ".0");
-            //    //new RuleLightMain()
-
-            //    //new RuleLightMain(),
-            //    //new RuleLightMainRemove(),
-            //    //new RuleLightAtTJunctionTop(),
-            //    //new RuleLightAtTJunctionLow(),
-            //    //new RuleLightAtTJunctionLeft(),
-            //    //new RuleLightAtTJunctionRight()
-
-            //});
+           
             actions.ForEach(a => a.Invoke(globalCtx));
             //var globalCtx = new GenerationContext(null);
             ////globalCtx.Set("game_difficulty", "hard");

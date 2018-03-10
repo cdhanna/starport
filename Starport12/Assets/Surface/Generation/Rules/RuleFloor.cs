@@ -26,7 +26,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var coord = new GridXY(ctx.X, ctx.Y);
             var position = World.Map.TransformCoordinateToWorld(coord);
             //position.y = 1;
-            output.Add(new CreateObjectAction(ctx.FloorPrefabName, position, Quaternion.identity));
+            output.Add(new CreateObjectAction(ctx.Cell.DefaultFloorAsset, position, Quaternion.identity));
 
             return output;
         }

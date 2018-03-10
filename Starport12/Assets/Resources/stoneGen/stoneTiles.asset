@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc3eee59930dbb4fa736ed529b39478, type: 3}
+  m_Name: stoneTiles
+  m_EditorClassIdentifier: 
+  WalkableCode: 48
+  FillCode: 46
+  FloorPrefab: {fileID: 1798805156164576, guid: 42207133ae7d0f244b4cc8f3cb0f1a7e,
+    type: 2}
+  WallPrefab: {fileID: 1133765475970082, guid: c02b373cdd075cc4aa9a4c12e8719691, type: 2}
+  JoinPrefab: {fileID: 1349197108879392, guid: c502efd2ffcaae641a34b56ef9a7a7f5, type: 2}
+  CornerJoinPrefab: {fileID: 1314714920678654, guid: cc876935ba2e5694fbc032b9dac5f91d,
+    type: 2}
