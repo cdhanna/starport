@@ -1,8 +1,16 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: 7eadd07720ded1a43b00cf09a064b579
 timeCreated: 1520430607
 licenseType: Free
 TextScriptImporter:
+=======
+guid: 371a4dc1defc80147aa3fd07129c6ba8
+timeCreated: 1520370948
+licenseType: Free
+TextScriptImporter:
+  externalObjects: {}
+>>>>>>> Stashed changes
   userData: 
   assetBundleName: 
   assetBundleVariant: 
