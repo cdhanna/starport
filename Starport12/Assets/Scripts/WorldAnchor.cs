@@ -45,7 +45,8 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
-            World.Map = MapLoader.LoadFromFile();
+            World.Map = MapLoader.LoadFromMFT();
+            //World.Map = MapLoader.LoadFromFile();
             Map = World.Map;
             AttachCellAnchors();
 
@@ -84,6 +85,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
             var rules2 = new GenerationRule<Ctx>[]{
                 new RuleFloor(),
+                new RuleFloorFull(),
                 new RuleSingleWall(),
                 new RuleCornerWall(),
                 new RuleHallWall(),

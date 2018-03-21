@@ -15,6 +15,7 @@ public class MapBitInspector : Editor {
         var mapBit = (MapBit)target;
 
         DoPattern(mapBit);
+        DoColorPattern(mapBit);
 
         if (GUILayout.Button("Center Children"))
         {
@@ -56,7 +57,23 @@ public class MapBitInspector : Editor {
 
     }
 
+    private void DoColorPattern(MapBit bit)
+    {
+        var width = EditorGUILayout.IntField(3);
+        var height = EditorGUILayout.IntField(3);
 
+        for (var y = 0; y < height; y++)
+        {
+            GUILayout.BeginHorizontal();
+            for (var x = 0; x < width; x++)
+            {
+                EditorGUILayout.ColorField(Color.red);
+
+            }
+            GUILayout.EndHorizontal();
+        }
+
+    }
 
     private void DoPattern(MapBit mapBit)
     {

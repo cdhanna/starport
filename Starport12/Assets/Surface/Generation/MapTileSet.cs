@@ -13,11 +13,12 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 
         public char WalkableCode;
         public char FillCode;
-
+        public Color WalkColor;
         public GameObject FloorPrefab;
         public GameObject WallPrefab;
         public GameObject JoinPrefab;
         public GameObject CornerJoinPrefab;
+        public GameObject FillPrefab;
 
     }
 }

@@ -31,4 +31,29 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             return output;
         }
     }
+
+    public class RuleFloorFull : GenerationRule<Ctx>
+    {
+        public RuleFloorFull()
+        {
+            Tag = "FLOOR";
+        }
+
+        public override bool[] EvaluateConditions(Ctx ctx)
+        {
+            return new bool[] { ctx.Cell.ReferenceSet.FillPrefab != null && !ctx.Cell.Walkable };
+        }
+
+        public override List<GenerationAction> Execute(Ctx ctx)
+        {
+            var output = new List<GenerationAction>();
+
+            var coord = new GridXY(ctx.X, ctx.Y);
+            var position = World.Map.TransformCoordinateToWorld(coord);
+            //position.y = 1;
+            output.Add(new CreateObjectAction(ctx.Cell.ReferenceSet.FillPrefab, position, Quaternion.identity));
+
+            return output;
+        }
+    }
 }

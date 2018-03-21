@@ -1,4 +1,5 @@
 ﻿using Smallgroup.Starport.Assets.Core;
+using Smallgroup.Starport.Assets.Surface.Generation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Smallgroup.Starport.Assets.Surface
         public GameObject DefaultWallAsset { get; set; }
         public GameObject DefaultJoinAsset { get; set; }
         public GameObject DefaultCornerJoinAsset { get; set; }
+        public MapTileSet ReferenceSet { get; set; }
 
     }
     

@@ -11,11 +11,38 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 {
     public class MapLoader : MonoBehaviour
     {
+        public string mftFilePath;
+
 
         public string filePath;
         public List<MapTileSet> tileSets;
         //public 
 
+        public MapXY LoadFromMFT()
+        {
+            var bytes = File.ReadAllBytes(mftFilePath);
+            var mapFile = MapFileCodec.Converter.FromBytes(bytes);
+            var map = new MapXY();
+
+            for (var y = 0; y < mapFile.Height; y++)
+            {
+                for (var x = 0; x < mapFile.Width; x++)
+                {
+                    var roomData = mapFile.GetData("rooms", x, y);
+                    var walkableData = mapFile.GetData("walkable", x, y);
+                    var cell = GenerateCell(roomData.ChannelR, roomData.ChannelG, roomData.ChannelB, roomData.ChannelA);
+                    cell.Walkable = walkableData.ChannelB == 255;
+                    if (cell != null)
+                    {
+                        map.SetCell(new GridXY(x, -y + mapFile.Height), cell);
+
+                    }
+                }
+            }
+
+            map.AutoMap( (coord, cell) => cell.Walkable);
+            return map;
+        }
 
         public MapXY LoadFromFile()
         {
@@ -38,6 +65,31 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 
             map.AutoMap( (coord, cell) => cell.Walkable);
             return map;
+        }
+
+        public Cell GenerateCell(byte red, byte green, byte blue, byte alpha)
+        {
+            var r = red / 255f;
+            var g = green / 255f;
+            var b = blue / 255f;
+            var a = alpha / 255f;
+            var set = tileSets.FirstOrDefault(t => t.WalkColor.r == r && t.WalkColor.g == g && t.WalkColor.b == b);
+            if (set != null)
+            {
+
+                return new Cell()
+                {
+                    Walkable = true,
+                    Code = set.WalkableCode,
+                    DefaultCornerJoinAsset = set.CornerJoinPrefab,
+                    DefaultJoinAsset = set.JoinPrefab,
+                    DefaultWallAsset = set.WallPrefab,
+                    Type = set.name,
+                    ReferenceSet = set,
+                    DefaultFloorAsset = set.FloorPrefab,
+                };
+            }
+            else return null;
         }
 
         public Cell GenerateCell(char code)

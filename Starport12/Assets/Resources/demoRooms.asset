@@ -11,6 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20facc97cf4d99d4ab1bddde60654a37, type: 3}
   m_Name: demoRooms
   m_EditorClassIdentifier: 
-  Patterns:
-  - {fileID: 114813577845501914, guid: 2ec264a78cdf08241922eda95f0dd68c, type: 2}
-  - {fileID: 114511843045056838, guid: ff791c2328b604f459d58d4dcc34d6db, type: 2}
+  Patterns: []

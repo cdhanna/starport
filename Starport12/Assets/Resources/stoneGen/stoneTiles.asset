@@ -13,9 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WalkableCode: 48
   FillCode: 46
+  WalkColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   FloorPrefab: {fileID: 1798805156164576, guid: 42207133ae7d0f244b4cc8f3cb0f1a7e,
     type: 2}
   WallPrefab: {fileID: 1133765475970082, guid: c02b373cdd075cc4aa9a4c12e8719691, type: 2}
   JoinPrefab: {fileID: 1349197108879392, guid: c502efd2ffcaae641a34b56ef9a7a7f5, type: 2}
   CornerJoinPrefab: {fileID: 1314714920678654, guid: cc876935ba2e5694fbc032b9dac5f91d,
     type: 2}
+  FillPrefab: {fileID: 1567514217421856, guid: d912f88422ce7ab4a872b31438c84f32, type: 2}
