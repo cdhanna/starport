@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MapPatterns", menuName = "Map/Map Patterns")]
 public class PatternSet : ScriptableObject {
 
-    public List<MapBit> Patterns = new List<MapBit>();
+    public List<MapPattern> Patterns = new List<MapPattern>();
 
 
 }

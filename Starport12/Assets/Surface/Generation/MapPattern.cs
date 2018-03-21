@@ -4,12 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
 [Serializable]
-public class MapBit : MonoBehaviour {
+public class MapPatternLayer
+{
+    public string LayerName { get; set; }
+    public List<Color> Data { get; set; }
+}
+
+[Serializable]
+public class MapPattern : MonoBehaviour {
 
 
     public GameObject FloorPrefab;
 
+    public MapTilePalett Palett;
+
+    public List<MapPatternLayer> Layers { get; set; }
+    public int Width { get; set; }
+    public int Height { get; set; }
     [HideInInspector]
     public string[] pattern;
 

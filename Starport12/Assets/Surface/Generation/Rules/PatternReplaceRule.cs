@@ -50,7 +50,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             return set;
         }
 
-        public static List<PatternReplaceRule> General(MapBit prefab)
+        public static List<PatternReplaceRule> General(MapPattern prefab)
         {
             var set = new List<PatternReplaceRule>();
             var data = prefab.pattern;
