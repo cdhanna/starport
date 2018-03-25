@@ -11,8 +11,10 @@ namespace Smallgroup.Starport.Assets.Surface
     {
         public float CellWidth { get; set; }
         public Vector3 CellOffset { get { return new Vector3(CellWidth, 0, CellWidth) * -2.5f; } }
-        public MapXY()
+        public CellHandlers Handlers { get; set; }
+        public MapXY(CellHandlers handlers)
         {
+            Handlers = handlers;
             CellWidth = 1.7f;
         }
 

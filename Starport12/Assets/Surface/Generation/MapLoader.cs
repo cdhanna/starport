@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MapFileCodec;
+using Newtonsoft.Json;
 using Smallgroup.Starport.Assets.Core.Generation;
 using Smallgroup.Starport.Assets.Surface.Generation;
 using Smallgroup.Starport.Assets.Surface.Generation.Rules;
@@ -13,70 +14,123 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 {
     public class MapLoader : MonoBehaviour
     {
-        public string mftFilePath;
-        public PatternSet GenerationPatternSet;
+        //public string mftFilePath;
+        //public PatternSet GenerationPatternSet;
 
 
-        public string filePath;
-        public MapTilePalett tilePalette;
+        //public string filePath;
+        //public MapTilePalett tilePalette;
         //public 
-
-        public MapXY LoadFromPattern(MapPattern pattern)
+        public static Dictionary<string, long> LayerNameToCode { get; private set; } = new Dictionary<string, long>
         {
-            var map = new MapXY();
+            { "rooms", Cell.LAYER_ROOMS },
+            { "walkable", Cell.LAYER_WALKABLE }
+        };
 
-            var roomLayer = pattern.Layers.FirstOrDefault(l => l.LayerName.ToLower().Equals("rooms"));
-            var walkableLayer = pattern.Layers.FirstOrDefault(l => l.LayerName.ToLower().Equals("walkable"));
-            for (var y = 0; y < pattern.Height; y++)
-            {
-                for (var x = 0; x < pattern.Width; x++)
-                {
-                    var cell = default(Cell);
-                    if (roomLayer != null)
-                    {
-                        var roomData = roomLayer.Data[y * pattern.Width + x];
-                        cell = GenerateCell((byte)(roomData.r * 255), (byte)(roomData.g * 255), (byte)(roomData.b * 255), (byte)(roomData.a * 255));
-                        cell.Walkable = true;
-                    }
-                    if (walkableLayer != null)
-                    {
-                        var walkableData = roomLayer.Data[y * pattern.Width + x];
-                        cell.Walkable = walkableData.b > 0;
 
-                    }
-                    map.SetCell(new GridXY(x, -y + pattern.Height), cell);
+        public static MapXY LoadFromPattern(CellHandlers handlers, MapPattern pattern)
+        {
+            return LoadFromMFT(handlers, pattern.PatternData.Raw);
 
-                }
-            }
-            map.AutoMap((coord, cell) => cell.Walkable);
+            //var map = new MapXY(handlers);
 
-            return map;
+
+
+            //var roomLayer = pattern.Layers.FirstOrDefault(l => l.LayerName.ToLower().Equals("rooms"));
+            //var walkableLayer = pattern.Layers.FirstOrDefault(l => l.LayerName.ToLower().Equals("walkable"));
+            //for (var y = 0; y < pattern.Height; y++)
+            //{
+            //    for (var x = 0; x < pattern.Width; x++)
+            //    {
+            //        var cell = default(Cell);
+
+            //        for (var i = 0; i < pattern.Layers.Count; i++)
+            //        {
+            //            var layerCode = LayerNameToCode[pattern.Layers[i].LayerName];
+            //            var layerData = pattern.Layers[i].Data[y * pattern.Width + x];
+            //            cell.CellData[layerCode] = new CellTemplate()
+            //            {
+            //                Red = layerData.Red,
+            //                Green = layerData.Green,
+            //                Blue = layerData.Blue,
+            //                Alpha = layerData.Alpha
+            //            };
+                        
+            //        }
+
+
+            //        //if (roomLayer != null)
+            //        //{
+            //        //    var roomData = roomLayer.Data[y * pattern.Width + x];
+            //        //    cell = GenerateCell(palett, roomData.Red, roomData.Green, roomData.Blue, roomData.Alpha);
+            //        //    cell.Walkable = true;
+            //        //}
+            //        //if (walkableLayer != null)
+            //        //{
+            //        //    var walkableData = roomLayer.Data[y * pattern.Width + x];
+            //        //    cell.Walkable = walkableData.Blue > 0;
+
+            //        //}
+            //        map.SetCell(new GridXY(x, -y + pattern.Height), cell);
+
+            //    }
+            //}
+            //map.AutoMap((coord, cell) => handlers.Walkable.Process(cell));
+
+            //return map;
         }
 
-        public MapXY LoadFromMFT()
+
+        public static MapXY LoadFromMFT(CellHandlers handlers, byte[] bytes)
         {
-            var bytes = File.ReadAllBytes(mftFilePath);
+            //var bytes = File.ReadAllBytes(mftFilePath);
             var mapFile = MapFileCodec.Converter.FromBytes(bytes);
-            var map = new MapXY();
+            return Load(handlers, mapFile);
+        }
+        
+        public static MapXY Load(CellHandlers handlers, MapFile mapFile)
+        {
+
+            var map = new MapXY(handlers);
 
             for (var y = 0; y < mapFile.Height; y++)
             {
                 for (var x = 0; x < mapFile.Width; x++)
                 {
-                    var roomData = mapFile.GetData("rooms", x, y);
-                    var walkableData = mapFile.GetData("walkable", x, y);
-                    var cell = GenerateCell(roomData.ChannelR, roomData.ChannelG, roomData.ChannelB, roomData.ChannelA);
+                    //var roomData = mapFile.GetData("rooms", x, y);
+                    //var walkableData = mapFile.GetData("walkable", x, y);
+
+                    var names = mapFile.LayerNames;
+                    var datas = mapFile.GetData(x, y);
+                    var cell = new Cell();
+                    for (var i = 0; i < names.Length; i++)
+                    {
+                        var name = names[i];
+                        var data = datas[i];
+                        var layerCode = LayerNameToCode[name];
+                        cell.CellData[layerCode] = new CellTemplate()
+                        {
+                            Red = data.ChannelR,
+                            Green = data.ChannelG,
+                            Blue = data.ChannelB,
+                            Alpha = data.ChannelA,
+                        };
+                    }
+
+                    //var cell = GenerateCell(palett, roomData.ChannelR, roomData.ChannelG, roomData.ChannelB, roomData.ChannelA);
                     if (cell != null)
                     {
-                        cell.Walkable = walkableData.ChannelB == 255;
+                        // cell.Walkable = walkableData.ChannelB == 255;
                         map.SetCell(new GridXY(x, -y + mapFile.Height), cell);
 
                     }
                 }
             }
 
-            map.AutoMap( (coord, cell) => cell.Walkable);
+            map.AutoMap((coord, cell) => handlers.Walkable.Process(cell));
             return map;
+
+            return null;
         }
 
         public static void ApplyRules(MapXY map, PatternSet generationPatterns)
@@ -84,7 +138,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             var globalCtx = new Ctx(null);
 
             globalCtx.Set(RuleConstants.WALL_OFFSET, .5f);
-
+            globalCtx.Map = map;
 
             var runner = new GenerationRunner(new string[][]{
 
@@ -127,48 +181,48 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             actions.ForEach(a => a.Invoke(globalCtx));
         }
        
-        public Cell GenerateCell(byte red, byte green, byte blue, byte alpha)
-        {
-            var r = red / 255f;
-            var g = green / 255f;
-            var b = blue / 255f;
-            var a = alpha / 255f;
-            var set = tilePalette.TileSets.FirstOrDefault(t => t.WalkColor.r == r && t.WalkColor.g == g && t.WalkColor.b == b);
-            if (set != null)
-            {
+        //public static Cell GenerateCell(MapTilePalett tilePalette, byte red, byte green, byte blue, byte alpha)
+        //{
+        //    var r = red / 255f;
+        //    var g = green / 255f;
+        //    var b = blue / 255f;
+        //    var a = alpha / 255f;
+        //    var set = tilePalette.TileSets.FirstOrDefault(t => t.WalkColor.r == r && t.WalkColor.g == g && t.WalkColor.b == b);
+        //    if (set != null)
+        //    {
 
-                return new Cell()
-                {
-                    Walkable = true,
-                    Code = set.WalkableCode,
-                    DefaultCornerJoinAsset = set.CornerJoinPrefab,
-                    DefaultJoinAsset = set.JoinPrefab,
-                    DefaultWallAsset = set.WallPrefab,
-                    Type = set.name,
-                    ReferenceSet = set,
-                    DefaultFloorAsset = set.FloorPrefab,
-                };
-            }
-            else return null;
-        }
+        //        return new Cell()
+        //        {
+        //            Walkable = true,
+        //            Code = set.WalkableCode,
+        //            DefaultCornerJoinAsset = set.CornerJoinPrefab,
+        //            DefaultJoinAsset = set.JoinPrefab,
+        //            DefaultWallAsset = set.WallPrefab,
+        //            Type = set.name,
+        //            ReferenceSet = set,
+        //            DefaultFloorAsset = set.FloorPrefab,
+        //        };
+        //    }
+        //    else return null;
+        //}
 
         
 
 
-        class MapData
-        {
-            [JsonProperty("basic")]
-            public MapDataBasic Basic { get; set; }
+        //class MapData
+        //{
+        //    [JsonProperty("basic")]
+        //    public MapDataBasic Basic { get; set; }
 
-            public class MapDataBasic
-            {
+        //    public class MapDataBasic
+        //    {
                 
-                [JsonProperty("data")]
-                public string[] Data { get; set; }
+        //        [JsonProperty("data")]
+        //        public string[] Data { get; set; }
 
                
-                //class 
-            }
-        }
+        //        //class 
+        //    }
+        //}
     }
 }

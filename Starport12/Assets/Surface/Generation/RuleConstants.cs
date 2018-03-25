@@ -39,10 +39,14 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
     public class Ctx : GenerationContext
     {
 
-        public Ctx(GenerationContext parent) : base(parent) { }
+        public Ctx(GenerationContext parent) : base(parent) {
+            
+        }
 
-        public Ctx() : base(null) { }
+        public Ctx() : base(null) {
+        }
 
+        public MapXY Map { get; set; }
 
         public bool WallTop { get { return Get<bool>(RuleConstants.CELL_WALL_TOP); } }
         public bool WallLow { get { return Get<bool>(RuleConstants.CELL_WALL_LOW); } }
@@ -62,7 +66,15 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public string FloorPrefabName { get { return Get(RuleConstants.FLOOR_NAME); } }
         public float WallOffset { get { return Get<float>(RuleConstants.WALL_OFFSET); } }
 
-        public Cell Cell { get { return World.Map.GetCell(new GridXY(X, Y)); } }
+        public Cell Cell { get { return Map.GetCell(new GridXY(X, Y)); } }
+
+
+        public bool Walkable { get
+            {
+                return Map.Handlers.Walkable.Process(Cell);
+            }
+        }
+        public MapTileSet TileSet { get { return Map.Handlers.TileSet.Process(Cell); } }
 
         public Dictionary<GenerationRule<Ctx>, List<GenerationAction>> GetActions()
         {
@@ -75,7 +87,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         {
             var otherCoord = new GridXY(X + xDiff, Y + yDiff);
 
-            if (World.Map.CoordinateExists(otherCoord))
+            if (Map.CoordinateExists(otherCoord))
             {
                 return GetSubContext<GridXY, Ctx>(otherCoord);
 
@@ -89,11 +101,11 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 
         public void SetFromGrid(MapXY map, GridXY coord)
         {
+            Map = map;
             Set(RuleConstants.CELL_X, coord.X);
             Set(RuleConstants.CELL_Y, coord.Y);
             Set(RuleConstants.CELL_WORLD_POS, map.TransformCoordinateToWorld(coord));
             Set(RuleConstants.CELL_UNIT_WIDTH, map.CellWidth);
-
             // check if the cell is a single wall. 
             var neighbors = map.GetTraversable(coord);
             Set(RuleConstants.CELL_WALL_HAS_ANY, neighbors.Count != 4);

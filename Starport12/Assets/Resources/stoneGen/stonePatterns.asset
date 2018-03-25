@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20facc97cf4d99d4ab1bddde60654a37, type: 3}
-  m_Name: stone
+  m_Name: stonePatterns
   m_EditorClassIdentifier: 
   Patterns:
   - {fileID: 114543937916563716, guid: ba8be09a056f8c145b6b03186183061a, type: 2}

@@ -40,7 +40,10 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
                 var instance = GameObject.Instantiate(_prefab);
                 instance.transform.localPosition += Position;
                 instance.transform.localRotation = Rotation;
-                var scale = World.Map.CellWidth;
+
+                var specialCtx = ctx as Ctx;
+
+                var scale = specialCtx.Map.CellWidth;
                 instance.transform.localScale = new Vector3(instance.transform.localScale.x * scale, instance.transform.localScale.y, instance.transform.localScale.z * scale);
             }
             catch (Exception ex)

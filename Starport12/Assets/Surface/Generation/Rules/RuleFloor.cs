@@ -16,7 +16,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
         public override bool[] EvaluateConditions(Ctx ctx)
         {
-            return new bool[] { ctx.Cell.Walkable };
+            return new bool[] { ctx.Walkable };
         }
 
         public override List<GenerationAction> Execute(Ctx ctx)
@@ -24,9 +24,9 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var output = new List<GenerationAction>();
 
             var coord = new GridXY(ctx.X, ctx.Y);
-            var position = World.Map.TransformCoordinateToWorld(coord);
+            var position = ctx.Map.TransformCoordinateToWorld(coord);
             //position.y = 1;
-            output.Add(new CreateObjectAction(ctx.Cell.DefaultFloorAsset, position, Quaternion.identity));
+            output.Add(new CreateObjectAction(ctx.TileSet.FloorPrefab, position, Quaternion.identity));
 
             return output;
         }
@@ -41,7 +41,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
         public override bool[] EvaluateConditions(Ctx ctx)
         {
-            return new bool[] { ctx.Cell.ReferenceSet.FillPrefab != null && !ctx.Cell.Walkable };
+            return new bool[] { ctx.TileSet.FillPrefab != null && !ctx.Walkable };
         }
 
         public override List<GenerationAction> Execute(Ctx ctx)
@@ -49,9 +49,9 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var output = new List<GenerationAction>();
 
             var coord = new GridXY(ctx.X, ctx.Y);
-            var position = World.Map.TransformCoordinateToWorld(coord);
+            var position = ctx.Map.TransformCoordinateToWorld(coord);
             //position.y = 1;
-            output.Add(new CreateObjectAction(ctx.Cell.ReferenceSet.FillPrefab, position, Quaternion.identity));
+            output.Add(new CreateObjectAction(ctx.TileSet.FillPrefab, position, Quaternion.identity));
 
             return output;
         }

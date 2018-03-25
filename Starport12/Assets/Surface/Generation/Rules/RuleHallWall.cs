@@ -18,8 +18,8 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         {
             return new bool[]
             {
-                   (ctx.Cell.Walkable && ctx.WallLeft && ctx.WallRight && !ctx.WallTop && !ctx.WallLow)
-                || (ctx.Cell.Walkable && !ctx.WallLeft && !ctx.WallRight && ctx.WallTop && ctx.WallLow)
+                   (ctx.Walkable && ctx.WallLeft && ctx.WallRight && !ctx.WallTop && !ctx.WallLow)
+                || (ctx.Walkable && !ctx.WallLeft && !ctx.WallRight && ctx.WallTop && ctx.WallLow)
 
 
             };
@@ -45,13 +45,13 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             }
 
 
-            output.Add(new CreateObjectAction(ctx.Cell.DefaultWallAsset,
+            output.Add(new CreateObjectAction(ctx.TileSet.WallPrefab,
                 ctx.WorldPos + offsetB * ctx.Get<float>(RuleConstants.CELL_UNIT_WIDTH),
                 Quaternion.Euler(0, rotB, 0)));
 
 
 
-            output.Add(new CreateObjectAction(ctx.Cell.DefaultWallAsset,
+            output.Add(new CreateObjectAction(ctx.TileSet.WallPrefab,
                 ctx.WorldPos + offsetA * ctx.Get<float>(RuleConstants.CELL_UNIT_WIDTH),
                 Quaternion.Euler(0, rotA, 0)));
 

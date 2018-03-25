@@ -19,7 +19,19 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         public DialogAnchor DialogAnchor;
         public ActorAnchor[] Players;
-        public MapLoader MapLoader;
+        //public MapLoader MapLoader;
+        public MapTilePalett TilePalett;
+        public PatternSet PatternSet;
+
+        public MapDataAnchor MapData;
+
+        //public WalkableHandler WalkableHandler = new WalkableHandler();
+        //public RoomTypeNameHandler RoomTypeNameHandler = new RoomTypeNameHandler(new Dictionary<Color, string> {
+        //    { ColorGen.FromRGB(128, 128, 128, 255), "stone"},
+        //    { ColorGen.FromRGB(127, 51, 0, 255), "dirt" }
+        //});
+
+        public CellHandlers CellHandlers;
 
         private void AttachCellAnchors()
         {
@@ -44,12 +56,16 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
-            World.Map = MapLoader.LoadFromMFT();
+
+            CellHandlers = new CellHandlers(TilePalett);
+
+
+            World.Map = MapLoader.LoadFromMFT(CellHandlers, MapData.Raw);
             //World.Map = MapLoader.LoadFromFile();
             Map = World.Map;
             AttachCellAnchors();
 
-            MapLoader.ApplyRules(Map, MapLoader.GenerationPatternSet);
+            MapLoader.ApplyRules(Map, PatternSet);
             
         }
 

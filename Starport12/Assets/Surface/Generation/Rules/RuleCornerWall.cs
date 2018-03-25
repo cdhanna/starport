@@ -17,10 +17,11 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
         public override bool[] EvaluateConditions(Ctx ctx)
         {
+
             return new bool[]
             {
-                ctx.Cell.Walkable && (ctx.WallLeft ^ ctx.WallRight),
-                ctx.Cell.Walkable && (ctx.WallTop ^ ctx.WallLow)
+                ctx.Walkable && (ctx.WallLeft ^ ctx.WallRight),
+                ctx.Walkable && (ctx.WallTop ^ ctx.WallLow)
             };
         }
 
@@ -47,13 +48,13 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             }
 
 
-            output.Add(new CreateObjectAction(ctx.Cell.DefaultWallAsset,
+            output.Add(new CreateObjectAction(ctx.TileSet.WallPrefab,
                 position + vertOffset * ctx.Get<float>(RuleConstants.CELL_UNIT_WIDTH),
                 Quaternion.Euler(0, vertRotation, 0)));
 
 
 
-            output.Add(new CreateObjectAction(ctx.Cell.DefaultWallAsset,
+            output.Add(new CreateObjectAction(ctx.TileSet.WallPrefab,
                 position + hortOffset * ctx.Get<float>(RuleConstants.CELL_UNIT_WIDTH),
                 Quaternion.Euler(0, hortRotation, 0)));
 
