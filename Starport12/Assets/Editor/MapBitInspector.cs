@@ -6,10 +6,63 @@ using System.Linq;
 using System;
 using Smallgroup.Starport.Assets.Surface.Generation;
 using Smallgroup.Starport.Assets.Surface;
+using System.IO;
+using System.Security.AccessControl;
+using System.Diagnostics;
 
 [CustomEditor(typeof(MapPattern))]
 public class MapBitInspector : Editor {
+    
 
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        var pattern = (MapPattern)target;
+
+        
+        if (GUILayout.Button("Open"))
+        {
+            
+            if (pattern.PatternData == null)
+            {
+                if (pattern.MapDataPath != null)
+                {
+                    AssetDatabase.ImportAsset(pattern.MapDataPath);
+                    var resultPre = AssetDatabase.LoadMainAssetAtPath(pattern.MapDataPath) as GameObject;
+                    pattern.PatternData = resultPre.GetComponent<MapDataAnchor>();
+                } else
+                {
+                    var path = Application.dataPath + $"/Resources/Patterns/{pattern.name}.mft";
+                    File.WriteAllBytes(path, new byte[] { 0 }); // empty file
+
+                    var resourcePath = $"Assets/Resources/Patterns/{pattern.name}.mft";
+                    AssetDatabase.ImportAsset(resourcePath);
+                    var result = AssetDatabase.LoadMainAssetAtPath(resourcePath) as GameObject;
+                    pattern.PatternData = result.GetComponent<MapDataAnchor>();
+                    pattern.MapDataPath = resourcePath;
+                }
+            }
+
+            try
+            {
+                var prefabPath = AssetDatabase.GetAssetPath(pattern.PatternData);
+                var fullPath = Application.dataPath.Substring(0, Application.dataPath.Length - "Assets".Length) + prefabPath;
+
+                Process myProcess = new Process();
+                myProcess.StartInfo.FileName = fullPath; //not the full application path
+                                                         //myProcess.StartInfo.Arguments = "/A \"page=2=OpenActions\" C:\\example.pdf";
+                myProcess.Start();
+
+            } catch (Exception ex)
+            {
+                throw new Exception("Dont worry about this", ex);
+            }
+
+        }
+
+    }
+    
 
     //private List<bool> isLayerOpen = new List<bool>();
 
@@ -52,14 +105,14 @@ public class MapBitInspector : Editor {
     //    {
     //        mapBit.Layers = new List<MapPatternLayer>();
     //    }
-       
+
 
     //    Handles.color = Color.white;
     //    GUIStyle style = new GUIStyle();
     //    style.normal.textColor = Color.green;
     //    style.fontSize = 18;
     //    //Handles.Label(mapBit.transform.position, "Hello World", style);
-        
+
     //    //for (var i = 0; i < mapBit.pattern.Length; i++)
     //    //{
     //    //    for (var j = 0; j < mapBit.pattern[i].Length; j++)
@@ -115,8 +168,8 @@ public class MapBitInspector : Editor {
     //        var isFoldedOut = isLayerOpen[i];
 
     //        EditorGUILayout.BeginHorizontal();
-            
-            
+
+
     //        isLayerOpen[i] = EditorGUILayout.Foldout(isFoldedOut, "");
     //        EditorGUILayout.LabelField("Layer Name:", GUILayout.Width(100));
     //        layer.LayerName = EditorGUILayout.TextField(layer.LayerName, GUILayout.ExpandWidth(true));
@@ -149,7 +202,7 @@ public class MapBitInspector : Editor {
     //        GUILayout.BeginHorizontal();
     //        for (var x = 0; x < pattern.Width; x++)
     //        {
-                
+
     //            if (i >= layer.Data.Count)
     //            {
     //                layer.Data.Add(CellTemplates.Empty);

@@ -66,7 +66,7 @@ namespace Smallgroup.Starport.Assets.Surface
         public CellHandlers(MapTilePalett palett)
         {
             Walkable = new WalkableHandler();
-            TileSet = new RoomMapTileSetHandler(palett);
+            TileSet = new RoomMapTileSetHandler(palett.TileSets.First(), palett);
             //var walkHandler = new WalkableHandler();
             // Handlers.Add(walkHandler);
         }
@@ -104,10 +104,12 @@ namespace Smallgroup.Starport.Assets.Surface
         public override long LayerCode { get; } = Cell.LAYER_ROOMS;
 
         public MapTilePalett Palett { get; private set; }
+        public MapTileSet EmptyTileSet { get; private set; }
 
-        public RoomMapTileSetHandler(MapTilePalett palett)
+        public RoomMapTileSetHandler(MapTileSet nullTileset, MapTilePalett palett)
         {
             Palett = palett;
+            EmptyTileSet = nullTileset;
         }
 
         protected override MapTileSet Interp(CellTemplate data)
@@ -115,9 +117,10 @@ namespace Smallgroup.Starport.Assets.Surface
             var match = Palett.TileSets.FirstOrDefault(t => t.WalkColor.Equals(data.Color));
             if (match == null)
             {
-                throw new Exception("No tile found for data " + data);
+                return EmptyTileSet;
+                //throw new Exception("No tile found for data " + data);
             }
-           
+
             return match;
         }
     }

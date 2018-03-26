@@ -17,11 +17,13 @@ using UnityEngine;
 public class MapPattern : MonoBehaviour {
 
 
-    public GameObject FloorPrefab;
+    //public GameObject FloorPrefab;
 
     public MapTilePalett Palett;
-
     public MapDataAnchor PatternData;
+
+    [HideInInspector]
+    public string MapDataPath;
 
     //[HideInInspector]
     //public List<MapPatternLayer> Layers;

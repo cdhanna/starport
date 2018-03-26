@@ -169,7 +169,6 @@ MonoBehaviour:
   Players: []
   TilePalett: {fileID: 11400000, guid: 8d38cfe15a49ec046aa15dc6e71ff1ee, type: 2}
   PatternSet: {fileID: 11400000, guid: dbdae382e017ae74ea7c44b9e365f158, type: 2}
-  MftAsset: {fileID: 4900000, guid: 7e1f19e58a0eff2489e25386ae9a8070, type: 3}
   MapData: {fileID: 11400000, guid: 74db5c616ed61a3449248a6ba72272c8, type: 3}
 --- !u!1 &496370822
 GameObject:
@@ -252,6 +251,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1087202752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1087202754}
+  - component: {fileID: 1087202753}
+  m_Layer: 0
+  m_Name: testitout
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1087202753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1087202752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeba9e781a2344e43b9201ce3823cb82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Palett: {fileID: 11400000, guid: 8d38cfe15a49ec046aa15dc6e71ff1ee, type: 2}
+  PatternData: {fileID: 11400000, guid: 069b7da92437ad349836b47c7299c9ec, type: 3}
+  Width: 0
+  Height: 0
+--- !u!4 &1087202754
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1087202752}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.522673, y: 1.2066126, z: 19.067627}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1220810778
 GameObject:
   m_ObjectHideFlags: 0

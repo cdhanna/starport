@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Surface.Generation
 {
+    [Serializable]
     public class MapDataAnchor : MonoBehaviour
     {
         //[SerializeField]

@@ -107,14 +107,17 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
                     {
                         var name = names[i];
                         var data = datas[i];
-                        var layerCode = LayerNameToCode[name];
-                        cell.CellData[layerCode] = new CellTemplate()
+                        var layerCode = default(long);
+                        if (LayerNameToCode.TryGetValue(name, out layerCode))
                         {
-                            Red = data.ChannelR,
-                            Green = data.ChannelG,
-                            Blue = data.ChannelB,
-                            Alpha = data.ChannelA,
-                        };
+                            cell.CellData[layerCode] = new CellTemplate()
+                            {
+                                Red = data.ChannelR,
+                                Green = data.ChannelG,
+                                Blue = data.ChannelB,
+                                Alpha = data.ChannelA,
+                            };
+                        }
                     }
 
                     //var cell = GenerateCell(palett, roomData.ChannelR, roomData.ChannelG, roomData.ChannelB, roomData.ChannelA);
@@ -154,10 +157,10 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             var rules = new List<GenerationRule<Ctx>>();
                 generationPatterns.Patterns = generationPatterns.Patterns.Where(p => p != null).ToList();
 
-                generationPatterns.Patterns.ForEach(bit =>
-                {
-                    rules.AddRange(PatternRule.General(bit));
-                });
+                //generationPatterns.Patterns.ForEach(bit =>
+                //{
+                //    rules.AddRange(PatternRule.General(bit));
+                //});
 
             var rules2 = new GenerationRule<Ctx>[]{
                 new RuleFloor(),
