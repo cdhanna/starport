@@ -1,4 +1,5 @@
-﻿using Smallgroup.Starport.Assets.Surface.Generation;
+﻿using Smallgroup.Starport.Assets.Surface;
+using Smallgroup.Starport.Assets.Surface.Generation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ public class MapPattern : MonoBehaviour {
     [HideInInspector]
     public int Height;
 
+    private GameObject _basicGroup;
     //[HideInInspector]
     //public string[] pattern;
 
@@ -47,23 +49,34 @@ public class MapPattern : MonoBehaviour {
 	}
 
 
-    //public void GenerateFloors()
-    //{
-    //    while (transform.childCount > 0)
-    //    {
-    //        DestroyImmediate(transform.GetChild(0).gameObject);
-    //    }
+    public void GenerateFloors()
+    {
+        //while (transform.childCount > 0)
+        //{
+        //    DestroyImmediate(transform.GetChild(0).gameObject);
+        //}
 
+        if (_basicGroup != null)
+        {
+            DestroyImmediate(_basicGroup);
+        }
 
-    //    for (var i = 0; i < pattern.Length; i++)
-    //    {
-    //        for (var j = 0; j < pattern[i].Length; j++)
-    //        {
-    //            var tile = Instantiate(FloorPrefab, transform);
-    //            tile.transform.localPosition = GetPositionAtCell(i, j);
-    //        }
-    //    }
-    //}
+        var group = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        DestroyImmediate(group.GetComponent<MeshFilter>());
+        DestroyImmediate(group.GetComponent<MeshRenderer>());
+        DestroyImmediate(group.GetComponent<BoxCollider>());
+        group.name = "_basic";
+        group.transform.SetParent(transform);
+        _basicGroup = group;
+
+        var mapXY = MapLoader.LoadFromPattern(new CellHandlers(Palett), this);
+        mapXY.CellWidth = 1;
+        mapXY.CellOffset = new Vector3(mapXY.HighestX, 0, mapXY.HighestY + 1) * -.5f;
+        var all = MapLoader.ApplyRules(mapXY, new PatternSet());
+        all.Where(obj => obj.transform.parent == null)
+            .ToList()
+            .ForEach(obj => obj.transform.SetParent(group.transform));
+    }
 
     //public Vector3 GetPositionAtCell(int i, int j)
     //{

@@ -60,10 +60,36 @@ public class MapBitInspector : Editor {
             }
 
         }
+        HandleGenerationButton();
+
 
     }
     
+    private void HandleGenerationButton()
+    {
+        var pattern = (MapPattern)target;
 
+        if (GUILayout.Button("Generate Basic"))
+        {
+            if (pattern.Palett == null)
+            {
+                EditorUtility.DisplayDialog("Error", "You must assign a palett before you can generate a basic version of this pattern", "Succumb To Program's Demands...");
+                return;
+            }
+            if (pattern.MapDataPath != null)
+            {
+                AssetDatabase.ImportAsset(pattern.MapDataPath);
+                var resultPre = AssetDatabase.LoadMainAssetAtPath(pattern.MapDataPath) as GameObject;
+                pattern.PatternData = resultPre.GetComponent<MapDataAnchor>();
+                pattern.GenerateFloors();
+            } else
+            {
+                EditorUtility.DisplayDialog("Error", "We couldnt find the .mft resource I guess. Sorry bro.", "Go home.");
+
+            }
+
+        }
+    }
     //private List<bool> isLayerOpen = new List<bool>();
 
     //public override void OnInspectorGUI()

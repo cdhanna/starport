@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapFileCodec;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,12 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public byte Alpha = 255;
 
         public Color Color { get { return new Color(Red / 255f, Green / 255f, Blue / 255f, Alpha / 255f); } }
+
+
+        public bool Equals(CellData data)
+        {
+            return data.ChannelR == Red && data.ChannelG == Green && data.ChannelB == Blue && data.ChannelA == Alpha;
+        }
     }
 
     public static class CellTemplates

@@ -5,9 +5,202 @@
 //using System.Text;
 //using UnityEngine;
 
-//namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
-//{
+using System.Collections.Generic;
+using Smallgroup.Starport.Assets.Core.Generation;
+using MapFileCodec;
+using System;
+using System.Linq;
+using UnityEngine;
 
+namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
+{
+    public class PatternRule : GenerationRule<Ctx>
+    {
+        public static List<PatternRule> GenerateAllRotations(MapPattern pattern)
+        {
+            var all = new List<PatternRule>();
+
+            all.Add(new PatternRule(pattern, 0));
+            all.Add(new PatternRule(pattern, 1));
+            all.Add(new PatternRule(pattern, 2));
+            all.Add(new PatternRule(pattern, 3));
+
+            /* 123
+             * 456
+             * 789
+             * 
+             * 
+             * 
+             */
+
+            return all;
+        }
+
+        public static MapFile Rotate(MapFile input)
+        {
+            var output = new MapFile()
+            {
+                LayerCount = input.LayerCount,
+                LayerData = input.LayerData,
+                LayerNames = input.LayerNames,
+                Name = input.Name,
+                Width = input.Height,
+                Height = input.Width,
+            };
+
+            var nextData = new List<CellData[]>();
+            for (var l = 0; l < input.LayerCount; l++)
+            {
+                var line = new List<CellData>();
+                for (var index = 0; index < input.LayerData[l].Length; index++)
+                {
+
+                    var x = index % input.Width;
+                    var y = index / input.Height;
+                    var node = input.GetData(l, (input.Height - 1) - y, x);
+                    line.Add(node);
+                }
+
+                nextData.Add(line.ToArray());
+            }
+            output.LayerData = nextData.ToArray();
+           
+            //            var output = new List<string>();
+
+            //            var maxCol = 0;
+
+            //            for (var i = 0; i < input.Length; i++)
+            //            {
+            //                maxCol = Math.Max(maxCol, input[i].Length);
+            //            }
+
+            //            for (var i = 0; i < maxCol; i++)
+            //            {
+            //                var row = "";
+            //                for (var j = input.Length - 1; j > -1; j--)
+            //                {
+            //                    row += input[j][i];
+            //                }
+            //                output.Add(row);
+            //            }
+
+            //            return output.ToArray();
+
+            return output;
+        }
+
+
+        public MapPattern Pattern { get; private set; }
+        public MapFile MapFile { get; private set; }
+        public Quaternion Quaternion { get; private set; }
+
+
+        public PatternRule(MapPattern pattern, int rotationCount)
+        {
+            Tag = "PATTERN";
+            Pattern = pattern;
+            MapFile = Converter.FromBytes(pattern.PatternData.Raw);
+            for (var i = 0; i < rotationCount; i++)
+            {
+                MapFile = Rotate(MapFile);
+            }
+            Quaternion = Quaternion.Euler(0, rotationCount * 90, 0);
+        }
+
+        public int RuleSize { get { return MapFile.Width * MapFile.Height; } }
+
+        public override bool[] EvaluateConditions(Ctx ctx)
+        {
+            var results = new List<bool>();
+            for (var x = 0; x < MapFile.Width; x++)
+            {
+                for (var y = 0; y < MapFile.Height; y++)
+                {
+                    var expectedData = MapFile.GetData(x, y);
+                    var neighbor = ctx.GetNeighborCtx(x, y);
+                    if (neighbor == null)
+                    {
+                        return new bool[] { false };
+                    }
+                    var actualData = neighbor.Cell.CellData;
+
+                    for (var i = 0; i < expectedData.Length; i++)
+                    {
+                        var outCode = default(long);
+                        var name = MapFile.LayerNames[i];
+                        if (MapLoader.LayerNameToCode.TryGetValue(name, out outCode))
+                        {
+                            var actual = actualData[outCode];
+                            var expected = expectedData[i];
+                            var match = 
+                                    neighbor.PatternCount <= RuleSize
+                                &&  actual.Equals(expected);
+                            if (match)
+                            {
+                                results.Add(true);
+                            } else
+                            {
+                                return new bool[] { false };
+                            }
+                        }
+                    }
+                }
+            }
+
+            return results.ToArray();
+        }
+
+        public override List<GenerationAction> Execute(Ctx ctx)
+        {
+            var output = new List<GenerationAction>();
+
+
+            var position = ctx.Get<Vector3>(RuleConstants.CELL_WORLD_POS);
+            //var offset = new Vector3(MapFile.Width - 1, 0, -(MapFile.Height - 1)) * ctx.CellUnitWidth / 2;
+            var offset = new Vector3(
+                MapFile.Width - 1,
+                0,
+                MapFile.Height - 1
+                ) * ctx.CellUnitWidth/2;
+            var action = new CreateObjectAction(Pattern.gameObject, position + offset, Quaternion);
+
+            output.Add(action);
+
+            for (var x = 0; x < MapFile.Width; x++)
+            {
+                for (var y = 0; y < MapFile.Height; y++)
+                {
+
+                    var neighbor = ctx.GetNeighborCtx(x, y);
+                    if (neighbor != null)
+                    {
+                        neighbor.PatternCount = RuleSize;
+                        var neighborActions = neighbor.Ensure("pattern_clear_actions", new List<Action>());
+                        neighborActions.ForEach(clear => clear());
+                        neighborActions.Clear();
+                        neighborActions.Add(() =>
+                       {
+                           ctx.GetActions()[this].Remove(action);
+                       });
+
+
+                        var rule2Actions = neighbor.GetActions();
+                        rule2Actions.Values.ToList().ForEach(actions =>
+                        {
+                            actions.OfType<CreateObjectAction>()
+                                .ToList()
+                                .ForEach(a => actions.Remove(a));
+                        });
+                    }
+                }
+            }
+
+            return output;
+        }
+    }
+
+
+}
 //    public static class PatternRule
 //    {
 
@@ -21,7 +214,7 @@
 //            {
 //                maxCol = Math.Max(maxCol, input[i].Length);
 //            }
-            
+
 //            for (var i = 0; i < maxCol; i++)
 //            {
 //                var row = "";
@@ -161,12 +354,12 @@
 //                {
 //                    var neighbor = ctx.GetNeighborCtx((int)j, (int)-i);
 
-                    
+
 
 //                    var matched = neighbor != null
 //                        && neighbor.PatternCount <= ruleSize
 //                        && neighbor.Cell.Code == data[i][j];
-                    
+
 //                    pattern.Add(matched);
 //                    //if (!matched)
 //                    //{
@@ -209,7 +402,7 @@
 //            {
 //                for (var j = 0; j < data[i].Length; j++)
 //                {
-                    
+
 //                    var neighbor = ctx.GetNeighborCtx(j ,-i);
 //                    if(neighbor != null)
 //                    {
@@ -235,8 +428,8 @@
 //                    }
 //                }
 //            }
-            
-            
+
+
 
 //            return output;
 //        }

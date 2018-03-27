@@ -10,12 +10,39 @@ namespace Smallgroup.Starport.Assets.Surface
     public class MapXY : Map<GridXY, Cell>
     {
         public float CellWidth { get; set; }
-        public Vector3 CellOffset { get { return new Vector3(CellWidth, 0, CellWidth) * -2.5f; } }
+        public Vector3 CellOffset { get; set; }
         public CellHandlers Handlers { get; set; }
         public MapXY(CellHandlers handlers)
         {
             Handlers = handlers;
             CellWidth = 1.7f;
+            CellOffset = Vector3.zero;
+        }
+
+        public int HighestX { get
+            {
+                var best = int.MinValue;
+                Coordinates.ToList().ForEach(c => best = Math.Max(c.X, best));
+                return best;
+            }
+        }
+        public int HighestY
+        {
+            get
+            {
+                var best = int.MinValue;
+                Coordinates.ToList().ForEach(c => best = Math.Max(c.Y, best));
+                return best;
+            }
+        }
+        public int LowestX
+        {
+            get
+            {
+                var best = int.MaxValue;
+                Coordinates.ToList().ForEach(c => best = Math.Min(c.X, best));
+                return best;
+            }
         }
 
         public override GridXY TransformWorldToCoordinate(Vector3 position)

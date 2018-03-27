@@ -136,7 +136,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             return null;
         }
 
-        public static void ApplyRules(MapXY map, PatternSet generationPatterns)
+        public static List<GameObject> ApplyRules(MapXY map, PatternSet generationPatterns)
         {
             var globalCtx = new Ctx(null);
 
@@ -154,15 +154,17 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 
             });
 
-            var rules = new List<GenerationRule<Ctx>>();
-                generationPatterns.Patterns = generationPatterns.Patterns.Where(p => p != null).ToList();
+            var allRules = new List<GenerationRule<Ctx>>();
 
-                //generationPatterns.Patterns.ForEach(bit =>
-                //{
-                //    rules.AddRange(PatternRule.General(bit));
-                //});
+            generationPatterns.Patterns = generationPatterns.Patterns.Where(p => p != null).ToList();
 
-            var rules2 = new GenerationRule<Ctx>[]{
+            generationPatterns.Patterns.ForEach(bit =>
+            {
+                allRules.AddRange(PatternRule.GenerateAllRotations(bit));
+                //allRules.AddRange(PatternRule.General(bit));
+            });
+
+            var standardRules = new GenerationRule<Ctx>[]{
                 new RuleFloor(),
                 new RuleFloorFull(),
                 new RuleSingleWall(),
@@ -175,13 +177,15 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
                 new RulePillarCorner(),
 
             }.ToList();
-            rules.AddRange(rules2);
+            allRules.AddRange(standardRules);
 
 
             var actions = runner.Run(globalCtx, map, (ctx, coord) => ctx.SetFromGrid(map, coord),
-                    rules.ToArray());
+                    allRules.ToArray());
 
             actions.ForEach(a => a.Invoke(globalCtx));
+
+            return globalCtx.Ensure("all_generated_objects", new List<GameObject>());
         }
        
         //public static Cell GenerateCell(MapTilePalett tilePalette, byte red, byte green, byte blue, byte alpha)
