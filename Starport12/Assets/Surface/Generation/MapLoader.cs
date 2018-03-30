@@ -24,7 +24,8 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public static Dictionary<string, long> LayerNameToCode { get; private set; } = new Dictionary<string, long>
         {
             { "rooms", Cell.LAYER_ROOMS },
-            { "walkable", Cell.LAYER_WALKABLE }
+            { "walkable", Cell.LAYER_WALKABLE },
+            { "zones", Cell.LAYER_ZONES }
         };
 
 

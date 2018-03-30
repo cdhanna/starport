@@ -45,6 +45,7 @@ namespace Smallgroup.Starport.Assets.Surface
         public void InitDialogAttributes(DialogAnchor dialog)
         {
             UnitySystemConsoleRedirector.Redirect();
+            if (dialog == null) return; 
 
             var dEngine = dialog.dEngine;
             _dialog = dialog;

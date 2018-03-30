@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Scripts
 {
-    class WorldAnchor : MonoBehaviour
+    public class WorldAnchor : MonoBehaviour
     {
             
         public MapXY Map { get; set; }
@@ -32,6 +32,7 @@ namespace Smallgroup.Starport.Assets.Scripts
         //});
 
         public CellHandlers CellHandlers;
+        public List<MapZone> Zones;
 
         private void AttachCellAnchors()
         {
@@ -50,15 +51,15 @@ namespace Smallgroup.Starport.Assets.Scripts
                 cellObj.transform.localPosition = World.Map.TransformCoordinateToWorld(coord);
 
                 float scale = .9f;
-                cellObj.transform.localScale = new Vector3(World.Map.CellWidth * scale, .1f, World.Map.CellWidth * scale);
+                cellObj.transform.localScale = new Vector3(Map.CellWidth * scale, .1f, Map.CellWidth * scale);
             }
         }
 
-        protected void Start()
+        protected void Awake()
         {
 
             CellHandlers = new CellHandlers(TilePalett);
-
+            CellHandlers.Zones.Zones = Zones;
 
             World.Map = MapLoader.LoadFromMFT(CellHandlers, MapData.Raw);
             //World.Map = MapLoader.LoadFromFile();

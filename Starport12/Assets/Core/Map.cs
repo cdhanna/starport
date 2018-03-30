@@ -80,6 +80,13 @@ namespace Smallgroup.Starport.Assets.Core
             return result;
         }
 
+        public TCoordinate GetCoordinate(TCell cell)
+        {
+            var result = default(TCoordinate);
+            _cell2Coord.TryGetValue(cell, out result);
+            return result;
+        }
+
         public List<TCoordinate> GetTraversable(TCoordinate from)
         {
             var coords = default(List<TCoordinate>);

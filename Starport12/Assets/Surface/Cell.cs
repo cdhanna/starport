@@ -1,4 +1,5 @@
 ﻿using Smallgroup.Starport.Assets.Core;
+using Smallgroup.Starport.Assets.Scripts;
 using Smallgroup.Starport.Assets.Surface.Generation;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace Smallgroup.Starport.Assets.Surface
 
         public const long LAYER_WALKABLE = 10;
         public const long LAYER_ROOMS = 20;
+        public const long LAYER_ZONES = 30;
         public Dictionary<long, CellTemplate> CellData { get; set; } = new Dictionary<long, CellTemplate>()
         {
             { LAYER_WALKABLE, CellTemplates.Empty },
-            { LAYER_ROOMS, CellTemplates.Empty }
+            { LAYER_ROOMS, CellTemplates.Empty },
+            { LAYER_ZONES, CellTemplates.Empty }
         };
 
         //public bool Walkable { get; set; }
@@ -49,7 +52,7 @@ namespace Smallgroup.Starport.Assets.Surface
         public abstract long LayerCode { get; }
 
         protected abstract TResult Interp(CellTemplate data);
-
+        
         public TResult Process(Cell cell)
         {
             var data = cell.CellData[LayerCode];
@@ -63,10 +66,12 @@ namespace Smallgroup.Starport.Assets.Surface
 
         public WalkableHandler Walkable { get; set; } 
         public RoomMapTileSetHandler TileSet { get; set; }
+        public MapZoneHandler Zones { get; set; }
         public CellHandlers(MapTilePalett palett)
         {
             Walkable = new WalkableHandler();
             TileSet = new RoomMapTileSetHandler(palett.TileSets.First(), palett);
+            Zones = new MapZoneHandler();
             //var walkHandler = new WalkableHandler();
             // Handlers.Add(walkHandler);
         }
@@ -96,6 +101,18 @@ namespace Smallgroup.Starport.Assets.Surface
         protected override string Interp(CellTemplate data)
         {
             return ColorToRoomName[data.Color];
+        }
+    }
+
+    public class MapZoneHandler : DefaultCellHandler<MapZone>
+    {
+        public override long LayerCode { get; } = Cell.LAYER_ZONES;
+
+        public List<MapZone> Zones { get; set; }
+
+        protected override MapZone Interp(CellTemplate data)
+        {
+            return Zones.FirstOrDefault(z => z.ColorCode.Equals(data.Color));
         }
     }
 

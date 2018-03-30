@@ -1,5 +1,6 @@
 ﻿using Smallgroup.Starport.Assets.Core.Players;
 using Smallgroup.Starport.Assets.Surface;
+using Smallgroup.Starport.Assets.Surface.Generation;
 using Smallgroup.Starport.Assets.Surface.InputMechs;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,24 @@ namespace Smallgroup.Starport.Assets.Scripts
     public class ActorAnchor : MonoBehaviour
     {
         public Color Color;
-        public GridXY StartPosition;
+        //public GridXY StartPosition;
         public bool UseMouse;
         public ControllerBinding Controller;
 
-        public DialogAnchor DialogAnchor;
+        public MapZone SpawnZone;
+
+        public WorldAnchor World;
+
+        private DialogAnchor DialogAnchor;
 
         public SimpleActor Actor;
         public DefaultInputMech<SimpleActor> InputMech { get; set; }
 
         private Material standardMat;
         private GameObject gob;
+
+
+
         //public MapXY World { get; set; }
 
         public ActorAnchor()
@@ -31,6 +39,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
+            DialogAnchor = World.DialogAnchor;
             Actor.Setup(World.Map, transform);
             Actor.InitDialogAttributes(DialogAnchor);
 
@@ -41,9 +50,18 @@ namespace Smallgroup.Starport.Assets.Scripts
             standardMat = gob.GetComponent<MeshRenderer>().material;
             gob.transform.parent = transform;
             gob.transform.localScale *= .5f;
+            gob.transform.localPosition = Vector3.zero;
 
 
-            World.Map.SetObjectPosition(StartPosition, Actor);
+            var possibleCells = World.Map.Coordinates.Select(xy => World.Map.GetCell(xy)).Where(c => {
+                var proc = World.Map.Handlers.Zones.Process(c);
+                return proc == SpawnZone;
+                }).ToList();
+
+            float n = UnityEngine.Random.Range(0, possibleCells.Count);
+            var startCell = possibleCells[(int)(Math.Round(n, 1))];
+            var startCoord = World.Map.GetCoordinate(startCell);
+            World.Map.SetObjectPosition(startCoord, Actor);
 
             if (UseMouse)
             {
@@ -66,7 +84,7 @@ namespace Smallgroup.Starport.Assets.Scripts
         protected void Update()
         {
 
-            if (!DialogAnchor.ConversationFlag)
+            if (DialogAnchor==null || !DialogAnchor.ConversationFlag)
             {
                 Actor.Update();
                 InputMech.Update();

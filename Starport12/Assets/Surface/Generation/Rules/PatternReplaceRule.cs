@@ -54,11 +54,27 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
                 var line = new List<CellData>();
                 for (var index = 0; index < input.LayerData[l].Length; index++)
                 {
+                    var coef = (input.Height - 1 ) - (index % input.Height);
+                    var index2 = input.Width *coef + (index / input.Height);
 
-                    var x = index % input.Width;
-                    var y = index / input.Height;
-                    var node = input.GetData(l, (input.Height - 1) - y, x);
-                    line.Add(node);
+
+                    var x = index2 % input.Width;
+                    var y = index2 / input.Width;
+                    
+
+                    //y2 = (input.Height - 1) - y; x2 = x;
+
+
+
+                    try
+                    {
+                        //var node = input.LayerData[l][y2 * output.Height + x2];
+                        var node = input.GetData(l, x, y);
+                        line.Add(node);
+                    } catch (Exception ex)
+                    {
+
+                    }
                 }
 
                 nextData.Add(line.ToArray());
@@ -116,7 +132,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             {
                 for (var y = 0; y < MapFile.Height; y++)
                 {
-                    var expectedData = MapFile.GetData(x, y);
+                    var expectedData = MapFile.GetData(x, MapFile.Height-1 - y);
                     var neighbor = ctx.GetNeighborCtx(x, y);
                     if (neighbor == null)
                     {
