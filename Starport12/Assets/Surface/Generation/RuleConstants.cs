@@ -67,7 +67,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public float WallOffset { get { return Get<float>(RuleConstants.WALL_OFFSET); } }
 
         public Cell Cell { get { return Map.GetCell(new GridXY(X, Y)); } }
-
+        public bool HardWalls { get { return Get<bool>("HardWalls"); } }
 
         public bool Walkable { get
             {

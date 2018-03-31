@@ -190,23 +190,29 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
                     var neighbor = ctx.GetNeighborCtx(x, y);
                     if (neighbor != null)
                     {
-                        neighbor.PatternCount = RuleSize;
-                        var neighborActions = neighbor.Ensure("pattern_clear_actions", new List<Action>());
-                        neighborActions.ForEach(clear => clear());
-                        neighborActions.Clear();
-                        neighborActions.Add(() =>
-                       {
-                           ctx.GetActions()[this].Remove(action);
-                       });
-
-
-                        var rule2Actions = neighbor.GetActions();
-                        rule2Actions.Values.ToList().ForEach(actions =>
+                        if (Pattern.ReplacementPattern)
                         {
-                            actions.OfType<CreateObjectAction>()
-                                .ToList()
-                                .ForEach(a => actions.Remove(a));
-                        });
+                            //  neighbor.PatternCount = RuleSize;
+
+
+                            var neighborActions = neighbor.Ensure("pattern_clear_actions", new List<Action>());
+                            neighborActions.ForEach(clear => clear());
+                            neighborActions.Clear();
+                            neighborActions.Add(() =>
+                           {
+                               ctx.GetActions()[this].Remove(action);
+                           });
+
+                        
+
+                            var rule2Actions = neighbor.GetActions();
+                            rule2Actions.Values.ToList().ForEach(actions =>
+                            {
+                                actions.OfType<CreateObjectAction>()
+                                    .ToList()
+                                    .ForEach(a => actions.Remove(a));
+                            });
+                        }
                     }
                 }
             }

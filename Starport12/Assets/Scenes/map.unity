@@ -128,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &161877644
 Transform:
   m_ObjectHideFlags: 0
@@ -237,6 +237,7 @@ MonoBehaviour:
   TilePalett: {fileID: 11400000, guid: 8d38cfe15a49ec046aa15dc6e71ff1ee, type: 2}
   PatternSet: {fileID: 11400000, guid: dbdae382e017ae74ea7c44b9e365f158, type: 2}
   MapData: {fileID: 11400000, guid: 74db5c616ed61a3449248a6ba72272c8, type: 3}
+  AdditionalRules: []
   Zones:
   - {fileID: 11400000, guid: 859810e27a01e8f4186512a5ce98623b, type: 2}
   - {fileID: 11400000, guid: 905afcb160c711842a305b135148513b, type: 2}
@@ -321,6 +322,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1001 &947932229
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4380676478313904, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380676478313904, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380676478313904, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380676478313904, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380676478313904, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380676478313904, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380676478313904, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380676478313904, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1736402412686212, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &965540377
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +405,7 @@ MonoBehaviour:
   World: {fileID: 483248443}
   Actor:
     Velocity: {x: 0, y: 0, z: 0}
-    Speed: 0.42
+    Speed: 0.19
     Friction: 0.87
     Name: test
     Merchant: 0
@@ -414,7 +461,7 @@ MonoBehaviour:
   Following:
   - {fileID: 965540379}
   Camera: {fileID: 496370825}
-  Offset: {x: 0, y: 15, z: 0}
+  Offset: {x: 0, y: 9.08, z: 0}
   AttractionCoef: 0.11
   FrictionCoef: 0.41
   Mass: 1
@@ -511,7 +558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1336106217
 Transform:
   m_ObjectHideFlags: 0

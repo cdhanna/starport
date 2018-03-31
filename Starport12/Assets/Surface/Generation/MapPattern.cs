@@ -33,6 +33,8 @@ public class MapPattern : MonoBehaviour {
     [HideInInspector]
     public int Height;
 
+    public bool ReplacementPattern = true;
+
     private GameObject _basicGroup;
     //[HideInInspector]
     //public string[] pattern;
@@ -72,7 +74,7 @@ public class MapPattern : MonoBehaviour {
         var mapXY = MapLoader.LoadFromPattern(new CellHandlers(Palett), this);
         mapXY.CellWidth = 1;
         mapXY.CellOffset = new Vector3(mapXY.HighestX, 0, mapXY.HighestY + 1) * -.5f;
-        var all = MapLoader.ApplyRules(mapXY, new PatternSet());
+        var all = MapLoader.ApplyRules(mapXY, new PatternSet(), null);
         all.Where(obj => obj.transform.parent == null)
             .ToList()
             .ForEach(obj => obj.transform.SetParent(group.transform));

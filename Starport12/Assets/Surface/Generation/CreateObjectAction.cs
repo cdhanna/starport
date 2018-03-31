@@ -38,13 +38,14 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
                     _prefab = Resources.Load<GameObject>(PrefabPath);
                 }
                 var instance = GameObject.Instantiate(_prefab);
+                var specialCtx = ctx as Ctx;
+                var scale = specialCtx.Map.CellWidth;
+                instance.transform.localScale = new Vector3(instance.transform.localScale.x * scale, instance.transform.localScale.y *scale, instance.transform.localScale.z * scale);
+
+           
                 instance.transform.localPosition += Position;
                 instance.transform.localRotation = Rotation;
 
-                var specialCtx = ctx as Ctx;
-
-                var scale = specialCtx.Map.CellWidth;
-                instance.transform.localScale = new Vector3(instance.transform.localScale.x * scale, instance.transform.localScale.y , instance.transform.localScale.z * scale);
 
                 ctx.Ensure("all_generated_objects", new List<GameObject>()).Add(instance);
             }

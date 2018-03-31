@@ -25,6 +25,8 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         public MapDataAnchor MapData;
 
+        public List<SuperRule> AdditionalRules;
+
         //public WalkableHandler WalkableHandler = new WalkableHandler();
         //public RoomTypeNameHandler RoomTypeNameHandler = new RoomTypeNameHandler(new Dictionary<Color, string> {
         //    { ColorGen.FromRGB(128, 128, 128, 255), "stone"},
@@ -66,7 +68,7 @@ namespace Smallgroup.Starport.Assets.Scripts
             Map = World.Map;
             AttachCellAnchors();
 
-            MapLoader.ApplyRules(Map, PatternSet);
+            MapLoader.ApplyRules(Map, PatternSet, AdditionalRules);
             
         }
 

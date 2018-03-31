@@ -137,11 +137,16 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             return null;
         }
 
-        public static List<GameObject> ApplyRules(MapXY map, PatternSet generationPatterns)
+        public static List<GameObject> ApplyRules(MapXY map, PatternSet generationPatterns, List<SuperRule> additionalRules)
         {
+            if (additionalRules == null)
+            {
+                additionalRules = new List<SuperRule>();
+            }
             var globalCtx = new Ctx(null);
 
             globalCtx.Set(RuleConstants.WALL_OFFSET, .5f);
+            globalCtx.Set("HardWalls", false);
             globalCtx.Map = map;
 
             var runner = new GenerationRunner(new string[][]{
@@ -151,7 +156,8 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
                     RuleConstants.TAG_JOINER,
                     RuleConstants.TAG_CORNER_JOINER,
                     RuleConstants.TAG_LIGHT},
-                new string[]{ RuleConstants.TAG_LIGHT, "PATTERN"}
+                new string[]{ RuleConstants.TAG_LIGHT, "PATTERN"},
+                new string[]{ "SPAWN" }
 
             });
 
@@ -179,7 +185,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 
             }.ToList();
             allRules.AddRange(standardRules);
-
+            allRules.AddRange(additionalRules.Select(r => r.Rule).ToArray());
 
             var actions = runner.Run(globalCtx, map, (ctx, coord) => ctx.SetFromGrid(map, coord),
                     allRules.ToArray());

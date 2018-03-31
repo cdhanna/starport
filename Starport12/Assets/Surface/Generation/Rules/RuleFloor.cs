@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 {
-    public class RuleFloor : GenerationRule<Ctx>
+    public class RuleFloor : DefaultCtxRule
     {
         public RuleFloor()
         {
@@ -50,7 +50,8 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
             var coord = new GridXY(ctx.X, ctx.Y);
             var position = ctx.Map.TransformCoordinateToWorld(coord);
-            //position.y = 1;
+
+            //position.y *= ctx.CellUnitWidth;
             output.Add(new CreateObjectAction(ctx.TileSet.FillPrefab, position, Quaternion.identity));
 
             return output;

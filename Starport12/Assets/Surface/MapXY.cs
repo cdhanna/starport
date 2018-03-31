@@ -15,7 +15,7 @@ namespace Smallgroup.Starport.Assets.Surface
         public MapXY(CellHandlers handlers)
         {
             Handlers = handlers;
-            CellWidth = 1.7f;
+            CellWidth = 1f;
             CellOffset = Vector3.zero;
         }
 

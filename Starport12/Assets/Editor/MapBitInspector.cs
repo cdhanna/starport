@@ -10,6 +10,22 @@ using System.IO;
 using System.Security.AccessControl;
 using System.Diagnostics;
 
+public static class MapBitCreator
+{
+
+    [MenuItem("GameObject/JafarMap/New Pattern", false, 0)]
+    static void Init()
+    {
+        //Debug.Log("here");
+        var g = new GameObject("NewPattern_RENAMEME");
+        g.transform.position = new Vector3(0,0,0);
+        var pattern = g.AddComponent<MapPattern>();
+        var palett = GameObject.FindObjectOfType<MapTilePalett>();
+
+       
+    }
+}
+
 [CustomEditor(typeof(MapPattern))]
 public class MapBitInspector : Editor {
     
@@ -26,7 +42,7 @@ public class MapBitInspector : Editor {
             
             if (pattern.PatternData == null)
             {
-                if (pattern.MapDataPath != null)
+                if (!string.IsNullOrEmpty(pattern.MapDataPath))
                 {
                     AssetDatabase.ImportAsset(pattern.MapDataPath);
                     var resultPre = AssetDatabase.LoadMainAssetAtPath(pattern.MapDataPath) as GameObject;
