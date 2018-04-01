@@ -16,7 +16,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
         public override bool[] EvaluateConditions(Ctx ctx)
         {
-            return new bool[] { ctx.Walkable };
+            return new bool[] { ctx.Walkable && ctx.Replaceable};
         }
 
         public override List<GenerationAction> Execute(Ctx ctx)
@@ -41,7 +41,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
         public override bool[] EvaluateConditions(Ctx ctx)
         {
-            return new bool[] { ctx.TileSet.FillPrefab != null && !ctx.Walkable };
+            return new bool[] { ctx.TileSet.FillPrefab != null && !ctx.Walkable && ctx.Replaceable };
         }
 
         public override List<GenerationAction> Execute(Ctx ctx)

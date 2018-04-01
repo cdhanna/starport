@@ -19,6 +19,9 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public byte Green;
         public byte Blue;
         public byte Alpha = 255;
+        // TODO add a "had Data" slot that is set by the mapLoader
+        public bool HadData = false;
+
 
         public Color Color { get { return new Color(Red / 255f, Green / 255f, Blue / 255f, Alpha / 255f); } }
 

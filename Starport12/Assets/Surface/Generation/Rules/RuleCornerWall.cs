@@ -20,8 +20,8 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
             return new bool[]
             {
-                ctx.Walkable && (ctx.WallLeft ^ ctx.WallRight),
-                ctx.Walkable && (ctx.WallTop ^ ctx.WallLow)
+                ctx.Replaceable && ctx.Walkable && (ctx.WallLeft ^ ctx.WallRight),
+                ctx.Replaceable && ctx.Walkable && (ctx.WallTop ^ ctx.WallLow)
             };
         }
 

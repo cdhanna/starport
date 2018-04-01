@@ -15,13 +15,16 @@ namespace Smallgroup.Starport.Assets.Surface
         public const long LAYER_WALKABLE = 10;
         public const long LAYER_ROOMS = 20;
         public const long LAYER_ZONES = 30;
+        public const long LAYER_REPLACE = 40;
         public Dictionary<long, CellTemplate> CellData { get; set; } = new Dictionary<long, CellTemplate>()
         {
             { LAYER_WALKABLE, CellTemplates.Empty },
             { LAYER_ROOMS, CellTemplates.Empty },
-            { LAYER_ZONES, CellTemplates.Empty }
+            { LAYER_ZONES, CellTemplates.Empty },
+            { LAYER_REPLACE, CellTemplates.Empty }
         };
 
+        //public Dictionary<>
         //public bool Walkable { get; set; }
         //public char Code { get; set; }
         //public string Type { get; set; }
@@ -51,7 +54,7 @@ namespace Smallgroup.Starport.Assets.Surface
     {
         public abstract long LayerCode { get; }
 
-        protected abstract TResult Interp(CellTemplate data);
+        public abstract TResult Interp(CellTemplate data);
         
         public TResult Process(Cell cell)
         {
@@ -67,13 +70,26 @@ namespace Smallgroup.Starport.Assets.Surface
         public WalkableHandler Walkable { get; set; } 
         public RoomMapTileSetHandler TileSet { get; set; }
         public MapZoneHandler Zones { get; set; }
+        public ReplacementHandler Replacable { get; set; }
         public CellHandlers(MapTilePalett palett)
         {
             Walkable = new WalkableHandler();
             TileSet = new RoomMapTileSetHandler(palett.TileSets.First(), palett);
             Zones = new MapZoneHandler();
+            Replacable = new ReplacementHandler();
             //var walkHandler = new WalkableHandler();
             // Handlers.Add(walkHandler);
+        }
+    }
+
+    public class ReplacementHandler : DefaultCellHandler<bool>
+    {
+        public override long LayerCode { get; } = Cell.LAYER_REPLACE;
+
+        public override bool Interp(CellTemplate data)
+        {
+           
+            return !data.HadData || data.Red > 0; // you cant replace it if it doesnt have any red
         }
     }
 
@@ -81,7 +97,7 @@ namespace Smallgroup.Starport.Assets.Surface
     {
         public override long LayerCode { get; } = Cell.LAYER_WALKABLE;
 
-        protected override bool Interp(CellTemplate data)
+        public override bool Interp(CellTemplate data)
         {
             return data.Red == 255;
         }
@@ -98,7 +114,7 @@ namespace Smallgroup.Starport.Assets.Surface
             ColorToRoomName = rooms;
         }
 
-        protected override string Interp(CellTemplate data)
+        public override string Interp(CellTemplate data)
         {
             return ColorToRoomName[data.Color];
         }
@@ -110,7 +126,7 @@ namespace Smallgroup.Starport.Assets.Surface
 
         public List<MapZone> Zones { get; set; }
 
-        protected override MapZone Interp(CellTemplate data)
+        public override MapZone Interp(CellTemplate data)
         {
             return Zones.FirstOrDefault(z => z.ColorCode.Equals(data.Color));
         }
@@ -129,7 +145,7 @@ namespace Smallgroup.Starport.Assets.Surface
             EmptyTileSet = nullTileset;
         }
 
-        protected override MapTileSet Interp(CellTemplate data)
+        public override MapTileSet Interp(CellTemplate data)
         {
             var match = Palett.TileSets.FirstOrDefault(t => t.WalkColor.Equals(data.Color));
             if (match == null)

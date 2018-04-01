@@ -18,10 +18,10 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         {
             return new bool[]
             {
-                   (ctx.Walkable && !ctx.WallLeft && ctx.WallLow && ctx.WallRight && ctx.WallTop)
-                || (ctx.Walkable && ctx.WallLeft && !ctx.WallLow && ctx.WallRight && ctx.WallTop)
-                || (ctx.Walkable && ctx.WallLeft && ctx.WallLow && !ctx.WallRight && ctx.WallTop)
-                || (ctx.Walkable && ctx.WallLeft && ctx.WallLow && ctx.WallRight && !ctx.WallTop)
+                   (ctx.Replaceable && ctx.Walkable && !ctx.WallLeft && ctx.WallLow && ctx.WallRight && ctx.WallTop)
+                || (ctx.Replaceable && ctx.Walkable && ctx.WallLeft && !ctx.WallLow && ctx.WallRight && ctx.WallTop)
+                || (ctx.Replaceable && ctx.Walkable && ctx.WallLeft && ctx.WallLow && !ctx.WallRight && ctx.WallTop)
+                || (ctx.Replaceable && ctx.Walkable && ctx.WallLeft && ctx.WallLow && ctx.WallRight && !ctx.WallTop)
             };
         }
 

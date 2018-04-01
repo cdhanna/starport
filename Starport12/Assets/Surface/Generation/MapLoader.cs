@@ -25,7 +25,8 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         {
             { "rooms", Cell.LAYER_ROOMS },
             { "walkable", Cell.LAYER_WALKABLE },
-            { "zones", Cell.LAYER_ZONES }
+            { "zones", Cell.LAYER_ZONES },
+            { "replace", Cell.LAYER_REPLACE }
         };
 
 
@@ -111,12 +112,14 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
                         var layerCode = default(long);
                         if (LayerNameToCode.TryGetValue(name, out layerCode))
                         {
+
                             cell.CellData[layerCode] = new CellTemplate()
                             {
                                 Red = data.ChannelR,
                                 Green = data.ChannelG,
                                 Blue = data.ChannelB,
                                 Alpha = data.ChannelA,
+                                HadData = true,
                             };
                         }
                     }

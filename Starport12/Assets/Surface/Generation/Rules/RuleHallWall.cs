@@ -18,8 +18,8 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         {
             return new bool[]
             {
-                   (ctx.Walkable && ctx.WallLeft && ctx.WallRight && !ctx.WallTop && !ctx.WallLow)
-                || (ctx.Walkable && !ctx.WallLeft && !ctx.WallRight && ctx.WallTop && ctx.WallLow)
+                   (ctx.Replaceable && ctx.Walkable && ctx.WallLeft && ctx.WallRight && !ctx.WallTop && !ctx.WallLow)
+                || (ctx.Replaceable && ctx.Walkable && !ctx.WallLeft && !ctx.WallRight && ctx.WallTop && ctx.WallLow)
 
 
             };

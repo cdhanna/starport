@@ -146,6 +146,10 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
                         var name = MapFile.LayerNames[i];
                         if (MapLoader.LayerNameToCode.TryGetValue(name, out outCode))
                         {
+                            if (outCode == Cell.LAYER_REPLACE)
+                            {
+                                continue;
+                            }
                             var actual = actualData[outCode];
                             var expected = expectedData[i];
                             var match = 
@@ -181,6 +185,8 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var action = new CreateObjectAction(Pattern.gameObject, position + offset, Quaternion);
 
             output.Add(action);
+            var handler = new ReplacementHandler();
+            var hasReplacementLayer = MapFile.LayerNames.Contains("replace");
 
             for (var x = 0; x < MapFile.Width; x++)
             {
@@ -188,9 +194,27 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
                 {
 
                     var neighbor = ctx.GetNeighborCtx(x, y);
+
+                    var cellTemplate = new CellTemplate();
+
+                    if (hasReplacementLayer)
+                    {
+
+                        var cellData = MapFile.GetData("replace", x, y);
+                        cellTemplate = new CellTemplate()
+                        {
+                            Alpha = cellData.ChannelA,
+                            Red = cellData.ChannelR,
+                            Green = cellData.ChannelG,
+                            Blue = cellData.ChannelB,
+                            HadData = true
+                        };
+                    }
+
+
                     if (neighbor != null)
                     {
-                        if (Pattern.ReplacementPattern)
+                        if (Pattern.ReplacementPattern && handler.Interp(cellTemplate))
                         {
                             //  neighbor.PatternCount = RuleSize;
 

@@ -69,6 +69,15 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public Cell Cell { get { return Map.GetCell(new GridXY(X, Y)); } }
         public bool HardWalls { get { return Get<bool>("HardWalls"); } }
 
+
+        public bool Replaceable
+        {
+            get
+            {
+                return Map.Handlers.Replacable.Process(Cell);
+            }
+        }
+
         public bool Walkable { get
             {
                 return Map.Handlers.Walkable.Process(Cell);

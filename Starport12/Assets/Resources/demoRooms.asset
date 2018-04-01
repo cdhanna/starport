@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Name: demoRooms
   m_EditorClassIdentifier: 
   Patterns:
-  - {fileID: 114770370765291378, guid: 19782c93321094c46be5d0583e486f2f, type: 2}
-  - {fileID: 114774954977474790, guid: ef8420af3f5b1404b993e4a093c02b07, type: 2}
-  - {fileID: 114719678431044860, guid: b552dde536b09314883cf5ba4877d609, type: 2}
   - {fileID: 114926252801662988, guid: 3d51c2eae151ae345849baab33a44843, type: 2}
+  - {fileID: 114719678431044860, guid: b552dde536b09314883cf5ba4877d609, type: 2}
