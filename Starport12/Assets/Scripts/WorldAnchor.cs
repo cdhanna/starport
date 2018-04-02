@@ -22,6 +22,7 @@ namespace Smallgroup.Starport.Assets.Scripts
         //public MapLoader MapLoader;
         public MapTilePalett TilePalett;
         public PatternSet PatternSet;
+        
 
         public MapDataAnchor MapData;
 

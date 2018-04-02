@@ -17,12 +17,14 @@ public static class MapBitCreator
     static void Init()
     {
         //Debug.Log("here");
-        var g = new GameObject("NewPattern_RENAMEME");
+        var g = new GameObject("");
         g.transform.position = new Vector3(0,0,0);
         var pattern = g.AddComponent<MapPattern>();
         var palett = GameObject.FindObjectOfType<MapTilePalett>();
 
-       
+        var variations = new GameObject("Variations");
+        variations.AddComponent<Variations>();
+        variations.transform.parent = g.transform;
     }
 }
 
@@ -36,10 +38,19 @@ public class MapBitInspector : Editor {
 
         var pattern = (MapPattern)target;
 
+
         
         if (GUILayout.Button("Open"))
         {
-            
+
+            if (string.IsNullOrEmpty(pattern.MapDataPath) || string.IsNullOrWhiteSpace(pattern.MapDataPath))
+            {
+
+                EditorUtility.DisplayDialog("Error", "You need to give this pattern a friggin name, homie.", "Name On");
+                return;
+
+            }
+
             if (pattern.PatternData == null)
             {
                 if (!string.IsNullOrEmpty(pattern.MapDataPath))
