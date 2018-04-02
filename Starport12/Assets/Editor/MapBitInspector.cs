@@ -43,7 +43,7 @@ public class MapBitInspector : Editor {
         if (GUILayout.Button("Open"))
         {
 
-            if (string.IsNullOrEmpty(pattern.MapDataPath) || string.IsNullOrWhiteSpace(pattern.MapDataPath))
+            if (string.IsNullOrEmpty(pattern.name) || string.IsNullOrWhiteSpace(pattern.name))
             {
 
                 EditorUtility.DisplayDialog("Error", "You need to give this pattern a friggin name, homie.", "Name On");

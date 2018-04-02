@@ -98,15 +98,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
-    agentHeight: 2
-    agentSlope: 45
-    agentClimb: 0.4
+    agentRadius: 0.1
+    agentHeight: 0.5
+    agentSlope: 60
+    agentClimb: 0.5
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.033333335
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
   - {fileID: 965540378}
   TilePalett: {fileID: 11400000, guid: 8d38cfe15a49ec046aa15dc6e71ff1ee, type: 2}
   PatternSet: {fileID: 11400000, guid: dbdae382e017ae74ea7c44b9e365f158, type: 2}
-  MapData: {fileID: 11400000, guid: 74db5c616ed61a3449248a6ba72272c8, type: 3}
+  MapData: {fileID: 11400000, guid: 13d3830ba10e22c4694134ddf1aca8f7, type: 3}
   AdditionalRules: []
   Zones:
   - {fileID: 11400000, guid: 859810e27a01e8f4186512a5ce98623b, type: 2}
