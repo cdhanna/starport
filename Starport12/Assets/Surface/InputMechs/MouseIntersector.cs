@@ -65,7 +65,7 @@ public class MouseIntersector : DefaultInputMech<SimpleActor>
                 if (otherActor != null)
                 {
                     Actor.ClearCommands();
-                    Actor.AddCommand(new GotoCommand(otherActor.Actor.Coordinate));
+                    Actor.AddCommand(new GotoCommand(otherActor.Actor.Coordinate, _lastHit));
                     Actor.AddCommand(new OpenDialogCommand(otherActor.Actor));
                 }
 
@@ -77,7 +77,7 @@ public class MouseIntersector : DefaultInputMech<SimpleActor>
                 {
                     Debug.Log("SUBMITTING COMMAND");
                     Actor.ClearCommands();
-                    Actor.AddCommand(new GotoCommand(clickedCoord));
+                    Actor.AddCommand(new GotoCommand(clickedCoord, _lastHit));
                 }
             }
         }

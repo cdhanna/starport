@@ -60,7 +60,7 @@ namespace Smallgroup.Starport.Assets.Surface.InputMechs
                 {
                     Debug.Log("SUBMITTING COMMAND");
                     Actor.ClearCommands();
-                    Actor.AddCommand(new GotoCommand(clickedCoord));
+                    Actor.AddCommand(new GotoCommand(clickedCoord, _pos));
                 }
             }
         }

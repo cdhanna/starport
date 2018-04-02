@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Smallgroup.Starport.Assets.Scripts
 {
@@ -29,6 +30,7 @@ namespace Smallgroup.Starport.Assets.Scripts
         private Material standardMat;
         private GameObject gob;
 
+        private bool _secondPass = false;
 
 
         //public MapXY World { get; set; }
@@ -37,12 +39,21 @@ namespace Smallgroup.Starport.Assets.Scripts
         {
         }
 
+        private void Awake()
+        {
+            if (!_secondPass)
+            {
+                GetComponent<NavMeshAgent>().enabled = false;
+            }
+        }
+
         protected void Start()
         {
             DialogAnchor = World.DialogAnchor;
-            Actor.Setup(World.Map, transform);
+            Actor.Setup(World.Map, this, transform);
             Actor.InitDialogAttributes(DialogAnchor);
 
+           
 
             gob = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             //Actor = new SimpleActor(World.Map, transform);
@@ -83,7 +94,11 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Update()
         {
-
+            if (_secondPass)
+            {
+                GetComponent<NavMeshAgent>().enabled = true;
+            }
+            _secondPass = true;
             if (DialogAnchor==null || !DialogAnchor.ConversationFlag)
             {
                 Actor.Update();

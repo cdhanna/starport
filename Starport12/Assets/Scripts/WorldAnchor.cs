@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Smallgroup.Starport.Assets.Scripts
 {
@@ -70,12 +71,16 @@ namespace Smallgroup.Starport.Assets.Scripts
             AttachCellAnchors();
 
             MapLoader.ApplyRules(Map, PatternSet, AdditionalRules);
-            
+            GetComponent<NavMeshSurface>().BuildNavMesh();
+
         }
 
         protected void Update()
         {
-
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                GetComponent<NavMeshSurface>().BuildNavMesh();
+            }
         }
 
        
