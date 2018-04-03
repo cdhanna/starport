@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Smallgroup.Starport.Assets.Core.Players
 {
+
     public interface ICommand
     {
     }

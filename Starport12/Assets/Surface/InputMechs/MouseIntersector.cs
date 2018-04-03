@@ -61,6 +61,13 @@ public class MouseIntersector : DefaultInputMech<SimpleActor>
                     
                 }
 
+                var interactable = _currentlyHovering.GetComponent<InteractionSupport>();
+                if (interactable != null)
+                {
+                    interactable.StartInteraction();
+                }
+                
+
                 var otherActor = _currentlyHovering.GetComponent<ActorAnchor>();
                 if (otherActor != null)
                 {

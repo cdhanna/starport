@@ -116,6 +116,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 479512}
+  - component: {fileID: 114607936409845898}
+  - component: {fileID: 114558404564373234}
   m_Layer: 0
   m_Name: Boxes
   m_TagString: Untagged
@@ -256,9 +258,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 174624}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.246, y: 0, z: -0.142}
+  m_LocalScale: {x: 0.31133455, y: 0.31133443, z: 0.31133443}
   m_Children:
   - {fileID: 436468}
   - {fileID: 478268}
@@ -741,3 +743,30 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 174624}
   m_IsPrefabParent: 1
+--- !u!114 &114558404564373234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e2ca3ede4a1364fa358cc9015272b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnSelect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114607936409845898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21c58c743d835a44f936fe75a4a28df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
