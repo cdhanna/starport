@@ -496,6 +496,7 @@ GameObject:
   - component: {fileID: 1410299543}
   - component: {fileID: 1410299542}
   - component: {fileID: 1410299545}
+  - component: {fileID: 1410299546}
   m_Layer: 0
   m_Name: handleBasicInteractions
   m_TagString: Untagged
@@ -583,6 +584,34 @@ MonoBehaviour:
     m_TypeName: Smallgroup.Starport.Assets.Scripts.Events.GameObjectUnityEvent, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   Event: {fileID: 11400000, guid: a79fcf16cc6745849926c0d33461402a, type: 2}
+--- !u!114 &1410299546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1410299541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e43357de44a514a838f3f286ca4ba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnRaised:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 965540378}
+        m_MethodName: IssueGotoCommand
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Smallgroup.Starport.Assets.Scripts.Events.GameObjectUnityEvent, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  Event: {fileID: 11400000, guid: 623896cf194314f4cb7f2c945fbac5e3, type: 2}
 --- !u!1 &1840751826
 GameObject:
   m_ObjectHideFlags: 0

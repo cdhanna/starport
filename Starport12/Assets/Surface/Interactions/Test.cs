@@ -21,6 +21,11 @@ public class Test : MonoBehaviour {
         Debug.Log("Searching for " + obj.name);
     }
 
+    public void HandleTalkTo(GameObject target)
+    {
+
+    }
+
     public void HandleClick(Interaction[] interactions)
     {
         Debug.Log("available interactions..." + interactions.Length);

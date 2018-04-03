@@ -119,6 +119,12 @@ namespace Smallgroup.Starport.Assets.Scripts
             //Debug.DrawLine(worldPos , worldPos + Vector3.up * 1, Color.red);
         }
 
+        public void IssueGotoCommand(GameObject target)
+        {
+            Actor.ClearCommands();
+            Actor.AddCommand(new GotoCommand() { Target = World.Map.TransformWorldToCoordinate(target.transform.position), Actual = target.transform.position });
+        }
+
         public void SetColor(Color color)
         {
             gob.GetComponent<MeshRenderer>().material.color = color;
