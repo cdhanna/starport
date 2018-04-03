@@ -1,4 +1,6 @@
-﻿using Smallgroup.Starport.Assets.Surface.Interactions;
+﻿using Smallgroup.Starport.Assets.Scripts.Events;
+using Smallgroup.Starport.Assets.Surface.Interactions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +16,10 @@ public class InteractionSupport : MonoBehaviour {
 
     private static GameObject _foundSelectionCircle;
 
-    public List<Interaction> Interactions;
-
+    public InteractionGameEvent OnInteractionStartedEvent;
+    //[Serializable]
+    //public class OnInteractionStartUnityEvent : UnityEvent<Interaction[]> { }
+    //public OnInteractionStartUnityEvent OnInteractionStart;
 
 	// Use this for initialization
 	void Start () {
@@ -80,6 +84,15 @@ public class InteractionSupport : MonoBehaviour {
     public void StartInteraction()
     {
         Debug.Log("START INTERACTION");
-        Interactions.First().Invoke();
+        var all = GetComponents<Interaction>();
+
+        OnInteractionStartedEvent.Raise(all);
+        //OnInteractionStart.Invoke(all);
+
+        //Interactions.First().Invoke();
     }
+
+    
 }
+
+

@@ -9,5 +9,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: Search
-  m_EditorClassIdentifier: Assembly-CSharp:Smallgroup.Starport.Assets.Surface.Interactions:GameEvent
+  m_Name: InteractionStart
+  m_EditorClassIdentifier: Assembly-CSharp:Smallgroup.Starport.Assets.Surface.Interactions:InteractionGameEvent
+  DisplayName: Interact

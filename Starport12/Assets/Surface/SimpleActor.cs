@@ -66,16 +66,16 @@ namespace Smallgroup.Starport.Assets.Surface
             dEngine.AddAttribute(DialogAttribute.New(Name + ".position.x", x => Coordinate = new GridXY(x, Coordinate.Y) , () => Coordinate.X));
             dEngine.AddAttribute(DialogAttribute.New(Name + ".position.y", y => Coordinate = new GridXY(Coordinate.X, y) , () => Coordinate.Y));
 
-            var gotoFunc = new ObjectFunctionDialogAttribute(Name + ".funcs.goto", args =>
-            {
-                var xPosition = (int)args["x"];
-                var yPosition = (int)args["y"];
-                this.AddCommand(new GotoCommand() { Target = new GridXY(xPosition, yPosition) });
-            }, new Dictionary<string, object>() {
-                { "x", -1 },
-                { "y", -1 }
-            });
-            dEngine.AddAttribute(gotoFunc);
+            //var gotoFunc = new ObjectFunctionDialogAttribute(Name + ".funcs.goto", args =>
+            //{
+            //    var xPosition = (int)args["x"];
+            //    var yPosition = (int)args["y"];
+            //    this.AddCommand(new GotoCommand() { Target = new GridXY(xPosition, yPosition) });
+            //}, new Dictionary<string, object>() {
+            //    { "x", -1 },
+            //    { "y", -1 }
+            //});
+            //dEngine.AddAttribute(gotoFunc);
 
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
         }

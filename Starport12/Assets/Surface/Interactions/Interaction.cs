@@ -1,4 +1,5 @@
 ﻿using Smallgroup.Starport.Assets.Core.Players;
+using Smallgroup.Starport.Assets.Scripts.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,38 +10,26 @@ using UnityEngine.Events;
 
 namespace Smallgroup.Starport.Assets.Surface.Interactions
 {
-    [Serializable]
-    public class Interaction
+    public class Interaction : MonoBehaviour
     {
-        public string name;
-        public UnityEvent OnInvoke;
+        public string DisplayAs;
+        public GameObjectGameEvent Event;
+        public GameObject arg;
 
-        public void Invoke()
+        public string GetDisplayName()
         {
-            OnInvoke.Invoke();
-        }
-    }
-
-    [CreateAssetMenu]
-    public class GameEvent : ScriptableObject
-    {
-        private List<GameEventListener> _listeners;
-
-        public void Raise()
-        {
-            for (var i = _listeners.Count-1; i > -1; i--)
+            if (string.IsNullOrEmpty(DisplayAs) || string.IsNullOrWhiteSpace(DisplayAs))
             {
-                _listeners[i].OnEventRaised();
+                return Event.name;
+            } else
+            {
+                return DisplayAs;
             }
         }
 
-        public void RegisterListener(GameEventListener listener)
+        public void Invoke()
         {
-            _listeners.Add(listener);
-        }
-        public void UnRegisterListener(GameEventListener listener)
-        {
-            _listeners.Remove(listener);
+            Event.Raise(arg == null ? gameObject : arg);
         }
     }
 

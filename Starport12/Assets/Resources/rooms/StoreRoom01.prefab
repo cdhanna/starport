@@ -1214,7 +1214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4712010437239978}
   - component: {fileID: 114284043347445174}
-  - component: {fileID: 114680816606534854}
+  - component: {fileID: 114367701616383944}
   m_Layer: 0
   m_Name: Boxes
   m_TagString: Untagged
@@ -9640,6 +9640,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c58c743d835a44f936fe75a4a28df0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HoverTrigger: {fileID: 0}
+  SelectionCircle: {fileID: 0}
+  OnInteractionStartedEvent: {fileID: 11400000, guid: 9bc154e3a72d58c45b8131d5c9540a41,
+    type: 2}
 --- !u!114 &114355770279376694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9657,7 +9661,7 @@ MonoBehaviour:
   Width: 0
   Height: 0
   ReplacementPattern: 1
---- !u!114 &114680816606534854
+--- !u!114 &114367701616383944
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -9665,14 +9669,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1610838359560322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18e2ca3ede4a1364fa358cc9015272b3, type: 3}
+  m_Script: {fileID: 11500000, guid: ae3523a80845bbe4e99bac84dc00a9df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnSelect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  DisplayAs: Investigate It
+  Event: {fileID: 11400000, guid: a79fcf16cc6745849926c0d33461402a, type: 2}
+  arg: {fileID: 0}
 --- !u!114 &114875940384529920
 MonoBehaviour:
   m_ObjectHideFlags: 1

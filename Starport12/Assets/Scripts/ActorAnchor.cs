@@ -102,7 +102,10 @@ namespace Smallgroup.Starport.Assets.Scripts
             if (DialogAnchor==null || !DialogAnchor.ConversationFlag)
             {
                 Actor.Update();
-                InputMech.Update();
+                if (InputMech != null)
+                {
+                    InputMech.Update();
+                }
 
             }
 
