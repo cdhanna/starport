@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4460aa17403654b4da4e2791ea8178c7, type: 3}
+  m_Name: Library
+  m_EditorClassIdentifier: 
+  Description: Knowledge is power
+  Slots: []
+  RequiredResources:
+  - ResourceType: {fileID: 11400000, guid: d94b0fb5fd0f43744bbc5e9f1e904da7, type: 2}
+    Amount: 5
+  - ResourceType: {fileID: 11400000, guid: 7b6408e327ae9044c9582068e3dc466f, type: 2}
+    Amount: 200
