@@ -17,13 +17,15 @@ public class InteractionSupport : MonoBehaviour {
     private static GameObject _foundSelectionCircle;
 
     public InteractionGameEvent OnInteractionStartedEvent;
+
+    public bool ignoreVisuals = true;
     //[Serializable]
     //public class OnInteractionStartUnityEvent : UnityEvent<Interaction[]> { }
     //public OnInteractionStartUnityEvent OnInteractionStart;
 
 	// Use this for initialization
 	void Start () {
-
+        if (ignoreVisuals) { return; }
         if (SelectionCircle == null)
         {
             if (_foundSelectionCircle == null)
@@ -71,6 +73,7 @@ public class InteractionSupport : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (ignoreVisuals) { return; }
 
         if (_shouldHide && _hideTime > Time.realtimeSinceStartup)
         {

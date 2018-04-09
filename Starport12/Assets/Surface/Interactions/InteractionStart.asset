@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: InteractionStart
   m_EditorClassIdentifier: Assembly-CSharp:Smallgroup.Starport.Assets.Surface.Interactions:InteractionGameEvent
-  DisplayName: Interact
+  DisplayName: WillInteractionStart
