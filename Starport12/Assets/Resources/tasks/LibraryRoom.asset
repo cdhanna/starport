@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af33288c4aea01a4e9fc8ea6e191881a, type: 3}
+  m_Name: LibraryRoom
+  m_EditorClassIdentifier: 
+  Title: Library
+  Description: A place for reading and such
+  FlavorText: Only in the depths of an ancient fantasy, can the heights of our reality
+    be found.
+  LocationRequirement:
+    Name: Location
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 1
+    MatchPattern: {fileID: 0}
+    Loop: 0
+  ResourceRequirements:
+  - Name: 
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    StartingValue: 0
+    RequiredValue: 100
+    Resource: {fileID: 11400000, guid: 9144b0618e8f2d24f80cf2070ee5121a, type: 2}
+  - Name: 
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    StartingValue: 0
+    RequiredValue: 25
+    Resource: {fileID: 11400000, guid: afe5769b761373d4f87705cd285f9d30, type: 2}
+  ResourceCommitments: []
+  OutputMFT: {fileID: 0}

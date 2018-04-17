@@ -150,7 +150,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
             ctx.SetLight(true);
 
-            output.Add(new CreateObjectAction("light_main1", position , Quaternion.identity));
+            output.Add(new CreateObjectAction(ctx.Coord, "light_main1", position , Quaternion.identity));
 
 
             return output;

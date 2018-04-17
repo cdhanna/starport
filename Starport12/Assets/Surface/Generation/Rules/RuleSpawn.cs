@@ -88,7 +88,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
             position += offset * ctx.Get<float>(RuleConstants.CELL_UNIT_WIDTH);
 
-            output.Add(new CreateObjectAction(Template, position, Quaternion.Euler(0, rotation, 0)));
+            output.Add(new CreateObjectAction(ctx.Coord, Template, position, Quaternion.Euler(0, rotation, 0)));
 
             return output;
         }

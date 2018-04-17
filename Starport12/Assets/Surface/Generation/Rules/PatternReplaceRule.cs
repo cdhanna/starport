@@ -182,7 +182,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
                 0,
                 MapFile.Height - 1
                 ) * ctx.CellUnitWidth/2;
-            var action = new CreateObjectAction(Pattern.gameObject, position + offset, Quaternion);
+            var action = new CreateObjectAction(ctx.Coord, Pattern.gameObject, position + offset, Quaternion);
 
             output.Add(action);
             var handler = new ReplacementHandler();

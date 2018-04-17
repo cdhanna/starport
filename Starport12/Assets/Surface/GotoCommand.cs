@@ -22,6 +22,8 @@ namespace Smallgroup.Starport.Assets.Surface
             Actual = actual;
             Target = target;
         }
-
+        public GotoCommand(GridXY target, Vector2 actual) : this(target, new Vector3(actual.x, 0, actual.y))
+        {
+        }
     }
 }

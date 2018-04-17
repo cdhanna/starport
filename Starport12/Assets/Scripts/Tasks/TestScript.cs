@@ -1,41 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using UnityEngine;
 
-namespace Smallgroup.Starport.Assets.Scripts.Tasks
-{
-    class TestScript : MonoBehaviour
-    {
+//namespace Smallgroup.Starport.Assets.Scripts.Tasks
+//{
+//    class TestScript : MonoBehaviour
+//    {
 
-        public List<GameTaskType> TasksTypes;
+//        public List<GameTaskType> TasksTypes;
 
-        public List<GameTask> Tasks;
+//        public List<GameTask> Tasks;
 
-        public int selected = 0;
-        public TaskUI UI;
+//        public int selected = 0;
+//        public TaskUI UI;
 
-        private int _prevSelected = -1;
+//        private int _prevSelected = -1;
 
-        public void Start()
-        {
-            Tasks = TasksTypes.Select(s => s.CreateInstance()).ToList();
-        }
+//        public void Start()
+//        {
+//            Tasks = TasksTypes.Select(s => s.CreateInstance()).ToList();
+//        }
 
-        public void Update()
-        {
+//        public void Update()
+//        {
 
-            selected = selected % Tasks.Count;
-            if (_prevSelected != selected)
-            {
+//            selected = selected % Tasks.Count;
+//            if (_prevSelected != selected)
+//            {
 
-                UI.Task = Tasks[selected];
+//                UI.Task = Tasks[selected];
 
-                _prevSelected = selected ;
-            }
-        }
+//                _prevSelected = selected ;
+//            }
+//        }
 
-    }
-}
+//    }
+//}

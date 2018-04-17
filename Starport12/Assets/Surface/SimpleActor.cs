@@ -2,6 +2,7 @@
 using Smallgroup.Starport.Assets.Core;
 using Smallgroup.Starport.Assets.Core.Players;
 using Smallgroup.Starport.Assets.Scripts;
+using Smallgroup.Starport.Assets.Scripts.Characters.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,47 +91,7 @@ namespace Smallgroup.Starport.Assets.Surface
             }
         }
 
-        public void MoveLeft()
-        {
-            var current = _map.GetObjectPosition(this);
-            current.X -= 1;
-            if (_map.CoordinateExists(current))
-            {
-                _map.SetObjectPosition(current, this);
-            }
-        }
-
-        public void MoveRight()
-        {
-            var current = _map.GetObjectPosition(this);
-            current.X += 1;
-            if (_map.CoordinateExists(current))
-            {
-                _map.SetObjectPosition(current, this);
-            }
-        }
-
-        public void MoveUp()
-        {
-            var current = _map.GetObjectPosition(this);
-            current.Y += 1;
-            if (_map.CoordinateExists(current))
-            {
-                _map.SetObjectPosition(current, this);
-            }
-        }
-
-        public void MoveDown()
-        {
-            var current = _map.GetObjectPosition(this);
-            current.Y -= 1;
-            if (_map.CoordinateExists(current))
-            {
-                _map.SetObjectPosition(current, this);
-            }
-        }
-
-
+      
         public override IEnumerable<CommandResult> ProcessCommand_Generator(ICommand command)
         {
             if (command is GotoCommand)
@@ -139,10 +100,148 @@ namespace Smallgroup.Starport.Assets.Surface
             } else if (command is OpenDialogCommand)
             {
                 return HandleDialog(command as OpenDialogCommand);
+            } else if (command is BoxSelectionCommand)
+            {
+                return HandleBoxSelection(command as BoxSelectionCommand);
+            } else if (command is MoveObjectCommand)
+            {
+                return HandleMoveCommand(command as MoveObjectCommand);
             }
 
             return null;
             //yield return CommandResult.COMPLETE;
+        }
+
+        private IEnumerable<CommandResult> HandleMoveCommand(MoveObjectCommand command)
+        {
+            yield return CommandResult.WORKING; // wait a tick for another click.
+            var input = _anchor.InputMech;
+
+            var selected = default(InteractionSupport);
+            var originalPosition = new Vector3();
+            while (selected == null)
+            {
+                if (input.NewSecondary)
+                {
+                    command.Done = true;
+                    yield return CommandResult.COMPLETE;
+                }
+
+                if (input.Now.InteractableObject != null && input.NewPrimary)
+                {
+                    selected = input.Now.InteractableObject;
+                    originalPosition = selected.transform.position;
+                }
+
+                yield return CommandResult.WORKING; 
+
+            }
+
+            yield return CommandResult.WORKING; // wait a tick for another click.
+
+            while (!input.NewPrimary)
+            {
+                if (input.NewSecondary)
+                {
+                    command.Done = true;
+                    selected.transform.position = originalPosition;
+                    yield return CommandResult.COMPLETE;
+                }
+
+                selected.transform.position = new Vector3(input.Now.Point.x, originalPosition.y, input.Now.Point.y);
+                yield return CommandResult.WORKING; 
+
+            }
+
+            command.Done = true;
+            _anchor.World.RebuildNav();
+            yield return CommandResult.COMPLETE;
+        }
+
+        private IEnumerable<CommandResult> HandleBoxSelection(BoxSelectionCommand command)
+        {
+            //yield return CommandResult.WORKING;
+
+            yield return CommandResult.WORKING; // wait a tick for another click.
+
+            var input = _anchor.InputMech;
+            var valid = false;
+
+            //var startCoord
+            _anchor.BoxSelector.Viz.UseValidator(command.Validator);
+
+            _anchor.BoxSelector.gameObject.SetActive(true);
+
+            while (!input.NewPrimary)
+            {
+                if (input.NewSecondary)
+                {
+                    command.Done = true;
+                    _anchor.BoxSelector.gameObject.SetActive(false);
+
+                    yield return CommandResult.COMPLETE;
+                }
+                var coord = input.Now.Coord;
+
+                _anchor.BoxSelector.x = coord.X;
+                _anchor.BoxSelector.y = coord.Y;
+
+                _anchor.BoxSelector.width = 0;
+                _anchor.BoxSelector.height = 0;
+
+                yield return CommandResult.WORKING;
+            }
+
+            var startCoord = input.Now.Coord;
+            yield return CommandResult.WORKING; // wait a tick for another click.
+
+            while (!input.NewPrimary)
+            {
+
+                if (input.NewSecondary)
+                {
+                    command.Done = true;
+                    _anchor.BoxSelector.gameObject.SetActive(false);
+
+                    yield return CommandResult.COMPLETE;
+                }
+
+                var coord = input.Now.Coord;
+
+                var minX = Math.Min(startCoord.X, coord.X);
+                var maxX = Math.Max(startCoord.X, coord.X);
+                var minY = Math.Min(startCoord.Y, coord.Y);
+                var maxY = Math.Max(startCoord.Y, coord.Y);
+
+                _anchor.BoxSelector.x = minX;
+                _anchor.BoxSelector.y = minY;
+
+                _anchor.BoxSelector.width = maxX - minX;
+                _anchor.BoxSelector.height = maxY - minY;
+
+
+                yield return CommandResult.WORKING;
+
+            }
+
+            valid = _anchor.BoxSelector.GetRelativeCoordinates().Select(c => command.Validator(_anchor.BoxSelector, c.X, c.Y)).All(t => t);
+
+            _anchor.BoxSelector.gameObject.SetActive(false);
+
+            if (valid)
+            {
+                // use selection!
+                command.Selected = true;
+                command.Callback();
+                _anchor.World.RebuildNav();
+
+            }
+
+            command.Done = true;
+
+
+            yield return CommandResult.COMPLETE;
+
         }
 
         private IEnumerable<CommandResult> HandleDialog(OpenDialogCommand command)
@@ -158,50 +257,16 @@ namespace Smallgroup.Starport.Assets.Surface
 
         private IEnumerable<CommandResult> HandleGoto(GotoCommand command)
         {
-            var path = _pather.FindPath(_map, _map.GetObjectPosition(this), command.Target);
-
+            
             var agent = _anchor.GetComponent<NavMeshAgent>();
             agent.SetDestination(command.Actual);
 
             while (!agent.isStopped)
             {
-                
-
                 yield return CommandResult.WORKING;
             }
 
             yield return CommandResult.COMPLETE;
-
-            //for (var i = 1; i < path.Count; i++)
-            //{
-                
-            //    //var startPos = _transform.position;
-
-            //    var targetPos = _map.TransformCoordinateToWorld(path[i]);
-
-            //    var mag = (targetPos - _transform.position).magnitude;
-            //    while ( mag > .2f)
-            //    {
-
-            //        var pullForce = (targetPos - _transform.position).normalized * Speed;
-            //        var frictionForce = (Velocity * -Friction);
-            //        var acceleration = (pullForce + frictionForce) / 1.0f;
-
-            //        Velocity += acceleration;
-            //        _transform.position += Velocity;
-            //        mag = (targetPos - _transform.position).magnitude;
-            //        yield return CommandResult.WORKING;
-
-            //    }
-            //    _map.SetObjectPosition(path[i], this);
-
-                
-            //}
-
-
-            //Debug.Log("DONE");
-            //yield return CommandResult.COMPLETE;
-
         }
 
     }

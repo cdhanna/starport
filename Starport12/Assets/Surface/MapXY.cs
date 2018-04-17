@@ -44,6 +44,28 @@ namespace Smallgroup.Starport.Assets.Surface
                 return best;
             }
         }
+        public int LowestY
+        {
+            get
+            {
+                var best = int.MaxValue;
+                Coordinates.ToList().ForEach(c => best = Math.Min(c.Y, best));
+                return best;
+            }
+        }
+
+        public void Join(MapXY other)
+        {
+            var otherCoords = other.Coordinates;
+            for(var c = 0; c < otherCoords.Length; c++)
+            {
+                var coord = otherCoords[c];
+                var otherCell = other.GetCell(coord);
+                var traverasble = other.GetTraversable(coord);
+                SetCell(coord, otherCell);
+                SetTraversable(coord, traverasble);
+            }
+        }
 
         public override GridXY TransformWorldToCoordinate(Vector3 position)
         {

@@ -48,8 +48,27 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 
         public MapXY Map { get; set; }
 
-        public bool WallTop { get { return Get<bool>(RuleConstants.CELL_WALL_TOP); } }
-        public bool WallLow { get { return Get<bool>(RuleConstants.CELL_WALL_LOW); } }
+        public bool WallTop
+        {
+            get
+            {
+                var coord = Coord;
+                var neighbors = Map.GetTraversable(coord);
+                return !neighbors.Contains(new GridXY(coord.X, coord.Y - 1));
+            }
+        }
+
+        public bool WallLow
+        {
+            get
+            {
+                var coord = Coord;
+                var neighbors = Map.GetTraversable(coord);
+                return !neighbors.Contains(new GridXY(coord.X, coord.Y + 1));
+            }
+        }
+        //public bool WallTop { get { return Get<bool>(RuleConstants.CELL_WALL_TOP); } }
+        //public bool WallLow { get { return Get<bool>(RuleConstants.CELL_WALL_LOW); } }
         public bool WallRight { get { return Get<bool>(RuleConstants.CELL_WALL_RIGHT); } }
         public bool WallLeft { get { return Get<bool>(RuleConstants.CELL_WALL_LEFT); } }
 
@@ -67,6 +86,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public float WallOffset { get { return Get<float>(RuleConstants.WALL_OFFSET); } }
 
         public Cell Cell { get { return Map.GetCell(new GridXY(X, Y)); } }
+        public GridXY Coord { get { return new GridXY(X, Y); } }
         public bool HardWalls { get { return Get<bool>("HardWalls"); } }
 
 

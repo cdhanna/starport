@@ -48,13 +48,13 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             }
 
 
-            output.Add(new CreateObjectAction(ctx.TileSet.WallPrefab,
+            output.Add(new CreateObjectAction(ctx.Coord, ctx.TileSet.WallPrefab,
                 position + vertOffset * ctx.Get<float>(RuleConstants.CELL_UNIT_WIDTH),
                 Quaternion.Euler(0, vertRotation, 0)));
 
 
 
-            output.Add(new CreateObjectAction(ctx.TileSet.WallPrefab,
+            output.Add(new CreateObjectAction(ctx.Coord, ctx.TileSet.WallPrefab,
                 position + hortOffset * ctx.Get<float>(RuleConstants.CELL_UNIT_WIDTH),
                 Quaternion.Euler(0, hortRotation, 0)));
 

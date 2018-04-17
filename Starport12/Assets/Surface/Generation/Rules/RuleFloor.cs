@@ -26,7 +26,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var coord = new GridXY(ctx.X, ctx.Y);
             var position = ctx.Map.TransformCoordinateToWorld(coord);
             //position.y = 1;
-            output.Add(new CreateObjectAction(ctx.TileSet.FloorPrefab, position, Quaternion.identity));
+            output.Add(new CreateObjectAction(ctx.Coord, ctx.TileSet.FloorPrefab, position, Quaternion.identity));
 
             return output;
         }
@@ -52,7 +52,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var position = ctx.Map.TransformCoordinateToWorld(coord);
 
             //position.y *= ctx.CellUnitWidth;
-            output.Add(new CreateObjectAction(ctx.TileSet.FillPrefab, position, Quaternion.identity));
+            output.Add(new CreateObjectAction(ctx.Coord, ctx.TileSet.FillPrefab, position, Quaternion.identity));
 
             return output;
         }

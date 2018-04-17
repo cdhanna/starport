@@ -16,3 +16,5 @@ MonoBehaviour:
   ResourceAbilities:
   - ResourceType: {fileID: 11400000, guid: 23f13efaec67f9d43a261e21e1418a95, type: 2}
     Amount: 2
+  - ResourceType: {fileID: 11400000, guid: d94b0fb5fd0f43744bbc5e9f1e904da7, type: 2}
+    Amount: 9

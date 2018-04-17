@@ -74,8 +74,8 @@ public class MapPattern : MonoBehaviour {
         var mapXY = MapLoader.LoadFromPattern(new CellHandlers(Palett), this);
         mapXY.CellWidth = 1;
         mapXY.CellOffset = new Vector3(mapXY.HighestX, 0, mapXY.HighestY + 1) * -.5f;
-        var all = MapLoader.ApplyRules(mapXY, new PatternSet(), null);
-        all.Where(obj => obj.transform.parent == null)
+        var results = MapLoader.ApplyRules(null, mapXY, new PatternSet(), null, mapXY.Coordinates);
+        results.GeneratedObjects.Where(obj => obj.transform.parent == null)
             .ToList()
             .ForEach(obj => obj.transform.SetParent(group.transform));
     }

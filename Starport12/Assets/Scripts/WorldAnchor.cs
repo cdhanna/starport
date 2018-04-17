@@ -15,20 +15,22 @@ namespace Smallgroup.Starport.Assets.Scripts
 {
     public class WorldAnchor : MonoBehaviour
     {
-            
-        public MapXY Map { get; set; }
+        public MapXY Map { get { return Results.Output; } }
 
         public DialogAnchor DialogAnchor;
         public ActorAnchor[] Players;
         //public MapLoader MapLoader;
         public MapTilePalett TilePalett;
         public PatternSet PatternSet;
-        
+        public int MapWidth = 64;
+        public int MapHeight = 64;
 
         public MapDataAnchor MapData;
 
         public List<SuperRule> AdditionalRules;
 
+        [HideInInspector]
+        public RuleAppliedResults Results { get; set; }
         //public WalkableHandler WalkableHandler = new WalkableHandler();
         //public RoomTypeNameHandler RoomTypeNameHandler = new RoomTypeNameHandler(new Dictionary<Color, string> {
         //    { ColorGen.FromRGB(128, 128, 128, 255), "stone"},
@@ -40,7 +42,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         private void AttachCellAnchors()
         {
-            for (var i = 0; i <  Map.Coordinates.Length; i++)
+            for (var i = 0; i < Map.Coordinates.Length; i++)
             {
                 var coord = Map.Coordinates[i];
                 var cell = Map.GetCell(coord);
@@ -59,18 +61,35 @@ namespace Smallgroup.Starport.Assets.Scripts
             }
         }
 
+        public void GetSubset(int x, int y, int width, int height)
+        {
+
+        }
+
         protected void Awake()
         {
 
             CellHandlers = new CellHandlers(TilePalett);
             CellHandlers.Zones.Zones = Zones;
 
-            World.Map = MapLoader.LoadFromMFT(CellHandlers, MapData.Raw);
+            var map = MapLoader.LoadFromMFT(CellHandlers, MapData.Raw);
             //World.Map = MapLoader.LoadFromFile();
-            Map = World.Map;
+            
+
+            Results = MapLoader.ApplyRules(null, map, PatternSet, AdditionalRules, null);
+
+            var insetResults = MapLoader.InsetMap(map, MapWidth, MapHeight);
+
+            Results.Join(insetResults);
+
+            World.Map = Map;
             AttachCellAnchors();
 
-            MapLoader.ApplyRules(Map, PatternSet, AdditionalRules);
+            RebuildNav();
+        }
+
+        public void RebuildNav()
+        {
             GetComponent<NavMeshSurface>().BuildNavMesh();
 
         }
@@ -81,6 +100,10 @@ namespace Smallgroup.Starport.Assets.Scripts
             {
                 GetComponent<NavMeshSurface>().BuildNavMesh();
             }
+
+
+
+
         }
 
        

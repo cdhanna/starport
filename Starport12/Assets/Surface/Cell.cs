@@ -55,11 +55,33 @@ namespace Smallgroup.Starport.Assets.Surface
         public abstract long LayerCode { get; }
 
         public abstract TResult Interp(CellTemplate data);
-        
+        public virtual void InterpSet(CellTemplate data, TResult arg)
+        {
+            throw new NotImplementedException($"Cant set cell because no set behavour exists. Layer={LayerCode} HandlerType={this.GetType()} Cell={data}");
+            
+        }
         public TResult Process(Cell cell)
         {
-            var data = cell.CellData[LayerCode];
-            return Interp(data);
+            if (cell.CellData.ContainsKey(LayerCode))
+            {
+                var data = cell.CellData[LayerCode];
+                return Interp(data);
+            } else
+            {
+                throw new Exception($"Cant process cell because layer did not exist. Layer={LayerCode} HandlerType={this.GetType()} Cell={cell}");
+            }
+        }
+
+        public void Set(Cell cell, TResult value)
+        {
+            if (cell.CellData.ContainsKey(LayerCode))
+            {
+                var data = cell.CellData[LayerCode];
+                InterpSet(data, value);
+            } else
+            {
+                throw new Exception($"Cant set cell because layer did not exist. Layer={LayerCode} HandlerType={this.GetType()} Cell={cell}");
+            }
         }
     }
 
@@ -101,6 +123,12 @@ namespace Smallgroup.Starport.Assets.Surface
         {
             return data.Red == 255;
         }
+
+        public override void InterpSet(CellTemplate data, bool arg)
+        {
+            data.Red = (arg == true ? (byte)255 : (byte)0);
+        }
+
     }
 
     public class RoomTypeNameHandler : DefaultCellHandler<string>

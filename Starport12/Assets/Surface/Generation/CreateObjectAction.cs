@@ -12,18 +12,29 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public string PrefabPath { get; private set; }
         public Vector3 Position { get; private set; }
         public Quaternion Rotation { get; private set; }
-        
+        public GridXY[] Coord { get; private set; }
         private GameObject _prefab;
 
-        public CreateObjectAction(string prefabPath, Vector3 position, Quaternion rotation)
+        public CreateObjectAction(GridXY coord, string prefabPath, Vector3 position, Quaternion rotation)
         {
             PrefabPath = prefabPath;
             Position = position;
             Rotation = rotation;
+            Coord = new GridXY[] { coord };
         }
 
-        public CreateObjectAction(GameObject prefab, Vector3 position, Quaternion rotation)
+        public CreateObjectAction(GridXY coord, GameObject prefab, Vector3 position, Quaternion rotation)
         {
+            Coord = new GridXY[] { coord };
+
+            _prefab = prefab;
+            Position = position;
+            Rotation = rotation;
+        }
+
+        public CreateObjectAction(GridXY[] coord, GameObject prefab, Vector3 position, Quaternion rotation)
+        {
+            Coord = coord;
             _prefab = prefab;
             Position = position;
             Rotation = rotation;
@@ -46,7 +57,16 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
                 instance.transform.localPosition += Position;
                 instance.transform.localRotation = Rotation;
 
+                Coord.ToList().ForEach(c =>
+                {
+                    if (ctx.HasSubContext(c))
+                    {
 
+                    var subCtx = ctx.GetSubContext<GridXY, Ctx>(c);
+                    subCtx.Ensure("generated_objects", new List<GameObject>()).Add(instance);
+                    }
+
+                });
                 ctx.Ensure("all_generated_objects", new List<GameObject>()).Add(instance);
             }
             catch (Exception ex)

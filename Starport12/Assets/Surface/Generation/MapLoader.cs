@@ -34,52 +34,6 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         {
             return LoadFromMFT(handlers, pattern.PatternData.Raw);
 
-            //var map = new MapXY(handlers);
-
-
-
-            //var roomLayer = pattern.Layers.FirstOrDefault(l => l.LayerName.ToLower().Equals("rooms"));
-            //var walkableLayer = pattern.Layers.FirstOrDefault(l => l.LayerName.ToLower().Equals("walkable"));
-            //for (var y = 0; y < pattern.Height; y++)
-            //{
-            //    for (var x = 0; x < pattern.Width; x++)
-            //    {
-            //        var cell = default(Cell);
-
-            //        for (var i = 0; i < pattern.Layers.Count; i++)
-            //        {
-            //            var layerCode = LayerNameToCode[pattern.Layers[i].LayerName];
-            //            var layerData = pattern.Layers[i].Data[y * pattern.Width + x];
-            //            cell.CellData[layerCode] = new CellTemplate()
-            //            {
-            //                Red = layerData.Red,
-            //                Green = layerData.Green,
-            //                Blue = layerData.Blue,
-            //                Alpha = layerData.Alpha
-            //            };
-                        
-            //        }
-
-
-            //        //if (roomLayer != null)
-            //        //{
-            //        //    var roomData = roomLayer.Data[y * pattern.Width + x];
-            //        //    cell = GenerateCell(palett, roomData.Red, roomData.Green, roomData.Blue, roomData.Alpha);
-            //        //    cell.Walkable = true;
-            //        //}
-            //        //if (walkableLayer != null)
-            //        //{
-            //        //    var walkableData = roomLayer.Data[y * pattern.Width + x];
-            //        //    cell.Walkable = walkableData.Blue > 0;
-
-            //        //}
-            //        map.SetCell(new GridXY(x, -y + pattern.Height), cell);
-
-            //    }
-            //}
-            //map.AutoMap((coord, cell) => handlers.Walkable.Process(cell));
-
-            //return map;
         }
 
 
@@ -90,6 +44,58 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             return Load(handlers, mapFile);
         }
         
+        public static RuleAppliedResults InsetMap(MapXY map, int totalWidth, int totalHeight)
+        {
+            var newMap = new MapXY(map.Handlers);
+            var mapWidth = map.HighestX - map.LowestX;
+            var mapHeight = map.HighestY - map.LowestY;
+
+            var xGap = (totalWidth - mapWidth) / 2;
+            var yGap = (totalHeight - mapHeight) / 2;
+            var left = map.LowestX - xGap;
+            var right = map.HighestX + xGap;
+            var top = map.LowestY - yGap;
+            var low = map.HighestY + yGap;
+            for (var y = top; y < low; y++)
+            {
+               
+                for (var x = left; x < right; x++)
+                {
+                    if (x >= map.LowestX && x <= map.HighestX && y >= map.LowestY && y <= map.HighestY)
+                    {
+                        continue;
+                    }
+                    var coord = new GridXY(x, y);
+                    var cell = new Cell();
+                    cell.CellData[Cell.LAYER_ROOMS] = new CellTemplate()
+                    {
+                        Red = 128,
+                        Green = 128,
+                        Blue = 128,
+                        Alpha = 255,
+                        HadData = true
+                    };
+                    cell.CellData[Cell.LAYER_WALKABLE] = new CellTemplate()
+                    {
+                        Red = 0,
+                        Green = 0,
+                        Blue = 0,
+                        Alpha = 255,
+                        HadData = true
+                    };
+                    newMap.SetCell(coord, cell);
+
+                }
+            }
+
+            map.AutoMap((coord, c) => map.Handlers.Walkable.Process(c));
+
+            var results = ApplyRules(null, newMap, new PatternSet(), new List<SuperRule>(), null);
+
+            return results;
+
+        }
+
         public static MapXY Load(CellHandlers handlers, MapFile mapFile)
         {
 
@@ -140,17 +146,25 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             return null;
         }
 
-        public static List<GameObject> ApplyRules(MapXY map, PatternSet generationPatterns, List<SuperRule> additionalRules)
+        public static RuleAppliedResults ApplyRules(Ctx globalCtx, MapXY map, PatternSet generationPatterns, List<SuperRule> additionalRules, IEnumerable<GridXY> coordinatesToApply)
         {
             if (additionalRules == null)
             {
                 additionalRules = new List<SuperRule>();
             }
-            var globalCtx = new Ctx(null);
+            if (coordinatesToApply == null)
+            {
+                coordinatesToApply = map.Coordinates;
+            }
+            if (globalCtx == null)
+            {
 
-            globalCtx.Set(RuleConstants.WALL_OFFSET, .5f);
-            globalCtx.Set("HardWalls", false);
-            globalCtx.Map = map;
+                globalCtx = new Ctx(null);
+
+                globalCtx.Set(RuleConstants.WALL_OFFSET, .5f);
+                globalCtx.Set("HardWalls", false);
+                globalCtx.Map = map;
+            }
 
             var runner = new GenerationRunner(new string[][]{
 
@@ -190,56 +204,21 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
             allRules.AddRange(standardRules);
             allRules.AddRange(additionalRules.Select(r => r.Rule).ToArray());
 
-            var actions = runner.Run(globalCtx, map, (ctx, coord) => ctx.SetFromGrid(map, coord),
+            var actions = runner.Run(globalCtx, coordinatesToApply, (ctx, coord) => ctx.SetFromGrid(map, coord),
                     allRules.ToArray());
 
             actions.ForEach(a => a.Invoke(globalCtx));
 
-            return globalCtx.Ensure("all_generated_objects", new List<GameObject>());
+            var allObjects = globalCtx.Ensure("all_generated_objects", new List<GameObject>());
+
+            return new RuleAppliedResults()
+            {
+                GeneratedObjects = allObjects,
+                Global = globalCtx,
+                Output = map
+            };
         }
        
-        //public static Cell GenerateCell(MapTilePalett tilePalette, byte red, byte green, byte blue, byte alpha)
-        //{
-        //    var r = red / 255f;
-        //    var g = green / 255f;
-        //    var b = blue / 255f;
-        //    var a = alpha / 255f;
-        //    var set = tilePalette.TileSets.FirstOrDefault(t => t.WalkColor.r == r && t.WalkColor.g == g && t.WalkColor.b == b);
-        //    if (set != null)
-        //    {
-
-        //        return new Cell()
-        //        {
-        //            Walkable = true,
-        //            Code = set.WalkableCode,
-        //            DefaultCornerJoinAsset = set.CornerJoinPrefab,
-        //            DefaultJoinAsset = set.JoinPrefab,
-        //            DefaultWallAsset = set.WallPrefab,
-        //            Type = set.name,
-        //            ReferenceSet = set,
-        //            DefaultFloorAsset = set.FloorPrefab,
-        //        };
-        //    }
-        //    else return null;
-        //}
-
         
-
-
-        //class MapData
-        //{
-        //    [JsonProperty("basic")]
-        //    public MapDataBasic Basic { get; set; }
-
-        //    public class MapDataBasic
-        //    {
-                
-        //        [JsonProperty("data")]
-        //        public string[] Data { get; set; }
-
-               
-        //        //class 
-        //    }
-        //}
     }
 }

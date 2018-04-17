@@ -32,7 +32,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         {
             return new GenerationAction[]
             {
-                new CreateObjectAction("light_wall2", ctx.WorldPos + new Vector3(0, 0, -.5f) * ctx.CellUnitWidth, Quaternion.Euler(0, -90, 0))
+                new CreateObjectAction(ctx.Coord, "light_wall2", ctx.WorldPos + new Vector3(0, 0, -.5f) * ctx.CellUnitWidth, Quaternion.Euler(0, -90, 0))
             }.ToList();
         }
     }
@@ -62,7 +62,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         {
             return new GenerationAction[]
             {
-                new CreateObjectAction("light_wall2", ctx.WorldPos + new Vector3(0, 0, .5f) * ctx.CellUnitWidth, Quaternion.Euler(0, 90, 0))
+                new CreateObjectAction(ctx.Coord, "light_wall2", ctx.WorldPos + new Vector3(0, 0, .5f) * ctx.CellUnitWidth, Quaternion.Euler(0, 90, 0))
             }.ToList();
         }
     }
@@ -92,7 +92,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         {
             return new GenerationAction[]
             {
-                new CreateObjectAction("light_wall2", ctx.WorldPos + new Vector3(-.5f, 0, 0) * ctx.CellUnitWidth, Quaternion.Euler(0, 0, 0))
+                new CreateObjectAction(ctx.Coord, "light_wall2", ctx.WorldPos + new Vector3(-.5f, 0, 0) * ctx.CellUnitWidth, Quaternion.Euler(0, 0, 0))
             }.ToList();
         }
     }
@@ -122,7 +122,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
         {
             return new GenerationAction[]
             {
-                new CreateObjectAction("light_wall2", ctx.WorldPos + new Vector3(.5f, 0, 0) * ctx.CellUnitWidth, Quaternion.Euler(0, 180, 0))
+                new CreateObjectAction(ctx.Coord, "light_wall2", ctx.WorldPos + new Vector3(.5f, 0, 0) * ctx.CellUnitWidth, Quaternion.Euler(0, 180, 0))
             }.ToList();
         }
     }

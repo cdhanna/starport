@@ -15,6 +15,7 @@ namespace Smallgroup.Starport.Assets.Surface
         public int X { get { return _x; } set { _x = value; } }
         public int Y { get { return _y; } set { _y = value; } }
 
+        public string Key { get { return $"grid{_x},{_y}"; } }
         
         public GridXY(int x, int y)
         {

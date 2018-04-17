@@ -36,7 +36,6 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var output = new List<GenerationAction>();
 
             var position = ctx.Get<Vector3>(RuleConstants.CELL_WORLD_POS);
-
             var offset = new Vector3(0, 0, 0);
             var rotation = 0;
 
@@ -64,7 +63,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
 
             position += offset * ctx.Get<float>(RuleConstants.CELL_UNIT_WIDTH);
             
-            output.Add(new CreateObjectAction(ctx.TileSet.WallPrefab, position, Quaternion.Euler(0,rotation, 0)));
+            output.Add(new CreateObjectAction(ctx.Coord, ctx.TileSet.WallPrefab, position, Quaternion.Euler(0,rotation, 0)));
 
             return output;
         }
