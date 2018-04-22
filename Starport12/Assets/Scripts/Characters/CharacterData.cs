@@ -12,6 +12,12 @@ namespace Smallgroup.Starport.Assets.Scripts.Characters
     public class CharacterData : ScriptableObject
     {
         public string DisplayName;
+
+        public string CodedName { get { return DisplayName.Replace(" ", ".").ToLower(); } }
+
+        public bool IsDemon;
+        public bool IsCommandable;
+
         public Sprite Icon;
 
         public List<GameResource> ResourceAbilities;

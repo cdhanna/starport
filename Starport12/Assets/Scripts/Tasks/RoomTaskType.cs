@@ -1,4 +1,6 @@
-﻿using Smallgroup.Starport.Assets.Scripts.Tasks.Params;
+﻿using Smallgroup.Starport.Assets.Scripts.GameResources;
+using Smallgroup.Starport.Assets.Scripts.MapSelect;
+using Smallgroup.Starport.Assets.Scripts.Tasks.Params;
 using Smallgroup.Starport.Assets.Surface.Generation;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,8 @@ namespace Smallgroup.Starport.Assets.Scripts.Tasks
         public string FlavorText;
         public MapBoxParameter LocationRequirement;
         public List<ResourceRequirement> ResourceRequirements;
-        public List<ResourceCommitParameter> ResourceCommitments;
+        //public List<ResourceCommitParameter> ResourceCommitments;
+        public List<ActorParameter> Assignments;
         public MapDataAnchor OutputMFT;
 
         protected override void OnCreate(GameTask instance)
@@ -27,33 +30,75 @@ namespace Smallgroup.Starport.Assets.Scripts.Tasks
         protected override void OnComplete(GameTask instance)
         {
             // yahoo?
+
+            // modify the map, now motherfucker.
+            var selection = instance.GetValue(LocationRequirement);
+            var World = selection.World;
+            var setToWalk = selection.GetCoordinates(0);
+            setToWalk.ForEach(c =>
+            {
+                selection.World.Map.Handlers.Walkable.Set(World.Map.GetCell(c), true);
+
+            });
+
+            var toKill = selection.OverlappingObjects;
+            toKill.ForEach(g =>
+            {
+                DestroyImmediate(g);
+            });
+            World.Map.AutoMap((coord, cell) => World.Map.Handlers.Walkable.Process(cell));
+
+            var results = MapLoader.ApplyRules(World.Results.Global, World.Map, new PatternSet(), new List<Surface.Generation.Rules.SuperRule>(), setToWalk);
+            World.Results.Join(results);
+            World.RebuildNav();
+
         }
 
         protected override void OnAdvance(GameTask instance)
         {
-            // advance resourceCommitments
+            // get the actor assignments, and bake out the resources that they yield.
+            var resourceValues = new Dictionary<GameResourceType, float>();
+            Assignments.ForEach(assignment =>
+            {
+                var actor = instance.GetValue(assignment);
+                actor?.Character?.ResourceAbilities.ForEach(ability =>
+                {
+                    if (resourceValues.ContainsKey(ability.ResourceType) == false)
+                    {
+                        resourceValues.Add(ability.ResourceType, ability.Amount);
+                    } else
+                    {
+                        resourceValues[ability.ResourceType] += ability.Amount;
+                    }
+                });
+            });
 
-            // match the commits to the reqs.
+
             ResourceRequirements.ForEach(req =>
             {
-                // is there a commit?
-                var commit = ResourceCommitments.FirstOrDefault(c => c.TargetResource == req.Resource);
-                if (commit != null)
+                var currentValue = instance.GetValue(req);
+                float add = 0;
+                if (resourceValues.TryGetValue(req.Resource, out add))
                 {
-                    var currentValue = (float) instance.GetValue(req);
-                    var addValue = (float)instance.GetValue(commit);
-                    var nextValue = currentValue + addValue;
-                    instance.SetValue(req, addValue + nextValue);
+                    
+                    
+                    instance.SetValue(req, Math.Min(req.RequiredValue, currentValue + add));
                 }
             });
 
         }
 
-        public override List<GameTaskParameter> GetParameters()
+        
+
+        public override List<IGameTaskParameter> GetParameters()
         {
-            var parameters = new List<GameTaskParameter>();
+
+            var parameters = new List<IGameTaskParameter>();
             parameters.Add(LocationRequirement);
-            parameters.AddRange(ResourceCommitments);
+            parameters.AddRange(Assignments);
+            //var reqs = ResourceCommitments.Select(r => r.AsDumb()).ToList(); ;
+            //parameters.AddRange(reqs);
+            //parameters.AddRange(ResourceCommitments);
             return parameters;
         }
 
@@ -64,9 +109,9 @@ namespace Smallgroup.Starport.Assets.Scripts.Tasks
             return parameters;
         }
 
-        public void SetLocation(GameTask instance, Rect location)
+        public void SetLocation(GameTask instance, MapSelection location)
         {
-            instance.SetValue(LocationRequirement, location);
+            instance.SetValue(LocationRequirement,  location.GetResult());
         }
        
     }

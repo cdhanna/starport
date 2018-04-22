@@ -10,10 +10,15 @@ namespace Smallgroup.Starport.Assets.Scripts.Tasks
     public class TaskUIHandler : MonoBehaviour
     {
         public GameObject PanelPrefab;
-        public GameTaskType TaskType;
+        public GameTaskType TaskTypeExample;
 
         internal GameObject CreateUI(GameTask instance, GameObject parent)
         {
+            if (PanelPrefab == null)
+            {
+                Debug.LogError("Task UI Handler didnt have a panel");
+                return null;
+            }
             var gob = Instantiate(PanelPrefab, parent.transform);
             gob.GetComponent<ITaskUIHandler>().SetGameTask(instance);
             return gob;

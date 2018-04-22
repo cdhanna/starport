@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc3eee59930dbb4fa736ed529b39478, type: 3}
+  m_Name: garden
+  m_EditorClassIdentifier: 
+  WalkableCode: 0
+  FillCode: 0
+  WalkColor: {r: 0, g: 1, b: 0, a: 1}
+  FloorPrefab: {fileID: 1273371867663452, guid: ba7772a06cebdd64298e888d5c44077c,
+    type: 2}
+  WallPrefab: {fileID: 1208396237253610, guid: 4bc8c4544e957d541a2b2c21fd6a9902, type: 2}
+  JoinPrefab: {fileID: 1023627703381556, guid: ec879583bf0e9094c911aa6bdcb14244, type: 2}
+  CornerJoinPrefab: {fileID: 1383384233130822, guid: bcb79cf8aab535848b01047e49ba6083,
+    type: 2}
+  FillPrefab: {fileID: 1595884039835346, guid: 04b3d5c5c5864ce4f880afbfe3b72a2c, type: 2}

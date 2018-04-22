@@ -1,6 +1,7 @@
 ﻿using Dialog.Engine;
 using Smallgroup.Starport.Assets.Core;
 using Smallgroup.Starport.Assets.Core.Generation;
+using Smallgroup.Starport.Assets.Scripts.Time;
 using Smallgroup.Starport.Assets.Surface;
 using Smallgroup.Starport.Assets.Surface.Generation;
 using Smallgroup.Starport.Assets.Surface.Generation.Rules;
@@ -13,6 +14,7 @@ using UnityEngine.AI;
 
 namespace Smallgroup.Starport.Assets.Scripts
 {
+    [RequireComponent(typeof(Calendar))]
     public class WorldAnchor : MonoBehaviour
     {
         public MapXY Map { get { return Results.Output; } }
@@ -39,6 +41,8 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         public CellHandlers CellHandlers;
         public List<MapZone> Zones;
+
+        public Calendar Calendar { get; private set; }
 
         private void AttachCellAnchors()
         {
@@ -68,7 +72,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Awake()
         {
-
+            Calendar = GetComponent<Calendar>();
             CellHandlers = new CellHandlers(TilePalett);
             CellHandlers.Zones.Zones = Zones;
 

@@ -34,5 +34,15 @@ MonoBehaviour:
     StartingValue: 0
     RequiredValue: 25
     Resource: {fileID: 11400000, guid: afe5769b761373d4f87705cd285f9d30, type: 2}
-  ResourceCommitments: []
+  Assignments:
+  - Name: 
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    StartOffset: 0
+    StopOffset: 0
+  - Name: 
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    StartOffset: 0
+    StopOffset: 0
   OutputMFT: {fileID: 0}

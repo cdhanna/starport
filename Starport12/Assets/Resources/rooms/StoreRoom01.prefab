@@ -1216,12 +1216,12 @@ GameObject:
   - component: {fileID: 114284043347445174}
   - component: {fileID: 114367701616383944}
   m_Layer: 0
-  m_Name: Boxes
+  m_Name: boxes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1611218943998034
 GameObject:
   m_ObjectHideFlags: 1

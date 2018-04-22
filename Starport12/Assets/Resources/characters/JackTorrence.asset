@@ -14,7 +14,7 @@ MonoBehaviour:
   DisplayName: Jacky Boy
   Icon: {fileID: 21300000, guid: b2b3a38ee88486f4c8220cf478ddf8d2, type: 3}
   ResourceAbilities:
-  - ResourceType: {fileID: 11400000, guid: 23f13efaec67f9d43a261e21e1418a95, type: 2}
-    Amount: 2
-  - ResourceType: {fileID: 11400000, guid: d94b0fb5fd0f43744bbc5e9f1e904da7, type: 2}
+  - ResourceType: {fileID: 11400000, guid: 9144b0618e8f2d24f80cf2070ee5121a, type: 2}
+    Amount: 12
+  - ResourceType: {fileID: 11400000, guid: afe5769b761373d4f87705cd285f9d30, type: 2}
     Amount: 9

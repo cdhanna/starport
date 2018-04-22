@@ -1,4 +1,5 @@
 ﻿using Smallgroup.Starport.Assets.Core.Players;
+using Smallgroup.Starport.Assets.Scripts.MapSelect;
 using Smallgroup.Starport.Assets.Surface;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Smallgroup.Starport.Assets.Scripts.Characters.Commands
 
 
 
-    class BoxSelectionCommand : InteractionBasedCommand
+    public class BoxSelectionCommand : InteractionBasedCommand
     {
 
 

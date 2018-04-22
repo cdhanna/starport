@@ -17,13 +17,24 @@ namespace Smallgroup.Starport.Assets.Scripts.JobSystem
         public List<GameTask> Tasks;
 
         public GameTaskEvent OnAddedGameTask;
+        public GameTaskEvent OnCompletedGameTask;
 
         public void AdvanceJobs()
         {
+            var completed = new List<GameTask>();
             foreach(var task in Tasks)
             {
                 task.TaskType.Advance(task);
+                if (task.TaskType.IsComplete(task))
+                {
+                    completed.Add(task);
+                }
             }
+
+            completed.ForEach(task =>
+            {
+                OnCompletedGameTask?.Raise(task);
+            });
         }
 
         public void TryGenerate(GameTaskType taskType)

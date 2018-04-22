@@ -22,7 +22,7 @@ namespace Smallgroup.Starport.Assets.Scripts.Tasks
             return GetRequirements().Select(r => r.GetPercentageComplete(instance)).Sum() / GetRequirements().Count;
         }
 
-        public abstract List<GameTaskParameter> GetParameters();
+        public abstract List<IGameTaskParameter> GetParameters();
         public abstract List<RequirementParameter> GetRequirements();
 
         protected abstract void OnAdvance(GameTask instance);

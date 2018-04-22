@@ -14,7 +14,7 @@ MonoBehaviour:
   DisplayName: Staaaan
   Icon: {fileID: 21300000, guid: c39ddfbd11b373b4f8d5bd2265c6af4b, type: 3}
   ResourceAbilities:
-  - ResourceType: {fileID: 11400000, guid: d94b0fb5fd0f43744bbc5e9f1e904da7, type: 2}
+  - ResourceType: {fileID: 11400000, guid: 9144b0618e8f2d24f80cf2070ee5121a, type: 2}
+    Amount: 7
+  - ResourceType: {fileID: 11400000, guid: afe5769b761373d4f87705cd285f9d30, type: 2}
     Amount: 1
-  - ResourceType: {fileID: 11400000, guid: 7b6408e327ae9044c9582068e3dc466f, type: 2}
-    Amount: 2

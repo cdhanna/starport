@@ -17,6 +17,7 @@ public class DialogUI : MonoBehaviour {
     public Scrollbar scrollbar;
     public RuleButton ruleButtonTemplate;
     public RectTransform buttonPanel;
+    public Image PlayerIcon;
     
     private List<RuleButton> buttons = new List<RuleButton>();
     //private DialogRule[] rules;
@@ -84,5 +85,8 @@ public class DialogUI : MonoBehaviour {
         }
     }
 
-
+    public void SetTargetSpeaker(Sprite icon)
+    {
+        PlayerIcon.overrideSprite = icon;
+    }
 }

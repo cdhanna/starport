@@ -7,8 +7,18 @@ using System.Threading.Tasks;
 namespace Smallgroup.Starport.Assets.Scripts.Tasks.Params
 {
 
+    public interface IGameTaskParameter
+    {
+        void OnCreateInstance(GameTask task);
+
+    }
+
+    public interface IGameTaskParameter<out TArg> : IGameTaskParameter
+    {
+    }
+
     [Serializable]
-    public abstract class GameTaskParameter
+    public abstract class GameTaskParameter<TArg> : IGameTaskParameter<TArg>
     {
 
         public string Name;
@@ -24,10 +34,29 @@ namespace Smallgroup.Starport.Assets.Scripts.Tasks.Params
 
         //public abstract void InvokeSetter();
 
-        public abstract object GetDefault();
+        public abstract TArg GetDefault();
+
+        public void OnCreateInstance(GameTask gameTask)
+        {
+            gameTask.SetValue<TArg>(this, GetDefault());
+        }
+
+        public virtual bool IsValid(GameTask instance, TArg value, TArg oldValue)
+        {
+            return true;
+        }
+
+        //public abstract IGameTaskParameter<object> AsDumb();
     }
     
-
+    public class SingleContainer
+    {
+        public Single Data;
+        public SingleContainer(Single value)
+        {
+            Data = value;
+        }
+    }
   
 
 }

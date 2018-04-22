@@ -1,4 +1,5 @@
-﻿using Smallgroup.Starport.Assets.Scripts.Tasks;
+﻿using Smallgroup.Starport.Assets.Scripts.JobSystem;
+using Smallgroup.Starport.Assets.Scripts.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,14 @@ public class TaskUI : MonoBehaviour {
     public Text TitleText;
     public Text AboutText;
     public GameObject ChildPanel;
-    
+
+    //public GameTaskEvent CloseIfTaskDestroyed;
+
     private Animator _animator;
     private GameTask _task;
 
     private GameObject childInstance;
+
 	// Use this for initialization
 	void Start () {
 
@@ -35,7 +39,7 @@ public class TaskUI : MonoBehaviour {
         AboutText.text = task.TaskType.Description;
 
         var handlers = GetComponents<TaskUIHandler>().ToList();
-        var handler = handlers.First(h => h.TaskType == task.TaskType);
+        var handler = handlers.First(h => h.TaskTypeExample.GetType().IsAssignableFrom(task.TaskType.GetType()));
         if (childInstance != null)
         {
             Destroy(childInstance);
@@ -53,5 +57,14 @@ public class TaskUI : MonoBehaviour {
     public void Close()
     {
         IsOpen = false;
+    }
+
+    public void DestroyIfSelf(GameTask task)
+    {
+        if (_task == task)
+        {
+            Close();
+
+        }
     }
 }

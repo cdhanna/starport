@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:Smallgroup.Starport.Assets.Scripts.GameResources:GameResourceType
   Description: Knowledge is Power
   Color: {r: 0.09915656, g: 0.4626655, b: 0.9632353, a: 0}
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: ef6238ccfe8e97b4ba8ae35e78228635, type: 3}

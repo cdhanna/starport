@@ -14,3 +14,5 @@ MonoBehaviour:
   TileSets:
   - {fileID: 11400000, guid: 30e3dcaaad375af4c86423ccce5760e2, type: 2}
   - {fileID: 11400000, guid: 1cf6c582b21faf5469a73c369a94f9f0, type: 2}
+  - {fileID: 11400000, guid: 22d97fd1592d5d44699279e36830fa33, type: 2}
+  - {fileID: 11400000, guid: 56ad6f55a61349d4690d782a103ebff7, type: 2}

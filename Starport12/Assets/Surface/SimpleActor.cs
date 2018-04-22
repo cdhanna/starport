@@ -27,10 +27,10 @@ namespace Smallgroup.Starport.Assets.Surface
         public float Speed = .1f, Friction = .35f;
 
         [Header("Attributes")]
-        public string Name;
-        public bool Merchant, Seeker, Criminal, Collection, Trust;
-        public int Health = 100;
-        public int Respect = 50;
+        //public string Name;
+        //public bool Merchant, Seeker, Criminal, Collection, Trust;
+        //public int Health = 100;
+        //public int Respect = 50;
         public List<BagBoolElement> Flags = new List<BagBoolElement>();
         public List<BagIntElement> Ints = new List<BagIntElement>();
         public List<BagStringElement> Strs = new List<BagStringElement>();
@@ -53,19 +53,23 @@ namespace Smallgroup.Starport.Assets.Surface
 
             var dEngine = dialog.dEngine;
             _dialog = dialog;
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Name)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Merchant)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Seeker)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Criminal)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Collection)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Trust)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Health)));
-            dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Respect)));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".flags", false, Flags).UpdateElements(dEngine));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".ints", 0, Ints).UpdateElements(dEngine));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".strs", "", Strs).UpdateElements(dEngine));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".position.x", x => Coordinate = new GridXY(x, Coordinate.Y) , () => Coordinate.X));
-            dEngine.AddAttribute(DialogAttribute.New(Name + ".position.y", y => Coordinate = new GridXY(Coordinate.X, y) , () => Coordinate.Y));
+
+            var name = _anchor.Character.DisplayName.Replace(" ", "_");
+
+            dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".name", v => { }, () => _anchor.Character.DisplayName));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, name, "name"));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Merchant)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Seeker)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Criminal)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Collection)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Trust)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Health)));
+            //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Respect)));
+            dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".flags", false, Flags).UpdateElements(dEngine));
+            dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".ints", 0, Ints).UpdateElements(dEngine));
+            dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".strs", "", Strs).UpdateElements(dEngine));
+            dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".position.x", x => Coordinate = new GridXY(x, Coordinate.Y), () => Coordinate.X));
+            dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".position.y", y => Coordinate = new GridXY(Coordinate.X, y), () => Coordinate.Y));
 
             //var gotoFunc = new ObjectFunctionDialogAttribute(Name + ".funcs.goto", args =>
             //{
@@ -106,10 +110,47 @@ namespace Smallgroup.Starport.Assets.Surface
             } else if (command is MoveObjectCommand)
             {
                 return HandleMoveCommand(command as MoveObjectCommand);
+            } else if (command is ObjectSelectionCommand)
+            {
+                return HandleObjectSelectCommand(command as ObjectSelectionCommand);
             }
 
             return null;
             //yield return CommandResult.COMPLETE;
+        }
+
+        private IEnumerable<CommandResult> HandleObjectSelectCommand(ObjectSelectionCommand command)
+        {
+            yield return CommandResult.WORKING; // wait a tick for another click.
+            var input = _anchor.InputMech;
+
+            var selected = default(InteractionSupport);
+            var originalPosition = new Vector3();
+            while (selected == null)
+            {
+                if (input.NewSecondary)
+                {
+                    command.Done = true;
+                    yield return CommandResult.COMPLETE;
+                }
+
+                if (input.Now.InteractableObject != null && input.NewPrimary)
+                {
+                    selected = input.Now.InteractableObject;
+                    originalPosition = selected.transform.position;
+                }
+
+                yield return CommandResult.WORKING;
+
+            }
+
+            command.Done = true;
+            if (selected != default(InteractionSupport)){
+                command.Selected = true;
+                command.SelectedObject = selected;
+            }
+            command.Callback();
+            yield return CommandResult.COMPLETE;
         }
 
         private IEnumerable<CommandResult> HandleMoveCommand(MoveObjectCommand command)
@@ -246,7 +287,7 @@ namespace Smallgroup.Starport.Assets.Surface
 
         private IEnumerable<CommandResult> HandleDialog(OpenDialogCommand command)
         {
-            _dialog.OpenDialog(this, command.Target);
+            _dialog.OpenDialog(_anchor, command.Target);
             while (_dialog.IsDialogOpen)
             {
                 yield return CommandResult.WORKING;

@@ -1,6 +1,9 @@
 ﻿using Smallgroup.Starport.Assets.Core.Generation;
 using Smallgroup.Starport.Assets.Core.Players;
+using Smallgroup.Starport.Assets.Scripts.Characters;
 using Smallgroup.Starport.Assets.Scripts.Characters.Commands;
+using Smallgroup.Starport.Assets.Scripts.MapSelect;
+using Smallgroup.Starport.Assets.Scripts.Time;
 using Smallgroup.Starport.Assets.Surface;
 using Smallgroup.Starport.Assets.Surface.Generation;
 using Smallgroup.Starport.Assets.Surface.InputMechs;
@@ -13,6 +16,7 @@ using UnityEngine.AI;
 
 namespace Smallgroup.Starport.Assets.Scripts
 {
+    [RequireComponent(typeof(Schedule))]
     public class ActorAnchor : MonoBehaviour
     {
         public Color Color;
@@ -20,11 +24,12 @@ namespace Smallgroup.Starport.Assets.Scripts
         public bool UseMouse;
         public ControllerBinding Controller;
 
+        public CharacterData Character;
         public MapZone SpawnZone;
         public MapSelection BoxSelector;
 
         public WorldAnchor World;
-
+        
         private DialogAnchor DialogAnchor;
 
         public SimpleActor Actor;
@@ -38,6 +43,8 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         private InteractionBasedCommand currInteractionCommand;
         //public MapXY World { get; set; }
+
+        public Schedule Schedule { get; private set; }
 
         public ActorAnchor()
         {
@@ -53,6 +60,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         protected void Start()
         {
+            Schedule = GetComponent<Schedule>();
             DialogAnchor = World.DialogAnchor;
             Actor.Setup(World.Map, this, transform);
             Actor.InitDialogAttributes(DialogAnchor);
@@ -200,6 +208,16 @@ namespace Smallgroup.Starport.Assets.Scripts
             Actor.AddCommand(selectionCommand);
         }
 
+        public void IssueObjectSelectCommand()
+        {
+            Actor.ClearCommands();
+            var selectCommand = new ObjectSelectionCommand();
+            currInteractionCommand = selectCommand;
+
+            Actor.AddCommand(currInteractionCommand);
+
+        }
+
         public void IssueMakeMoveObjectCommand()
         {
             Actor.ClearCommands();
@@ -213,6 +231,14 @@ namespace Smallgroup.Starport.Assets.Scripts
         {
             Actor.ClearCommands();
             Actor.AddCommand(new GotoCommand() { Target = World.Map.TransformWorldToCoordinate(target.transform.position), Actual = target.transform.position });
+        }
+
+        public void IssueSpeakToCommand(GameObject toTalkTo)
+        {
+            var otherActor = toTalkTo.GetComponent<ActorAnchor>();
+            Actor.ClearCommands();
+           // Actor.AddCommand(new GotoCommand() { Target = World.Map.TransformWorldToCoordinate(toTalkTo.transform.position), Actual = toTalkTo.transform.position });
+            Actor.AddCommand(new OpenDialogCommand(otherActor));
         }
 
         public void SetColor(Color color)

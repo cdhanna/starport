@@ -1,4 +1,5 @@
 ﻿using Smallgroup.Starport.Assets.Core.Players;
+using Smallgroup.Starport.Assets.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace Smallgroup.Starport.Assets.Surface
 {
     public class OpenDialogCommand : ICommand
     {
-        public SimpleActor Target;
+        public ActorAnchor Target;
 
-       public OpenDialogCommand(SimpleActor target)
+       public OpenDialogCommand(ActorAnchor target)
         {
             Target = target;
         }

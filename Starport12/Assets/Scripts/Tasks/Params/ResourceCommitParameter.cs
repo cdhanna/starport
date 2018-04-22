@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace Smallgroup.Starport.Assets.Scripts.Tasks.Params
 {
     [Serializable]
-    public class ResourceCommitParameter : GameTaskParameter
+    public class ResourceCommitParameter : GameTaskParameter<float>
     {
 
         public GameResourceType TargetResource;
 
-        public override object GetDefault()
+        public override float GetDefault()
         {
-            return 0;
+            return 1;
         }
     }
 }

@@ -14,16 +14,18 @@ namespace Smallgroup.Starport.Assets.Scripts.Tasks.Params
         public float RequiredValue;
         public GameResourceType Resource;
 
-        
-        public override object GetDefault()
+      
+
+        public override float GetDefault()
         {
             return StartingValue;
         }
 
         public override float GetPercentageComplete(GameTask instance)
         {
-            var value = (float)instance.GetValue(this);
-            return value / RequiredValue;
+            var value = instance.GetValue<float>(this);
+            
+            return (float)value / RequiredValue;
         }
 
         //public override void InvokeSetter()
@@ -33,7 +35,7 @@ namespace Smallgroup.Starport.Assets.Scripts.Tasks.Params
 
         public override bool IsComplete(GameTask instance)
         {
-            var value = (float)instance.GetValue(this);
+            var value = (float)instance.GetValue<float>(this);
             return value >= RequiredValue;
         }
     }

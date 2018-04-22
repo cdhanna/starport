@@ -24,7 +24,7 @@ public class TaskRowUI : MonoBehaviour {
 		
         if (Task != null)
         {
-            RatioComplete.text = Task.TaskType.GetRatioComplete(Task) + "%";
+            RatioComplete.text = Mathf.Floor(100*Task.TaskType.GetRatioComplete(Task)) + "%";
             Description.text = Task.TaskType.Description;
         }
 

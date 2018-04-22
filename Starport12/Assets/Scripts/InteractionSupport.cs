@@ -13,7 +13,7 @@ public class InteractionSupport : MonoBehaviour {
     private float _hideTime;
     private bool _shouldHide;
     public GameObject SelectionCircle;
-
+    public float SelectionScale = 1;
     private static GameObject _foundSelectionCircle;
 
     public InteractionGameEvent OnInteractionStartedEvent;
@@ -56,6 +56,7 @@ public class InteractionSupport : MonoBehaviour {
                 //_hideTime = Time.realtimeSinceStartup + .25f;
                 _shouldHide = false;
                 SelectionCircle.transform.position = transform.position;
+                SelectionCircle.transform.localScale = new Vector3(1, .1f, 1) * SelectionScale;
                 //_oldColor = gameObject.GetComponent<MeshRenderer>().material.color;
                 //gameObject.GetComponent<MeshRenderer>().material.color = color;
             });
