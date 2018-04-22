@@ -14,5 +14,5 @@ MonoBehaviour:
   DisplayName: sofian
   IsDemon: 0
   IsCommandable: 0
-  Icon: {fileID: 21300000, guid: a0c78b016d49dad4385d693ac5c07a7f, type: 3}
+  Icon: {fileID: 21300000, guid: bf892f8519cf13f4a9e1ebf174d279ca, type: 3}
   ResourceAbilities: []

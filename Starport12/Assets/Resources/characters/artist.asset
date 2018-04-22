@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: omar
   IsDemon: 0
-  IsCommandable: 1
+  IsCommandable: 0
   Icon: {fileID: 21300000, guid: b417ee70edbcc37449beaa1bb31fb62a, type: 3}
   ResourceAbilities:
   - ResourceType: {fileID: 11400000, guid: afe5769b761373d4f87705cd285f9d30, type: 2}

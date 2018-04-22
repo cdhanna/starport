@@ -81,7 +81,8 @@ public class DialogAnchor : MonoBehaviour {
 
             instance.SetValue(moveTaskType.ObjectToMoveParameter, itemValue);
             instance.SetValue(moveTaskType.LocationToGoParameter, gotoValue);
-            FindObjectOfType<JobHandler>().AddTask(instance);
+            instance.SetValue(moveTaskType.Assignments[0], FindObjectsOfType<ActorAnchor>().FirstOrDefault(a => a.Character.DisplayName.Equals(assignee)));
+            FindObjectOfType<JobHandler>().AddTask(instance, true);
 
 
         }, new Dictionary<string, object>()
@@ -173,12 +174,9 @@ public class DialogAnchor : MonoBehaviour {
         _target = target;
         ConversationFlag = true;
         dialogInstance = Instantiate(convotemplate, GameObject.FindObjectOfType<Canvas>().transform);
-        dialogInstance.SetTargetSpeaker(target.Character.Icon);
+        dialogInstance.SetTargetSpeaker(target.Character);
         dialogInstance.UpdateRuleOptions(dEngine);
-
-        var sofianName = dEngine.GetAttributes().FirstOrDefault(a => a.Name.Equals("sofian.name"));
-        var sofianValue = sofianName?.GetRealValue();
-
+        
         GameObject.FindObjectsOfType<ActorAnchor>().ToList().ForEach(anchor => anchor.InputMech.Ignore = true);
 
     }

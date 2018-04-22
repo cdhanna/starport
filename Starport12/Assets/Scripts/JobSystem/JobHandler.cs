@@ -43,10 +43,13 @@ namespace Smallgroup.Starport.Assets.Scripts.JobSystem
           
         }
 
-        public void AddTask(GameTask instance)
+        public void AddTask(GameTask instance, bool silent=false)
         {
             Tasks.Add(instance);
-            OnAddedGameTask.Raise(instance);
+            if (!silent)
+            {
+                OnAddedGameTask.Raise(instance);
+            }
         }
 
         public void RemoveTask(GameTask instance)

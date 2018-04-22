@@ -57,6 +57,9 @@ namespace Smallgroup.Starport.Assets.Surface
             var name = _anchor.Character.DisplayName.Replace(" ", "_");
 
             dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".name", v => { }, () => _anchor.Character.DisplayName));
+            dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".commandable", v => {
+                _anchor.Character.IsCommandable = v;
+            }, () => _anchor.Character.IsCommandable));
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, name, "name"));
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Merchant)));
             //dEngine.AddAttribute(new ObjectDialogAttribute(this, Name, nameof(Seeker)));
@@ -71,6 +74,7 @@ namespace Smallgroup.Starport.Assets.Surface
             dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".position.x", x => Coordinate = new GridXY(x, Coordinate.Y), () => Coordinate.X));
             dEngine.AddAttribute(DialogAttribute.New(_anchor.Character.CodedName + ".position.y", y => Coordinate = new GridXY(Coordinate.X, y), () => Coordinate.Y));
 
+            _anchor.Resources?.AddDialog(_anchor.Character.CodedName + ".resources", dEngine);
             //var gotoFunc = new ObjectFunctionDialogAttribute(Name + ".funcs.goto", args =>
             //{
             //    var xPosition = (int)args["x"];

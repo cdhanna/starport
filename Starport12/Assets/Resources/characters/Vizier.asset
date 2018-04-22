@@ -14,7 +14,7 @@ MonoBehaviour:
   DisplayName: jafar
   IsDemon: 0
   IsCommandable: 0
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 4c8d62b2410d35240be70534763615d0, type: 3}
   ResourceAbilities:
   - ResourceType: {fileID: 11400000, guid: 9144b0618e8f2d24f80cf2070ee5121a, type: 2}
     Amount: 5

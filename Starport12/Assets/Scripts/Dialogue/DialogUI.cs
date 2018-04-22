@@ -1,6 +1,7 @@
 ﻿using Dialog;
 using Dialog.Engine;
 using Newtonsoft.Json;
+using Smallgroup.Starport.Assets.Scripts.Characters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ public class DialogUI : MonoBehaviour {
     public RuleButton ruleButtonTemplate;
     public RectTransform buttonPanel;
     public Image PlayerIcon;
-    
+    public Text PlayerLabel;
+
     private List<RuleButton> buttons = new List<RuleButton>();
     //private DialogRule[] rules;
     private bool textAdded;
@@ -85,8 +87,9 @@ public class DialogUI : MonoBehaviour {
         }
     }
 
-    public void SetTargetSpeaker(Sprite icon)
+    public void SetTargetSpeaker(CharacterData character)
     {
-        PlayerIcon.overrideSprite = icon;
+        PlayerIcon.overrideSprite = character.Icon;
+        PlayerLabel.text = character.DisplayName;
     }
 }

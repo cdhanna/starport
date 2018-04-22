@@ -34,7 +34,7 @@ namespace Smallgroup.Starport.Assets.Scripts
 
         public SimpleActor Actor;
         public DefaultInputMech<SimpleActor> InputMech { get; set; }
-
+        public PlayerResources Resources;
 
         private Material standardMat;
         private GameObject gob;

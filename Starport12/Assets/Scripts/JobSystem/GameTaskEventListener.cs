@@ -19,7 +19,7 @@ namespace Smallgroup.Starport.Assets.Scripts.JobSystem
     [CreateAssetMenu(fileName = "GameTask Event", menuName = "Events/GameTask Type")]
     public class GameTaskEvent : GameEvent<GameTaskUnityEvent, GameTaskEvent, GameTask>
     {
-
+        public bool Silent = false;
     }
 
     [Serializable]
