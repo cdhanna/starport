@@ -175,6 +175,10 @@ public class DialogAnchor : MonoBehaviour {
         dialogInstance = Instantiate(convotemplate, GameObject.FindObjectOfType<Canvas>().transform);
         dialogInstance.SetTargetSpeaker(target.Character.Icon);
         dialogInstance.UpdateRuleOptions(dEngine);
+
+        var sofianName = dEngine.GetAttributes().FirstOrDefault(a => a.Name.Equals("sofian.name"));
+        var sofianValue = sofianName?.GetRealValue();
+
         GameObject.FindObjectsOfType<ActorAnchor>().ToList().ForEach(anchor => anchor.InputMech.Ignore = true);
 
     }

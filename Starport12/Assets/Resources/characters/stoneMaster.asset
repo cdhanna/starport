@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c96551a5f52022245a7a7b730b1c7ff5, type: 3}
   m_Name: stoneMaster
   m_EditorClassIdentifier: 
-  DisplayName: Stone Master Garrick
+  DisplayName: stone master garrick
   IsDemon: 0
   IsCommandable: 0
   Icon: {fileID: 21300000, guid: b19c2e6404c97ad45a0469f33649da54, type: 3}

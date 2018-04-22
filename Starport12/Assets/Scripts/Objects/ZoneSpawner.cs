@@ -10,7 +10,7 @@ public class ZoneSpawner : MonoBehaviour {
 
     public MapZone Zone;
     public GameObject Prefab;
-
+    public string SpawnName;
     private bool _spawned;
 
 	// Use this for initialization
@@ -35,6 +35,7 @@ public class ZoneSpawner : MonoBehaviour {
 
             var obj = Instantiate(Prefab, world.transform);
             obj.transform.position = startPos;
+            obj.name = SpawnName;
 
             //world.Map.SetObjectPosition(startCoord, Actor);
 
