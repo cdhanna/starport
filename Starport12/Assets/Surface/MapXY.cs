@@ -10,10 +10,61 @@ namespace Smallgroup.Starport.Assets.Surface
     public class MapXY : Map<GridXY, Cell>
     {
         public float CellWidth { get; set; }
-        public Vector3 CellOffset { get { return new Vector3(CellWidth, 0, CellWidth) * -2.5f; } }
-        public MapXY()
+        public Vector3 CellOffset { get; set; }
+        public CellHandlers Handlers { get; set; }
+        public MapXY(CellHandlers handlers)
         {
-            CellWidth = 1.7f;
+            Handlers = handlers;
+            CellWidth = 1f;
+            CellOffset = Vector3.zero;
+        }
+
+        public int HighestX { get
+            {
+                var best = int.MinValue;
+                Coordinates.ToList().ForEach(c => best = Math.Max(c.X, best));
+                return best;
+            }
+        }
+        public int HighestY
+        {
+            get
+            {
+                var best = int.MinValue;
+                Coordinates.ToList().ForEach(c => best = Math.Max(c.Y, best));
+                return best;
+            }
+        }
+        public int LowestX
+        {
+            get
+            {
+                var best = int.MaxValue;
+                Coordinates.ToList().ForEach(c => best = Math.Min(c.X, best));
+                return best;
+            }
+        }
+        public int LowestY
+        {
+            get
+            {
+                var best = int.MaxValue;
+                Coordinates.ToList().ForEach(c => best = Math.Min(c.Y, best));
+                return best;
+            }
+        }
+
+        public void Join(MapXY other)
+        {
+            var otherCoords = other.Coordinates;
+            for(var c = 0; c < otherCoords.Length; c++)
+            {
+                var coord = otherCoords[c];
+                var otherCell = other.GetCell(coord);
+                var traverasble = other.GetTraversable(coord);
+                SetCell(coord, otherCell);
+                SetTraversable(coord, traverasble);
+            }
         }
 
         public override GridXY TransformWorldToCoordinate(Vector3 position)

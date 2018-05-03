@@ -26,6 +26,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public const string CELL_WALL_LEFT = "cell_wallLeft";
         public const string CELL_WALL_RIGHT = "cell_wallRight";
         public const string CELL_UNIT_WIDTH = "cell_unitWidth";
+        public const string CELL_PATTERN_MATCHED = "cell_patterned";
         //public const string CELL_QUAD_NEIGHBOR_COUNT = "cell_quadNeighborCount";
 
         public const string WALL_NAME = "wall_prefabName";
@@ -38,17 +39,41 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
     public class Ctx : GenerationContext
     {
 
-        public Ctx(GenerationContext parent) : base(parent) { }
+        public Ctx(GenerationContext parent) : base(parent) {
+            
+        }
 
-        public Ctx() : base(null) { }
+        public Ctx() : base(null) {
+        }
 
+        public MapXY Map { get; set; }
 
-        public bool WallTop { get { return Get<bool>(RuleConstants.CELL_WALL_TOP); } }
-        public bool WallLow { get { return Get<bool>(RuleConstants.CELL_WALL_LOW); } }
+        public bool WallTop
+        {
+            get
+            {
+                var coord = Coord;
+                var neighbors = Map.GetTraversable(coord);
+                return !neighbors.Contains(new GridXY(coord.X, coord.Y - 1));
+            }
+        }
+
+        public bool WallLow
+        {
+            get
+            {
+                var coord = Coord;
+                var neighbors = Map.GetTraversable(coord);
+                return !neighbors.Contains(new GridXY(coord.X, coord.Y + 1));
+            }
+        }
+        //public bool WallTop { get { return Get<bool>(RuleConstants.CELL_WALL_TOP); } }
+        //public bool WallLow { get { return Get<bool>(RuleConstants.CELL_WALL_LOW); } }
         public bool WallRight { get { return Get<bool>(RuleConstants.CELL_WALL_RIGHT); } }
         public bool WallLeft { get { return Get<bool>(RuleConstants.CELL_WALL_LEFT); } }
 
         public bool WallAny { get { return Get<bool>(RuleConstants.CELL_WALL_HAS_ANY); } }
+        public int PatternCount { get { return Get<int>(RuleConstants.CELL_PATTERN_MATCHED); } set { Set<int>(RuleConstants.CELL_PATTERN_MATCHED, value); } }
 
         public Vector3 WorldPos { get { return Get<Vector3>(RuleConstants.CELL_WORLD_POS); } }
         public float CellUnitWidth { get { return Get<float>(RuleConstants.CELL_UNIT_WIDTH); } }
@@ -60,9 +85,30 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         public string FloorPrefabName { get { return Get(RuleConstants.FLOOR_NAME); } }
         public float WallOffset { get { return Get<float>(RuleConstants.WALL_OFFSET); } }
 
+        public Cell Cell { get { return Map.GetCell(new GridXY(X, Y)); } }
+        public GridXY Coord { get { return new GridXY(X, Y); } }
+        public bool HardWalls { get { return Get<bool>("HardWalls"); } }
+
+
+        public bool Replaceable
+        {
+            get
+            {
+                return Map.Handlers.Replacable.Process(Cell);
+            }
+        }
+
+        public bool Walkable { get
+            {
+                return Map.Handlers.Walkable.Process(Cell);
+            }
+        }
+        public MapTileSet TileSet { get { return Map.Handlers.TileSet.Process(Cell); } }
+
         public Dictionary<GenerationRule<Ctx>, List<GenerationAction>> GetActions()
         {
-            return Get<Dictionary<GenerationRule<Ctx>, List<GenerationAction>>>("actions");
+            return Ensure<Dictionary<GenerationRule<Ctx>, List<GenerationAction>>>("actions", new Dictionary<GenerationRule<Ctx>, List<GenerationAction>>());
+            //return Get<Dictionary<GenerationRule<Ctx>, List<GenerationAction>>>("actions");
         }
 
 
@@ -70,7 +116,7 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
         {
             var otherCoord = new GridXY(X + xDiff, Y + yDiff);
 
-            if (World.Map.CoordinateExists(otherCoord))
+            if (Map.CoordinateExists(otherCoord))
             {
                 return GetSubContext<GridXY, Ctx>(otherCoord);
 
@@ -84,14 +130,15 @@ namespace Smallgroup.Starport.Assets.Surface.Generation
 
         public void SetFromGrid(MapXY map, GridXY coord)
         {
+            Map = map;
             Set(RuleConstants.CELL_X, coord.X);
             Set(RuleConstants.CELL_Y, coord.Y);
             Set(RuleConstants.CELL_WORLD_POS, map.TransformCoordinateToWorld(coord));
             Set(RuleConstants.CELL_UNIT_WIDTH, map.CellWidth);
-
             // check if the cell is a single wall. 
             var neighbors = map.GetTraversable(coord);
             Set(RuleConstants.CELL_WALL_HAS_ANY, neighbors.Count != 4);
+            Set(RuleConstants.CELL_PATTERN_MATCHED, 0);
             //Set(RuleConstants.CELL_QUAD_NEIGHBOR_COUNT, neighbors.Count);
 
 

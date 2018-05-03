@@ -1,0 +1,43 @@
+[
+    {
+        "name": "RuleA",
+        "displayAs": "RuleADisplay",
+        "conditions": [
+            {
+                "op": ">",
+                "left": "Player.health",
+                "right": "50"
+            }
+        ],
+        "dialog": [
+            {
+                "speaker": "player1",
+                "content": "Hello world this is rule A"
+            }
+        ],
+        "outcomes": []
+    },
+    {
+        "name": "RuleB",
+        "displayAs": "RuleBDisplay",
+        "conditions": [
+            {
+                "op": ">",
+                "left": "Player.health",
+                "right": "50"
+            },
+            {
+                "op": ">",
+                "left": "Player.respect",
+                "right": "(+ 50 (* 20 2))"
+            }
+        ],
+        "dialog": [
+            {
+                "speaker": "player1",
+                "content": "Hoopa Hooray"
+            }
+        ],
+        "outcomes": []
+    }
+]

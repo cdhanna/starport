@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af33288c4aea01a4e9fc8ea6e191881a, type: 3}
+  m_Name: Hallway
+  m_EditorClassIdentifier: 
+  Title: Hallway
+  Description: A place for people to walk
+  FlavorText: only some know where they go, but the hall always does
+  LocationRequirement:
+    Name: 
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    MatchPattern: {fileID: 0}
+    Loop: 0
+    UseMaxSize: 0
+    MaxWidth: 0
+    MaxHeight: 0
+  ResourceRequirements:
+  - Name: Money
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    StartingValue: 0
+    RequiredValue: 5
+    Resource: {fileID: 11400000, guid: b7993131bb377164e890da24e3c3d75a, type: 2}
+  Assignments:
+  - Name: Digger
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    StartOffset: 0
+    StopOffset: 0
+    RequiredToBeHuman: 0
+    RequiredToBeDemon: 1
+    RequiredAbilities:
+    - ResourceType: {fileID: 11400000, guid: b7993131bb377164e890da24e3c3d75a, type: 2}
+      Amount: 1
+  OutputMFT: {fileID: 0}

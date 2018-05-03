@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9efab300c509288499bd22a544cc8d16, type: 3}
+  m_Name: buildStatue
+  m_EditorClassIdentifier: 
+  Title: 'Scult Statue '
+  Description: transform a stone slab into a masterpiece
+  TransformInto: {fileID: 116990, guid: 311e54faa8a36f44ba713b6638fdf534, type: 2}
+  ObjectToMoveParameter:
+    Name: 
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    MustMatchPrefab: {fileID: 1169689714336304, guid: 526238edcbb7a7744981d47f5905d69e,
+      type: 2}
+  Assignments:
+  - Name: Who shall carve
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    StartOffset: 0
+    StopOffset: 0
+    RequiredToBeHuman: 1
+    RequiredToBeDemon: 0
+    RequiredAbilities:
+    - ResourceType: {fileID: 11400000, guid: 5eeacafcdea90284388aafcbf528acc9, type: 2}
+      Amount: 3
+  TimeRequirements:
+  - Name: 
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    RequiredDuration: 1
+  ResourceRequirements:
+  - Name: skill
+    SettableAfterCreation: 0
+    RequiredToCreateInstance: 0
+    StartingValue: 0
+    RequiredValue: 9
+    Resource: {fileID: 11400000, guid: 5eeacafcdea90284388aafcbf528acc9, type: 2}

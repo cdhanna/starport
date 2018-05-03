@@ -13,7 +13,7 @@ namespace Smallgroup.Starport.Assets.Core.Players
         public MapObjectID ID { get { return _id; } }
 
         protected Queue<ICommand> _commandQueue;
-        protected ICommand _activeCommand;
+        public ICommand ActiveCommand { get; set; }
         protected IEnumerable<CommandResult> _activeCommandResults;
         protected IEnumerator<CommandResult> _commandIterator;
 
@@ -30,7 +30,7 @@ namespace Smallgroup.Starport.Assets.Core.Players
         public virtual void ClearCommands()
         {
             // cancel current command ?
-            _activeCommand = null;
+            ActiveCommand = null;
             _commandQueue.Clear();
             _commandIterator = null;
         }
@@ -39,9 +39,9 @@ namespace Smallgroup.Starport.Assets.Core.Players
         {
             if (_commandIterator == null && _commandQueue.Count > 0)
             {
-                _activeCommand = _commandQueue.Dequeue();
+                ActiveCommand = _commandQueue.Dequeue();
                 
-                var results = ProcessCommand_Generator(_activeCommand);
+                var results = ProcessCommand_Generator(ActiveCommand);
                 _commandIterator = results.GetEnumerator();
             }
 
@@ -53,11 +53,14 @@ namespace Smallgroup.Starport.Assets.Core.Players
                     var result = _commandIterator.Current;
                     if (result == CommandResult.FAILURE)
                     {
+                        ActiveCommand = null;
+
                         throw new InvalidOperationException("Command ended in failure");
                     }
                     if (result == CommandResult.COMPLETE)
                     {
                         _commandIterator = null; // prepares for next.
+                        ActiveCommand = null;
                     }
                     if (result == CommandResult.WORKING)
                     {
@@ -67,6 +70,8 @@ namespace Smallgroup.Starport.Assets.Core.Players
                 {
                     // out of sequence, implies "error"
                     _commandIterator = null;
+                    ActiveCommand = null;
+
                 }
             }
         }

@@ -27,18 +27,18 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var output = new List<GenerationAction>();
 
             var coord = new GridXY(ctx.X, ctx.Y);
-            var position = World.Map.TransformCoordinateToWorld(coord);
+            var position = ctx.Map.TransformCoordinateToWorld(coord);
 
             if (ctx.WallRight && ctx.GetNeighborCtx(0, -1).WallRight)
             {
                 var offset = new Vector3(.55f, 0, -.5f);
-                output.Add(new CreateObjectAction("wall_joiner2", position + offset * ctx.CellUnitWidth, Quaternion.identity));
+                output.Add(new CreateObjectAction(ctx.Coord, ctx.TileSet.JoinPrefab, position + offset * ctx.CellUnitWidth, Quaternion.identity));
             }
 
             if (ctx.WallLeft && ctx.GetNeighborCtx(0, -1).WallLeft)
             {
                 var offset = new Vector3(-.55f, 0, -.5f);
-                output.Add(new CreateObjectAction("wall_joiner2", position + offset * ctx.CellUnitWidth, Quaternion.identity));
+                output.Add(new CreateObjectAction(ctx.Coord, ctx.TileSet.JoinPrefab, position + offset * ctx.CellUnitWidth, Quaternion.identity));
             }
 
 
@@ -67,18 +67,18 @@ namespace Smallgroup.Starport.Assets.Surface.Generation.Rules
             var output = new List<GenerationAction>();
 
             var coord = new GridXY(ctx.X, ctx.Y);
-            var position = World.Map.TransformCoordinateToWorld(coord);
+            var position = ctx.Map.TransformCoordinateToWorld(coord);
 
             if (ctx.WallTop && ctx.GetNeighborCtx(1, 0).WallTop)
             {
                 var offset = new Vector3(.5f, 0, -.55f);
-                output.Add(new CreateObjectAction("wall_joiner2", position + offset * ctx.CellUnitWidth, Quaternion.Euler(0, 90, 0)));
+                output.Add(new CreateObjectAction(ctx.Coord, ctx.TileSet.JoinPrefab, position + offset * ctx.CellUnitWidth, Quaternion.Euler(0, 90, 0)));
             }
 
             if (ctx.WallLow && ctx.GetNeighborCtx(1, 0).WallLow)
             {
                 var offset = new Vector3(.5f, 0,.55f);
-                output.Add(new CreateObjectAction("wall_joiner2", position + offset * ctx.CellUnitWidth, Quaternion.Euler(0, 90, 0)));
+                output.Add(new CreateObjectAction(ctx.Coord, ctx.TileSet.JoinPrefab, position + offset * ctx.CellUnitWidth, Quaternion.Euler(0, 90, 0)));
             }
 
 

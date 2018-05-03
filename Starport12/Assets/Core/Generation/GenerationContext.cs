@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Smallgroup.Starport.Assets.Core.Generation
 {
+    [Serializable]
     public class GenerationContext
     {
 
@@ -30,6 +31,31 @@ namespace Smallgroup.Starport.Assets.Core.Generation
             _parent = parent;
         }
 
+        public void Merge(GenerationContext other)
+        {
+            MergeDictionary(_ints, other._ints);
+            MergeDictionary(_strs, other._strs);
+            MergeDictionary(_floats, other._floats);
+            MergeDictionary(_bools, other._bools);
+            MergeDictionary(_objs, other._objs);
+        }
+
+        private static void MergeDictionary<TValue>(Dictionary<string, TValue> target, Dictionary<string, TValue> other)
+        {
+            foreach (var kv in other)
+            {
+
+                if (target.ContainsKey(kv.Key))
+                {
+                    // which value should we use?
+                    target[kv.Key] = kv.Value;
+                } else
+                {
+                    // simply take the other value
+                    target.Add(kv.Key, kv.Value);
+                } 
+            }
+        }
 
         public virtual void SetContextInfo<T>(T info)
         {
@@ -130,11 +156,18 @@ namespace Smallgroup.Starport.Assets.Core.Generation
         public GenerationContext SetSubContext<TCoordinate>(TCoordinate coord, GenerationContext ctx)
             where TCoordinate : ICoordinate<TCoordinate>, new()
         {
-            var name = "coordCtx" + coord.GetHashCode();
+            var name = "coordCtx" + coord.Key;
             if (_objs.ContainsKey(name))
                 _objs[name] = ctx;
             else _objs.Add(name, ctx);
             return this;
+        }
+
+        public bool HasSubContext<TCoordinate>(TCoordinate coord)
+            where TCoordinate : ICoordinate<TCoordinate>, new()
+        {
+            var name = "coordCtx" + coord.Key;
+            return (_objs.ContainsKey(name));
         }
 
         public TContext GetSubContext<TCoordinate, TContext>(TCoordinate coord)
@@ -142,7 +175,7 @@ namespace Smallgroup.Starport.Assets.Core.Generation
             where TContext : GenerationContext
         {
             object output = null;
-            var name = "coordCtx" + coord.GetHashCode();
+            var name = "coordCtx" + coord.Key;
 
             if (_objs.TryGetValue(name, out output))
             {

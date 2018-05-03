@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Smallgroup.Starport.Assets.Surface.InputMechs
 {
-    public class SimpleInputMech : InputMechanism<SimpleActor>
+    public class SimpleInputMech : DefaultInputMech<SimpleActor>
     {
         public SimpleInputMech()
         {

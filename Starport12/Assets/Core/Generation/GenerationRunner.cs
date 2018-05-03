@@ -15,9 +15,13 @@ namespace Smallgroup.Starport.Assets.Core.Generation
         }
 
 
-        public List<GenerationAction> Run<TCoordinate, TCell, TContext>(TContext global, Map<TCoordinate, TCell> map, Action<TContext, TCoordinate> coordContextCreator,  params GenerationRule<TContext>[] rules)
+        public List<GenerationAction> Run<TCoordinate, TContext>(TContext global,
+            IEnumerable<TCoordinate> coordinates,
+            Action<TContext, TCoordinate> coordContextCreator,
+            params GenerationRule<TContext>[] rules
+            )
             where TCoordinate : ICoordinate<TCoordinate>, new()
-            where TCell : ICell<TCell>, new()
+            //where TCell : ICell<TCell>, new()
             where TContext : GenerationContext, new()
         {
             var returnActions = new List<GenerationAction>();
@@ -26,14 +30,20 @@ namespace Smallgroup.Starport.Assets.Core.Generation
 
             var coord2ctx = new Dictionary<TCoordinate, TContext>();
 
-            foreach (var coord in map.Coordinates)
+            foreach (var coord in coordinates)
             {
-                var coordCtx = new TContext();
-                coordCtx.SetParent(global);
-                coordContextCreator(coordCtx, coord);
 
-                coord2ctx.Add(coord, coordCtx);
-                global.SetSubContext(coord, coordCtx);
+
+                if (global.HasSubContext(coord) == false)
+                {
+
+                }
+                    var coordCtx = new TContext();
+                    coordCtx.SetParent(global);
+                    coordContextCreator(coordCtx, coord);
+
+                    coord2ctx.Add(coord, coordCtx);
+                    global.SetSubContext(coord, coordCtx);
             }
 
             foreach (var run in _runs)
@@ -41,7 +51,7 @@ namespace Smallgroup.Starport.Assets.Core.Generation
 
 
 
-                foreach (var coord in map.Coordinates)
+                foreach (var coord in coordinates)
                 {
                     //var coordCtx = new TContext(); // TODO: figure out how to set the data on a coord
                     //coordCtx.SetParent(global);
@@ -105,10 +115,12 @@ namespace Smallgroup.Starport.Assets.Core.Generation
             }
 
 
-            foreach (var coord in map.Coordinates)
+            foreach (var coord in coordinates)
             {
                 var coordCtx = coord2ctx[coord];
-                var actions = coordCtx.Get<Dictionary<GenerationRule<TContext>, List<GenerationAction>>>("actions");
+                var actions = coordCtx.Ensure("actions", new Dictionary<GenerationRule<TContext>, List<GenerationAction>>());
+
+                //var actions = coordCtx.Get<Dictionary<GenerationRule<TContext>, List<GenerationAction>>>("actions");
                 actions.Values.ToList().ForEach(set => returnActions.AddRange(set));
             }
 

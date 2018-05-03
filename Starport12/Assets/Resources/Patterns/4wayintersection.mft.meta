@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: f2453fccaef50224aaa2028ab0dc41ef
+timeCreated: 1522630626
+licenseType: Free
+ScriptedImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 4a1a33252d7b31b468e547d4c15d5085, type: 3}
+  IconPath: icons/jafar-gear

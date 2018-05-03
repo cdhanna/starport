@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Smallgroup.Starport.Assets.Core.Generation
 {
+    [Serializable]
     public abstract class GenerationRule<TContext>
         where TContext : GenerationContext
     {
